@@ -1,0 +1,43 @@
+﻿2.1.4
+-  --no-qt-error-dialogs
+- bugfix youtube link variants
+- fallback for missing DASH links
+
+2.1.3
+- kodi hotkey optional
+- import local link with hotkey
+
+2.1.2
+- minor error searchquery Youtube link
+- right click to delete entry in mru list
+- fix Kodi password not recognized
+
+2.1.1
+- Keyboard shortcuts in About window
+- dodge youtube_dl error with '-' keys
+- fix UI error ctrl-v
+- filter open file dialog
+- double click on center label
+
+2.1.0
+- AIMP list import/convert
+- Edit F2 context menue entry
+- fix UI error with drag&drop
+- fix mru list error with drag&drop
+- fix ignore iptv files in mru
+- fix not working save on exit dialog
+- fix empty name in save file dialog
+
+
+2.0
+- Kodi direct play hotkey
+- MRU list
+- fix delete key in cell edit
+- fix context menu errors on empty window
+- changes in -F option youtube-dl
+- right click menu cell edit
+- highlight search text
+- disable automatic tooltip
+- move line ctrl-1/2
+- Ctrl + double click play on Kodi
+- Ctrl/Shift + double click queue to Kodi
