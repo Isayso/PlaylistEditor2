@@ -435,7 +435,8 @@ namespace PlaylistEditor
                         }
                         // var url = (String)yt_Link.GetData(DataFormats.Text);
                         // string name = ClassHelp.GetTitle(url);
-                        string name = ClassHelp.GetTitle_html(url);
+                      //  string name = ClassHelp.GetTitle_html(url);
+                        string name = ClassHelp.GetTitle_client(url);  //new client
                         //  if (string.IsNullOrEmpty(name)) name = ClassHelp.GetTitle_new(yUrl_search);
                         //string name = GetTitle(yUrl);
 #if DEBUG
@@ -850,10 +851,12 @@ namespace PlaylistEditor
                         }
                         else
                         {
-                            param = ClassHelp.GetVlcDashArg(key[1]);
+                          //  param = ClassHelp.GetVlcDashArg(key[1]);
+                            param = ClassHelp.GetVlcDashArg2(key[1]);  //youtube-dl delete
 
                             if (param == "false")
                             {
+                               // return;
                                 param = YTURL + key[1];
                             }
                             if (param == "nodash")
@@ -2534,6 +2537,7 @@ namespace PlaylistEditor
                     if (key.Length > 1)
                     {
                         if (ClassHelp.GetTitle_html(YTURL + key[1]) == "YouTube")
+                      //  if (ClassHelp.GetTitle_client(YTURL + key[1]) == "N/A")
                         {
                             for (int i = 0; i < 2; i++)
                             {
@@ -2766,10 +2770,13 @@ namespace PlaylistEditor
                     string[] key = playcell.Split('=');  //variant normal or YT playlist link
                     if (key.Length > 1)
                     {
-                        if (!string.IsNullOrEmpty(ClassDownload.DownloadYTLink
-                                        (YTURL + key[1], downpath, fpsValue, out string videofilename)))
-                        {
-                            if (videofilename == "false") return;  //for -F flag
+                        //if (!string.IsNullOrEmpty(ClassDownload.DownloadYTLink
+                        //                (YTURL + key[1], downpath, fpsValue, out string videofilename)))
+                            if (!string.IsNullOrEmpty(ClassDownload.DownloadYTLinkEx
+                                            (YTURL + key[1], downpath, fpsValue, out string videofilename)))
+
+                            {
+                                if (videofilename == "false") return;  //for -F flag
 
                             _done = true;
 

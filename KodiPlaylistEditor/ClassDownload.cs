@@ -17,14 +17,31 @@
  *         You should have received a copy of the GNU General Public License
  *         along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using PlaylistEditor.Properties;
+using YoutubeExplode;
+using YoutubeExplode.Converter;
+using YoutubeExplode.Videos;
+using YoutubeExplode.Videos.Streams;
 
 namespace PlaylistEditor
 {
     public static class ClassDownload
     {
+        private static string videoUrlnew;
+        private static string videoTitle;
+        private static string audioUrl;
+        private static Video VideoInfo;
+
+        private static YoutubeClient _youtube;
+
+
+
         /// <summary>
         /// opens cmd window and downloads video 
         /// </summary>
@@ -154,9 +171,75 @@ namespace PlaylistEditor
             }
     
            
+         //   return videofilename = GetDownloadFileName(output, ClassHelp.GetTitle_client(videolink));
             return videofilename = GetDownloadFileName(output, ClassHelp.GetTitle_html(videolink));
 
         }
+
+
+        public static string DownloadYTLinkEx(string videolink, string NewPath, string fpsValue, out string videofilename)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+
+            int maxres = Settings.Default.maxres;  //-> SetVideoQuality
+            int cvideo = Settings.Default.combovideo; //-> SetFileContainer .mp4 | .webm
+
+            Task.Run(async () => { await DownloadStream(videolink, NewPath, maxres); }).Wait();  //-> videoUrlnew   audioUrl 
+
+            Cursor.Current = Cursors.Default;
+
+
+            return videofilename = videoTitle;
+
+        }
+
+        private static async Task DownloadStream(string videoId, string NewPath, int height = 2)
+        {
+
+            var youtube = new YoutubeClient();
+            var converter = new YoutubeConverter(youtube); // re-using the same client instance for efficiency, not required
+
+
+            try
+            {
+
+                // Get stream manifest
+                var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videoId);
+
+                // Select audio stream
+                var audioStreamInfo = streamManifest.GetAudio().WithHighestBitrate();
+
+                // Select video stream
+                //  var videoStreamInfo = streamManifest.GetVideo().FirstOrDefault(s => s.VideoQualityLabel == "1080p60");
+                  var videoStreamInfo = streamManifest.GetVideoOnly()
+                    .FirstOrDefault(s => s.VideoQuality <= ClassHelp.SetVideoQuality(height));
+
+                //var videoStreamInfo = streamManifest.GetVideoOnly()
+                //                      .Where(s => s.VideoQuality <= ClassHelp.SetVideoQuality(height))
+                //                      .Where(t => t.Container == Container.Mp4)
+                //                      .Select(h => h.Url).ToList();
+                //  var test = streamManifest.get
+
+
+                // Combine them into a collection
+                var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo };
+
+                VideoInfo = await youtube.Videos.GetAsync(videoId);  //video info
+                videoTitle = (VideoInfo.Title +".mp4").Replace("/", "");
+                
+
+                // Download and process them into one file
+                await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("error " + ex.Message, "Stream Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
+
+        }
+
 
         /// <summary>
         /// download html link
