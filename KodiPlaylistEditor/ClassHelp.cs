@@ -35,19 +35,19 @@ namespace PlaylistEditor
 {
     static class ClassHelp
     {
-        private static bool _isBusy;
+      //  private static bool _isBusy;
        // private static Video _video;
-        private static IReadOnlyList<MuxedStreamInfo> _muxedStreamInfos;
-        private static IReadOnlyList<AudioOnlyStreamInfo> _audioOnlyStreamInfos;
+     //   private static IReadOnlyList<MuxedStreamInfo> _muxedStreamInfos;
+     //   private static IReadOnlyList<AudioOnlyStreamInfo> _audioOnlyStreamInfos;
       //  private static IReadOnlyList<VideoOnlyStreamInfo> _videoOnlyStreamInfos;
-        private static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos;
+     //   private static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos;
         // private static IReadOnlyList<ClosedCaptionTrackInfo>? _closedCaptionTrackInfos;
-        private static string videoUrlnew;
-        private static string videoTitle;
-        private static string audioUrl;
-        private static Video VideoInfo;
+      //  private static string videoUrlnew;
+       // private static string videoTitle;
+        //private static string audioUrl;
+        //private static Video VideoInfo;
 
-        private static YoutubeClient _youtube;
+     //   private static YoutubeClient _youtube;
 
 
 
@@ -197,31 +197,17 @@ namespace PlaylistEditor
            // var youtube = new YoutubeClient();
 
 
-            VideoInfo = null;
+            ClassYTExplode.VideoInfo = null;
 
-            Task.Run(async () => { await PullInfo(url); }).Wait();
+            Task.Run(async () => { await ClassYTExplode.PullInfo(url); }).Wait();
 
-            if (string.IsNullOrEmpty(videoTitle))
+            if (string.IsNullOrEmpty(ClassYTExplode.videoTitle))
                 return "N/A";
             else
-                return videoTitle;
+                return ClassYTExplode.videoTitle;
         }
 
 
-        private static async Task PullInfo(string videoId)
-        {
-            _youtube = new YoutubeClient();
-            try
-            {
-                VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
-                videoTitle = VideoInfo.Title; 
-
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
 
 
 
@@ -325,73 +311,73 @@ namespace PlaylistEditor
         /// </summary>
         /// <param name="videolink"></param>
         /// <returns>command line arg or false if no DASH avaliable</returns>
-        public static string GetVlcDashArg(string videolink)
-        {
-            string[] height = { "2160", "1440", "1080", "720", "480", "360" };
+        //public static string GetVlcDashArg(string videolink)
+        //{
+        //    string[] height = { "2160", "1440", "1080", "720", "480", "360" };
            
-            int maxres = Properties.Settings.Default.maxres;
+        //    int maxres = Properties.Settings.Default.maxres;
            
-            string videoUrl = "";
+        //    string videoUrl = "";
 
-         //   PullData(videolink);
+        // //   PullData(videolink);
 
-            // vlc "https://video.stream" --input-slave="https://audio.stream"
+        //    // vlc "https://video.stream" --input-slave="https://audio.stream"
 
-            string filename = NativeMethods.GetFullPathFromWindows("youtube-dl.exe");
+        //    string filename = NativeMethods.GetFullPathFromWindows("youtube-dl.exe");
 
-            if (string.IsNullOrEmpty(filename))
-            {
-                filename = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
-            }
-
-
-
-            // Set cursor as hourglass
-            Cursor.Current = Cursors.WaitCursor;
-
-            //no cmd window
-            ProcessStartInfo ps = new ProcessStartInfo();
-            ps.FileName = filename;// Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
-            ps.ErrorDialog = false;
-            //ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]\" -g " + videolink;  //-f "bestvideo[height<=720]" -g 2FcRM-p4koo
-            // ps.Arguments = "-f bestaudio -g " + videolink;
-            // error keys with -  -> -- seperator
-            ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]+bestaudio\" -g -- " + videolink;  //-f "bestvideo[height<=720]+bestaudio" -g 2FcRM-p4koo
-
-            ps.CreateNoWindow = true; // comment this out
-            ps.UseShellExecute = false; // true
-            ps.RedirectStandardOutput = true; // false
-            ps.EnvironmentVariables.Add("VARIABLE1", "1");
-            ps.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; // comment this out
-
-            using (Process proc = new Process())
-            {
-                proc.StartInfo = ps;
-                //proc.Exited += new EventHandler(proc_Exited);
-                //proc.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(proc_OutputDataReceived);
-                proc.Start();
-                StreamReader sr = proc.StandardOutput;
-                videoUrl = sr.ReadToEnd();
-                proc.WaitForExit();
-                //proc.BeginOutputReadLine(); // Comment this out
-            }
-
-            // Set cursor as default arrow
-            Cursor.Current = Cursors.Default;
-
-            if (string.IsNullOrEmpty(videoUrl)) return "false";  //sumtingwong
-            else if (videoUrl.Contains("manifest")) return "nodash";  //no dash
-
-            //   string[] splitUrl = videoUrl.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-
-            string[] splitUrl = videoUrl.Split(new[] { "\r\n", "\r", "\n" },StringSplitOptions.None);
-
-            string result = splitUrl[0] + " --input-slave=" + splitUrl[1];
-
-            return result;  //test
+        //    if (string.IsNullOrEmpty(filename))
+        //    {
+        //        filename = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
+        //    }
 
 
-        }
+
+        //    // Set cursor as hourglass
+        //    Cursor.Current = Cursors.WaitCursor;
+
+        //    //no cmd window
+        //    ProcessStartInfo ps = new ProcessStartInfo();
+        //    ps.FileName = filename;// Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
+        //    ps.ErrorDialog = false;
+        //    //ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]\" -g " + videolink;  //-f "bestvideo[height<=720]" -g 2FcRM-p4koo
+        //    // ps.Arguments = "-f bestaudio -g " + videolink;
+        //    // error keys with -  -> -- seperator
+        //    ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]+bestaudio\" -g -- " + videolink;  //-f "bestvideo[height<=720]+bestaudio" -g 2FcRM-p4koo
+
+        //    ps.CreateNoWindow = true; // comment this out
+        //    ps.UseShellExecute = false; // true
+        //    ps.RedirectStandardOutput = true; // false
+        //    ps.EnvironmentVariables.Add("VARIABLE1", "1");
+        //    ps.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; // comment this out
+
+        //    using (Process proc = new Process())
+        //    {
+        //        proc.StartInfo = ps;
+        //        //proc.Exited += new EventHandler(proc_Exited);
+        //        //proc.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(proc_OutputDataReceived);
+        //        proc.Start();
+        //        StreamReader sr = proc.StandardOutput;
+        //        videoUrl = sr.ReadToEnd();
+        //        proc.WaitForExit();
+        //        //proc.BeginOutputReadLine(); // Comment this out
+        //    }
+
+        //    // Set cursor as default arrow
+        //    Cursor.Current = Cursors.Default;
+
+        //    if (string.IsNullOrEmpty(videoUrl)) return "false";  //sumtingwong
+        //    else if (videoUrl.Contains("manifest")) return "nodash";  //no dash
+
+        //    //   string[] splitUrl = videoUrl.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+        //    string[] splitUrl = videoUrl.Split(new[] { "\r\n", "\r", "\n" },StringSplitOptions.None);
+
+        //    string result = splitUrl[0] + " --input-slave=" + splitUrl[1];
+
+        //    return result;  //test
+
+
+        //}
 
         //public static bool IsBusy
         //{
@@ -414,132 +400,6 @@ namespace PlaylistEditor
         //    }
         //}
 
-        public static VideoQuality SetVideoQuality (int height = 2)
-        {
-            VideoQuality quality = VideoQuality.High1080;
-
-            switch (height)
-            {
-                case 0:
-                    quality = VideoQuality.High2160;
-                    break;
-
-                case 1:
-                    quality = VideoQuality.High1440;
-                    break;
-
-                case 2:
-                    quality = VideoQuality.High1080;
-                    break;
-
-                case 3:
-                    quality = VideoQuality.High720;
-                    break;
-
-                case 4:
-                    quality = VideoQuality.Medium480;
-                    break;
-
-                case 5:
-                    quality = VideoQuality.Medium360;
-                    break;
-
-            }
-
-            return quality;
-
-        }
-
-        public static Container SetFileContainer(int fileext)
-        {
-            Container extension = Container.Mp4;
-
-            switch (fileext)
-            {
-                case 0:
-                    extension = Container.Mp4;
-                    break;
-
-                case 1:
-                    extension = Container.WebM;
-                    break;
-
-                case 2:
-                    extension = Container.Tgpp;
-                    break;
-            }
-            return extension;
-        }
-
-        public static async Task PullDASH(string videoId, int height=2)
-        {
-            _youtube = new YoutubeClient();
-
-
-
-            try
-            {
-                // Enter busy state
-                //IsBusy = true;
-                //IsProgressIndeterminate = true;
-
-
-                // Reset data
-                //Video = null;
-                //Channel = null;
-                //MuxedStreamInfos = null;
-                //AudioOnlyStreamInfos = null;
-                //VideoOnlyStreamInfos = null;
-                //ClosedCaptionTrackInfos = null;
-
-              //  List<string> VideoOnlyStreamInfos =
-
-                // Normalize video id
-                //var videoId = new VideoId(Query!);
-
-                // Get data
-                var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
-              //  var trackManifest = await _youtube.Videos.ClosedCaptions.GetManifestAsync(videoId);
-
-          //   var   Video = await _youtube.Videos.GetAsync(videoId);  //video info
-
-                //Channel = await _youtube.Channels.GetByVideoAsync(videoId);
-                //MuxedStreamInfos = streamManifest.GetMuxed().ToArray();
-                //AudioOnlyStreamInfos = streamManifest.GetAudioOnly().ToArray();
-                VideoOnlyStreamInfos = streamManifest.GetVideoOnly().ToArray();
-                //ClosedCaptionTrackInfos = trackManifest.Tracks;
-                //var streamInfo = streamManifest
-                //                 .GetVideoOnly()
-                //                 .Where(s => s.Container == Container.Mp4)
-                //                 .WithHighestVideoQuality();
-                var testinfo = streamManifest.GetVideoOnly()
-                  //  .Where(s => s.VideoQuality <= VideoQuality.High1080)
-                    .Where(s => s.VideoQuality <= SetVideoQuality(height))
-                    .Where(t => t.Container == Container.Mp4)
-                    .Select(h => h.Url).ToList();
-
-                videoUrlnew = testinfo[0];
-                
-                var streamInfoA = streamManifest.GetAudioOnly().WithHighestBitrate();
-
-                audioUrl = streamInfoA.Url;
-
-            }
-            catch (Exception e)
-            {
-//#if DEBUG
-                MessageBox.Show("Get DASH Arguments failed. " + e.Message, "Get DASH Arguments", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-//#endif
-
-            }
-
-            finally
-            {
-                // Exit busy state
-                //IsBusy = false;
-                //IsProgressIndeterminate = false;
-            }
-        }
 
 
 
@@ -553,15 +413,15 @@ namespace PlaylistEditor
 
             int maxres = Properties.Settings.Default.maxres;
 
-            Task.Run(async () => { await PullDASH(videolink, maxres); }).Wait();
+            Task.Run(async () => { await ClassYTExplode.PullDASH(videolink, maxres); }).Wait();
 
             Cursor.Current = Cursors.Default;
 
 
-            if (string.IsNullOrEmpty(videoUrlnew))
+            if (string.IsNullOrEmpty(ClassYTExplode.videoUrlnew))
                 return "false";
             else
-                return videoUrlnew + " --input-slave=" + audioUrl;
+                return ClassYTExplode.videoUrlnew + " --input-slave=" + ClassYTExplode.audioUrl;
 
         }
 

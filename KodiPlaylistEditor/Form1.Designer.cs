@@ -99,6 +99,8 @@
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.plabel_Filename = new PathLabel();
+            this.button_path = new System.Windows.Forms.Button();
+            this.button_download_start = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -334,7 +336,7 @@
             this.comboBox_download.Location = new System.Drawing.Point(24, 11);
             this.comboBox_download.Margin = new System.Windows.Forms.Padding(0);
             this.comboBox_download.Name = "comboBox_download";
-            this.comboBox_download.Size = new System.Drawing.Size(351, 28);
+            this.comboBox_download.Size = new System.Drawing.Size(329, 28);
             this.comboBox_download.TabIndex = 43;
             this.toolTip1.SetToolTip(this.comboBox_download, "download path");
             this.comboBox_download.Click += new System.EventHandler(this.ComboBox_Click);
@@ -345,14 +347,12 @@
             this.comboBox_video.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox_video.FormattingEnabled = true;
             this.comboBox_video.Items.AddRange(new object[] {
-            "bestvideo",
-            "bestvideo[ext!=webm]",
-            "bestvideo[ext=mp4]",
-            "bestvideo[ext=mkv]",
+            "mp4",
+            "webm",
             "novideo"});
-            this.comboBox_video.Location = new System.Drawing.Point(24, 88);
+            this.comboBox_video.Location = new System.Drawing.Point(24, 60);
             this.comboBox_video.Name = "comboBox_video";
-            this.comboBox_video.Size = new System.Drawing.Size(203, 28);
+            this.comboBox_video.Size = new System.Drawing.Size(77, 28);
             this.comboBox_video.TabIndex = 53;
             this.toolTip1.SetToolTip(this.comboBox_video, "youtube-dl option");
             this.comboBox_video.Click += new System.EventHandler(this.ComboBox_Click);
@@ -363,13 +363,13 @@
             this.comboBox_audio.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox_audio.FormattingEnabled = true;
             this.comboBox_audio.Items.AddRange(new object[] {
-            "bestaudio",
-            "bestaudio[ext=m4a]",
-            "bestaudio[ext=aac]",
-            "bestaudio[ext=ogg]"});
-            this.comboBox_audio.Location = new System.Drawing.Point(24, 122);
+            "auto",
+            "m4a",
+            "aac",
+            "ogg"});
+            this.comboBox_audio.Location = new System.Drawing.Point(115, 60);
             this.comboBox_audio.Name = "comboBox_audio";
-            this.comboBox_audio.Size = new System.Drawing.Size(203, 28);
+            this.comboBox_audio.Size = new System.Drawing.Size(77, 28);
             this.comboBox_audio.TabIndex = 54;
             this.toolTip1.SetToolTip(this.comboBox_audio, "youtube-dl option");
             this.comboBox_audio.Click += new System.EventHandler(this.ComboBox_Click);
@@ -489,10 +489,10 @@
             this.button_cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button_cancel.FlatAppearance.BorderSize = 0;
             this.button_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_cancel.Location = new System.Drawing.Point(684, 10);
+            this.button_cancel.Location = new System.Drawing.Point(83, 202);
             this.button_cancel.Margin = new System.Windows.Forms.Padding(0);
             this.button_cancel.Name = "button_cancel";
-            this.button_cancel.Size = new System.Drawing.Size(40, 37);
+            this.button_cancel.Size = new System.Drawing.Size(113, 37);
             this.button_cancel.TabIndex = 59;
             this.toolTip1.SetToolTip(this.button_cancel, "cancel");
             this.button_cancel.UseVisualStyleBackColor = true;
@@ -506,10 +506,10 @@
             this.button_download.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button_download.FlatAppearance.BorderSize = 0;
             this.button_download.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_download.Location = new System.Drawing.Point(734, 9);
+            this.button_download.Location = new System.Drawing.Point(732, 11);
             this.button_download.Margin = new System.Windows.Forms.Padding(0);
             this.button_download.Name = "button_download";
-            this.button_download.Size = new System.Drawing.Size(40, 37);
+            this.button_download.Size = new System.Drawing.Size(37, 37);
             this.button_download.TabIndex = 40;
             this.toolTip1.SetToolTip(this.button_download, "download YT video\r\n+Ctrl download with last options");
             this.button_download.UseVisualStyleBackColor = true;
@@ -767,7 +767,7 @@
             this.checkBox_subs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_subs.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox_subs.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_subs.Location = new System.Drawing.Point(276, 92);
+            this.checkBox_subs.Location = new System.Drawing.Point(24, 98);
             this.checkBox_subs.Name = "checkBox_subs";
             this.checkBox_subs.Size = new System.Drawing.Size(99, 24);
             this.checkBox_subs.TabIndex = 62;
@@ -791,6 +791,8 @@
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.button_download_start);
+            this.panel1.Controls.Add(this.button_path);
             this.panel1.Controls.Add(this.checkBox_subs);
             this.panel1.Controls.Add(this.checkBox_F);
             this.panel1.Controls.Add(this.textBox1);
@@ -799,11 +801,12 @@
             this.panel1.Controls.Add(this.checkBox_verb);
             this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.comboBox_audio);
+            this.panel1.Controls.Add(this.button_cancel);
             this.panel1.Controls.Add(this.comboBox_video);
             this.panel1.Controls.Add(this.comboBox_download);
             this.panel1.Location = new System.Drawing.Point(673, 57);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(402, 200);
+            this.panel1.Size = new System.Drawing.Size(402, 250);
             this.panel1.TabIndex = 44;
             this.panel1.Visible = false;
             // 
@@ -815,7 +818,7 @@
             this.checkBox_rlink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_rlink.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox_rlink.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_rlink.Location = new System.Drawing.Point(24, 45);
+            this.checkBox_rlink.Location = new System.Drawing.Point(213, 60);
             this.checkBox_rlink.Name = "checkBox_rlink";
             this.checkBox_rlink.Size = new System.Drawing.Size(160, 24);
             this.checkBox_rlink.TabIndex = 58;
@@ -985,6 +988,39 @@
             this.plabel_Filename.TabIndex = 26;
             this.plabel_Filename.Text = "pathLabel1";
             // 
+            // button_path
+            // 
+            this.button_path.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_path.BackColor = System.Drawing.Color.IndianRed;
+            this.button_path.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_path.BackgroundImage")));
+            this.button_path.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_path.FlatAppearance.BorderSize = 0;
+            this.button_path.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_path.Location = new System.Drawing.Point(364, 7);
+            this.button_path.Margin = new System.Windows.Forms.Padding(0);
+            this.button_path.Name = "button_path";
+            this.button_path.Size = new System.Drawing.Size(38, 37);
+            this.button_path.TabIndex = 69;
+            this.toolTip1.SetToolTip(this.button_path, "new download path");
+            this.button_path.UseVisualStyleBackColor = false;
+            // 
+            // button_download_start
+            // 
+            this.button_download_start.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_download_start.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_download_start.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_download_start.BackgroundImage")));
+            this.button_download_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_download_start.FlatAppearance.BorderSize = 0;
+            this.button_download_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_download_start.Location = new System.Drawing.Point(228, 202);
+            this.button_download_start.Margin = new System.Windows.Forms.Padding(0);
+            this.button_download_start.Name = "button_download_start";
+            this.button_download_start.Size = new System.Drawing.Size(107, 37);
+            this.button_download_start.TabIndex = 65;
+            this.toolTip1.SetToolTip(this.button_download_start, "download YT video\r\n+Ctrl download with last options");
+            this.button_download_start.UseVisualStyleBackColor = true;
+            this.button_download_start.Click += new System.EventHandler(this.button_download_start_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -997,12 +1033,11 @@
             this.Controls.Add(this.RedoButton);
             this.Controls.Add(this.UndoButton);
             this.Controls.Add(this.button_check);
-            this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button_download);
             this.Controls.Add(this.button_vlc);
             this.Controls.Add(this.button_revert);
             this.Controls.Add(this.button_tag);
+            this.Controls.Add(this.button_download);
             this.Controls.Add(this.button_dup);
             this.Controls.Add(this.textBox_find);
             this.Controls.Add(this.button_search);
@@ -1108,6 +1143,8 @@
         private System.Windows.Forms.ToolStripMenuItem deleteEntryToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBox_subs;
         private System.Windows.Forms.CheckBox checkBox_verb;
+        private System.Windows.Forms.Button button_download_start;
+        private System.Windows.Forms.Button button_path;
     }
 }
 

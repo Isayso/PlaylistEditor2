@@ -3056,6 +3056,11 @@ namespace PlaylistEditor
             panel2.Visible = false;
         }
 
+        private void button_download_start_Click(object sender, EventArgs e)
+        {
+
+        }
+
         //private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         //{
         //    //doubleClickTimer.Tick += new EventHandler(doubleClickTimer_Tick);
