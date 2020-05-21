@@ -55,6 +55,11 @@
             this.button_edit = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.checkBox_kodi = new System.Windows.Forms.CheckBox();
+            this.checkBox_w2 = new System.Windows.Forms.CheckBox();
+            this.textBox_hot2 = new System.Windows.Forms.TextBox();
+            this.checkBox_a2 = new System.Windows.Forms.CheckBox();
+            this.checkBox_s2 = new System.Windows.Forms.CheckBox();
+            this.checkBox_c2 = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -62,24 +67,19 @@
             this.comboBox_download = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.checkBox_w2 = new System.Windows.Forms.CheckBox();
-            this.textBox_hot2 = new System.Windows.Forms.TextBox();
-            this.checkBox_a2 = new System.Windows.Forms.CheckBox();
-            this.checkBox_s2 = new System.Windows.Forms.CheckBox();
-            this.checkBox_c2 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // button_ok
@@ -319,7 +319,7 @@
             this.checkBox3.Text = "use mpeg-dash\r\n";
             this.toolTip1.SetToolTip(this.checkBox3, "when add links");
             this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            this.checkBox3.Visible = false;
             // 
             // label10
             // 
@@ -390,6 +390,73 @@
             this.toolTip1.SetToolTip(this.checkBox_kodi, "when add links");
             this.checkBox_kodi.UseVisualStyleBackColor = true;
             this.checkBox_kodi.CheckedChanged += new System.EventHandler(this.checkBox_kodi_CheckedChanged);
+            // 
+            // checkBox_w2
+            // 
+            this.checkBox_w2.Checked = true;
+            this.checkBox_w2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_w2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox_w2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_w2.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_w2.Location = new System.Drawing.Point(245, 19);
+            this.checkBox_w2.Name = "checkBox_w2";
+            this.checkBox_w2.Size = new System.Drawing.Size(60, 24);
+            this.checkBox_w2.TabIndex = 28;
+            this.checkBox_w2.Text = "WIN";
+            this.toolTip1.SetToolTip(this.checkBox_w2, "Restart to take effect");
+            this.checkBox_w2.UseVisualStyleBackColor = true;
+            // 
+            // textBox_hot2
+            // 
+            this.textBox_hot2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textBox_hot2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_hot2.Location = new System.Drawing.Point(322, 18);
+            this.textBox_hot2.MaxLength = 1;
+            this.textBox_hot2.Name = "textBox_hot2";
+            this.textBox_hot2.Size = new System.Drawing.Size(33, 27);
+            this.textBox_hot2.TabIndex = 27;
+            this.textBox_hot2.Text = "Y";
+            this.textBox_hot2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip1.SetToolTip(this.textBox_hot2, "Restart to take effect");
+            // 
+            // checkBox_a2
+            // 
+            this.checkBox_a2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox_a2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_a2.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_a2.Location = new System.Drawing.Point(180, 19);
+            this.checkBox_a2.Name = "checkBox_a2";
+            this.checkBox_a2.Size = new System.Drawing.Size(59, 24);
+            this.checkBox_a2.TabIndex = 26;
+            this.checkBox_a2.Text = "ALT";
+            this.toolTip1.SetToolTip(this.checkBox_a2, "Restart to take effect");
+            this.checkBox_a2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_s2
+            // 
+            this.checkBox_s2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox_s2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_s2.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_s2.Location = new System.Drawing.Point(98, 19);
+            this.checkBox_s2.Name = "checkBox_s2";
+            this.checkBox_s2.Size = new System.Drawing.Size(76, 24);
+            this.checkBox_s2.TabIndex = 25;
+            this.checkBox_s2.Text = "SHIFT";
+            this.toolTip1.SetToolTip(this.checkBox_s2, "Restart to take effect");
+            this.checkBox_s2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_c2
+            // 
+            this.checkBox_c2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox_c2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_c2.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_c2.Location = new System.Drawing.Point(11, 19);
+            this.checkBox_c2.Name = "checkBox_c2";
+            this.checkBox_c2.Size = new System.Drawing.Size(72, 24);
+            this.checkBox_c2.TabIndex = 24;
+            this.checkBox_c2.Text = "CTRL";
+            this.toolTip1.SetToolTip(this.checkBox_c2, "Restart to take effect");
+            this.checkBox_c2.UseVisualStyleBackColor = true;
             // 
             // tabControl1
             // 
@@ -504,6 +571,19 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "HotKeys";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.checkBox_w2);
+            this.panel1.Controls.Add(this.textBox_hot2);
+            this.panel1.Controls.Add(this.checkBox_a2);
+            this.panel1.Controls.Add(this.checkBox_s2);
+            this.panel1.Controls.Add(this.checkBox_c2);
+            this.panel1.Location = new System.Drawing.Point(31, 173);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(366, 63);
+            this.panel1.TabIndex = 25;
+            this.panel1.Visible = false;
+            // 
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.DarkBlue;
@@ -562,86 +642,6 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Colum search";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.checkBox_w2);
-            this.panel1.Controls.Add(this.textBox_hot2);
-            this.panel1.Controls.Add(this.checkBox_a2);
-            this.panel1.Controls.Add(this.checkBox_s2);
-            this.panel1.Controls.Add(this.checkBox_c2);
-            this.panel1.Location = new System.Drawing.Point(31, 173);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(366, 63);
-            this.panel1.TabIndex = 25;
-            this.panel1.Visible = false;
-            // 
-            // checkBox_w2
-            // 
-            this.checkBox_w2.Checked = true;
-            this.checkBox_w2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_w2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_w2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_w2.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_w2.Location = new System.Drawing.Point(245, 19);
-            this.checkBox_w2.Name = "checkBox_w2";
-            this.checkBox_w2.Size = new System.Drawing.Size(60, 24);
-            this.checkBox_w2.TabIndex = 28;
-            this.checkBox_w2.Text = "WIN";
-            this.toolTip1.SetToolTip(this.checkBox_w2, "Restart to take effect");
-            this.checkBox_w2.UseVisualStyleBackColor = true;
-            // 
-            // textBox_hot2
-            // 
-            this.textBox_hot2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBox_hot2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_hot2.Location = new System.Drawing.Point(322, 18);
-            this.textBox_hot2.MaxLength = 1;
-            this.textBox_hot2.Name = "textBox_hot2";
-            this.textBox_hot2.Size = new System.Drawing.Size(33, 27);
-            this.textBox_hot2.TabIndex = 27;
-            this.textBox_hot2.Text = "Y";
-            this.textBox_hot2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.toolTip1.SetToolTip(this.textBox_hot2, "Restart to take effect");
-            // 
-            // checkBox_a2
-            // 
-            this.checkBox_a2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_a2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_a2.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_a2.Location = new System.Drawing.Point(180, 19);
-            this.checkBox_a2.Name = "checkBox_a2";
-            this.checkBox_a2.Size = new System.Drawing.Size(59, 24);
-            this.checkBox_a2.TabIndex = 26;
-            this.checkBox_a2.Text = "ALT";
-            this.toolTip1.SetToolTip(this.checkBox_a2, "Restart to take effect");
-            this.checkBox_a2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_s2
-            // 
-            this.checkBox_s2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_s2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_s2.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_s2.Location = new System.Drawing.Point(98, 19);
-            this.checkBox_s2.Name = "checkBox_s2";
-            this.checkBox_s2.Size = new System.Drawing.Size(76, 24);
-            this.checkBox_s2.TabIndex = 25;
-            this.checkBox_s2.Text = "SHIFT";
-            this.toolTip1.SetToolTip(this.checkBox_s2, "Restart to take effect");
-            this.checkBox_s2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_c2
-            // 
-            this.checkBox_c2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_c2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_c2.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_c2.Location = new System.Drawing.Point(11, 19);
-            this.checkBox_c2.Name = "checkBox_c2";
-            this.checkBox_c2.Size = new System.Drawing.Size(72, 24);
-            this.checkBox_c2.TabIndex = 24;
-            this.checkBox_c2.Text = "CTRL";
-            this.toolTip1.SetToolTip(this.checkBox_c2, "Restart to take effect");
-            this.checkBox_c2.UseVisualStyleBackColor = true;
-            // 
             // settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -663,10 +663,10 @@
             this.tabPage4.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }

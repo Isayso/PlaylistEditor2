@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,8 +100,6 @@ namespace PlaylistEditor
         {
             _youtube = new YoutubeClient();
 
-
-
             try
             {
                 // Enter busy state
@@ -167,14 +166,12 @@ namespace PlaylistEditor
 
         public static async Task DownloadStream(string videoId, string NewPath, int height = 2)
         {
-
             _youtube = new YoutubeClient();
             var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
 
 
             try
             {
-
                 // Get stream manifest
                 var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
 
@@ -197,17 +194,35 @@ namespace PlaylistEditor
                 var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo };
 
                 VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
-                videoTitle = (VideoInfo.Title + ".mp4").Replace("/", "");
+                videoTitle = (NewPath + "\\" + VideoInfo.Title + ".mp4").Replace("/", "").Replace("\"", "");
 
+                if (ClassHelp.MyFileExists(videoTitle, 3000))
+                {
+                    switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
+                    {
+                        case DialogResult.Yes:
+                            // Download and process them into one file
+                            await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
+                            break;
 
-                // Download and process them into one file
-                await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
+                        case DialogResult.No:
+                          //  return "error";
+                            break;
+                    }
+                }
+                else
+                {
+                    // Download and process them into one file
+                    await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
+
+                }
+
 
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                MessageBox.Show("error " + ex.Message, "Stream Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+                MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Stream Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                videoTitle = "error";
             }
 
         }
