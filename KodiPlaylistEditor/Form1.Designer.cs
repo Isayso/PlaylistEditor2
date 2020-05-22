@@ -340,7 +340,6 @@
             // comboBox_video
             // 
             this.comboBox_video.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_video.Enabled = false;
             this.comboBox_video.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox_video.FormattingEnabled = true;
             this.comboBox_video.Items.AddRange(new object[] {
@@ -349,7 +348,7 @@
             "novideo"});
             this.comboBox_video.Location = new System.Drawing.Point(24, 70);
             this.comboBox_video.Name = "comboBox_video";
-            this.comboBox_video.Size = new System.Drawing.Size(77, 28);
+            this.comboBox_video.Size = new System.Drawing.Size(88, 28);
             this.comboBox_video.TabIndex = 53;
             this.toolTip1.SetToolTip(this.comboBox_video, "youtube-dl option");
             this.comboBox_video.Click += new System.EventHandler(this.ComboBox_Click);
@@ -365,9 +364,9 @@
             "m4a",
             "aac",
             "ogg"});
-            this.comboBox_audio.Location = new System.Drawing.Point(115, 70);
+            this.comboBox_audio.Location = new System.Drawing.Point(123, 70);
             this.comboBox_audio.Name = "comboBox_audio";
-            this.comboBox_audio.Size = new System.Drawing.Size(77, 28);
+            this.comboBox_audio.Size = new System.Drawing.Size(88, 28);
             this.comboBox_audio.TabIndex = 54;
             this.toolTip1.SetToolTip(this.comboBox_audio, "youtube-dl option");
             this.comboBox_audio.Click += new System.EventHandler(this.ComboBox_Click);
@@ -432,7 +431,7 @@
             this.button_cancel.Location = new System.Drawing.Point(83, 139);
             this.button_cancel.Margin = new System.Windows.Forms.Padding(0);
             this.button_cancel.Name = "button_cancel";
-            this.button_cancel.Size = new System.Drawing.Size(113, 37);
+            this.button_cancel.Size = new System.Drawing.Size(114, 46);
             this.button_cancel.TabIndex = 59;
             this.toolTip1.SetToolTip(this.button_cancel, "cancel");
             this.button_cancel.UseVisualStyleBackColor = true;
@@ -683,7 +682,7 @@
             this.button_download_start.Location = new System.Drawing.Point(228, 139);
             this.button_download_start.Margin = new System.Windows.Forms.Padding(0);
             this.button_download_start.Name = "button_download_start";
-            this.button_download_start.Size = new System.Drawing.Size(107, 37);
+            this.button_download_start.Size = new System.Drawing.Size(107, 46);
             this.button_download_start.TabIndex = 65;
             this.toolTip1.SetToolTip(this.button_download_start, "download YT video\r\n");
             this.button_download_start.UseVisualStyleBackColor = true;
@@ -735,7 +734,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(35, 47);
+            this.label7.Location = new System.Drawing.Point(27, 47);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(48, 20);
             this.label7.TabIndex = 70;
@@ -749,7 +748,7 @@
             this.checkBox_rlink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_rlink.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox_rlink.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_rlink.Location = new System.Drawing.Point(213, 70);
+            this.checkBox_rlink.Location = new System.Drawing.Point(227, 70);
             this.checkBox_rlink.Name = "checkBox_rlink";
             this.checkBox_rlink.Size = new System.Drawing.Size(160, 24);
             this.checkBox_rlink.TabIndex = 58;

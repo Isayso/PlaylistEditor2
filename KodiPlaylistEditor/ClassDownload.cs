@@ -178,7 +178,7 @@ namespace PlaylistEditor
             int maxres = Settings.Default.maxres;  //-> SetVideoQuality
             int cvideo = Settings.Default.combovideo; //-> SetFileContainer .mp4 | .webm
 
-            Task.Run(async () => { await ClassYTExplode.DownloadStream(videolink, NewPath, maxres); }).Wait();  //-> videoUrlnew   audioUrl 
+            Task.Run(async () => { await ClassYTExplode.DownloadStream(videolink, NewPath, maxres, cvideo); }).Wait();  //-> videoUrlnew   audioUrl 
 
             Cursor.Current = Cursors.Default;
 

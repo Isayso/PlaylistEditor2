@@ -89,9 +89,9 @@ namespace PlaylistEditor
                     extension = Container.WebM;
                     break;
 
-                case 2:
-                    extension = Container.Tgpp;
-                    break;
+                //case 2:
+                //    extension = Container.Tgpp;
+                //    break;
             }
             return extension;
         }
@@ -164,65 +164,138 @@ namespace PlaylistEditor
             }
         }
 
-        public static async Task DownloadStream(string videoId, string NewPath, int height = 2)
+        public static async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext=0)
         {
             _youtube = new YoutubeClient();
             var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
 
-
-            try
+            if (fileext < 2)
             {
-                // Get stream manifest
-                var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
-
-                // Select audio stream
-                var audioStreamInfo = streamManifest.GetAudio().WithHighestBitrate();
-
-                // Select video stream
-                //  var videoStreamInfo = streamManifest.GetVideo().FirstOrDefault(s => s.VideoQualityLabel == "1080p60");
-                var videoStreamInfo = streamManifest.GetVideoOnly()
-                  .FirstOrDefault(s => s.VideoQuality <= SetVideoQuality(height));
-
-                //var videoStreamInfo = streamManifest.GetVideoOnly()
-                //                      .Where(s => s.VideoQuality <= ClassHelp.SetVideoQuality(height))
-                //                      .Where(t => t.Container == Container.Mp4)
-                //                      .Select(h => h.Url).ToList();
-                //  var test = streamManifest.get
-
-
-                // Combine them into a collection
-                var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo };
-
-                VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
-                videoTitle = (NewPath + "\\" + VideoInfo.Title + ".mp4").Replace("/", "").Replace("\"", "");
-
-                if (ClassHelp.MyFileExists(videoTitle, 3000))
+                try
                 {
-                    switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
+                    string[] filetype = { "mp4", "webm" };
+
+                    // Get stream manifest
+                    var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
+
+                    // Select audio stream
+                    var audioStreamInfo = streamManifest.GetAudio().WithHighestBitrate();
+
+                    // Select video stream
+                    //  var videoStreamInfo = streamManifest.GetVideo().FirstOrDefault(s => s.VideoQualityLabel == "1080p60");
+                    //var videoStreamInfo = streamManifest.GetVideoOnly()
+                    //  .FirstOrDefault(s => s.VideoQuality <= SetVideoQuality(height));
+
+                    var videoStreamInfo2 = streamManifest.GetVideoOnly()
+                                          .Where(s => s.VideoQuality <= SetVideoQuality(height))
+                                          .Where(t => t.Container == SetFileContainer(fileext))
+                                         // .Select(h => h.Url).ToList();
+                                         .First()
+                                          ;
+
+                    // Combine them into a collection
+                    var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
+
+                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
+                    videoTitle = (NewPath + "\\" + VideoInfo.Title + "." + filetype[fileext]/*".mp4"*/).Replace("/", "").Replace("\"", "");
+
+                    if (ClassHelp.MyFileExists(videoTitle, 3000))
                     {
-                        case DialogResult.Yes:
-                            // Download and process them into one file
-                            await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
-                            break;
+                        switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
+                        {
+                            case DialogResult.Yes:
+                                // Download and process them into one file
+                                await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext]);
+                                break;
 
-                        case DialogResult.No:
-                          //  return "error";
-                            break;
+                            case DialogResult.No:
+                                //  return "error";
+                                break;
+                        }
                     }
-                }
-                else
-                {
-                    // Download and process them into one file
-                    await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
+                    else
+                    {
+                        // Download and process them into one file
+                        await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext]);
 
+                    }
+
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Video Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    videoTitle = "error";
                 }
 
 
             }
-            catch (Exception e)
+
+            else  //audio only
             {
-                MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Stream Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                videoTitle = "error";
+                try
+                {
+                    //VideoOnlyStreamInfo videoStreamInfo2 = null;
+
+                    //// Get stream manifest
+                    //var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
+
+                    //// Select audio stream
+                    //var audioStreamInfo = streamManifest.GetAudio().WithHighestBitrate();
+                    //var audioStreamInfo2 = streamManifest.GetAudio().WithHighestBitrate().ToString();
+
+                    //// Select video stream
+                    ////  var videoStreamInfo = streamManifest.GetVideo().FirstOrDefault(s => s.VideoQualityLabel == "1080p60");
+                    //var videoStreamInfo = streamManifest.GetVideoOnly()
+                    //  .FirstOrDefault(s => s.VideoQuality <= SetVideoQuality(height));
+
+                    //videoStreamInfo2 = streamManifest.GetVideoOnly()
+                    //                      .Where(s => s.VideoQuality <= SetVideoQuality(height))
+                    //                      .Where(t => t.Container == SetFileContainer(fileext))
+                    //                     // .Select(h => h.Url).ToList();
+                    //                     .First()
+                    //                      ;
+
+                    //// Combine them into a collection
+                    //var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
+
+                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
+                   // videoTitle = (NewPath + "\\" + VideoInfo.Title + ".mp4").Replace("/", "").Replace("\"", "");
+                    videoTitle = (NewPath + "\\" + VideoInfo.Title + ".mp3").Replace("/", "").Replace("\"", "");
+
+                    if (ClassHelp.MyFileExists(videoTitle, 3000))
+                    {
+                        switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
+                        {
+                            case DialogResult.Yes:
+                                // Download and process them into one file
+                              //  await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
+                              //  await converter.DownloadVideoAsync(audioStreamInfo2, videoTitle);
+                                await converter.DownloadVideoAsync(videoId, videoTitle);
+                                break;
+
+                            case DialogResult.No:
+                                //  return "error";
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        // Download and process them into one file
+                        //  await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
+                        await converter.DownloadVideoAsync(videoId, videoTitle);
+
+                    }
+
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Audio Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    videoTitle = "error";
+                }
+
+
             }
 
         }
