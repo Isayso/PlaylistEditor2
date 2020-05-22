@@ -181,6 +181,10 @@ namespace PlaylistEditor
                     // Select audio stream
                     var audioStreamInfo = streamManifest.GetAudio().WithHighestBitrate();
 
+        /*            { 327, new ItagDescriptor(Container.WebM, AudioEncoding.Aac, null, null)},
+        { 338, new ItagDescriptor(Container.WebM, AudioEncoding.Opus, null, null)},
+        { 339, new ItagDescriptor(Container.WebM, AudioEncoding.Vorbis, null, null)}
+        */
                     // Select video stream
                     //  var videoStreamInfo = streamManifest.GetVideo().FirstOrDefault(s => s.VideoQualityLabel == "1080p60");
                     //var videoStreamInfo = streamManifest.GetVideoOnly()
@@ -197,7 +201,7 @@ namespace PlaylistEditor
                     var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
 
                     VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
-                    videoTitle = (NewPath + "\\" + VideoInfo.Title + "." + filetype[fileext]/*".mp4"*/).Replace("/", "").Replace("\"", "");
+                    videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + "." + filetype[fileext];
 
                     if (ClassHelp.MyFileExists(videoTitle, 3000))
                     {
@@ -235,33 +239,9 @@ namespace PlaylistEditor
             {
                 try
                 {
-                    //VideoOnlyStreamInfo videoStreamInfo2 = null;
-
-                    //// Get stream manifest
-                    //var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
-
-                    //// Select audio stream
-                    //var audioStreamInfo = streamManifest.GetAudio().WithHighestBitrate();
-                    //var audioStreamInfo2 = streamManifest.GetAudio().WithHighestBitrate().ToString();
-
-                    //// Select video stream
-                    ////  var videoStreamInfo = streamManifest.GetVideo().FirstOrDefault(s => s.VideoQualityLabel == "1080p60");
-                    //var videoStreamInfo = streamManifest.GetVideoOnly()
-                    //  .FirstOrDefault(s => s.VideoQuality <= SetVideoQuality(height));
-
-                    //videoStreamInfo2 = streamManifest.GetVideoOnly()
-                    //                      .Where(s => s.VideoQuality <= SetVideoQuality(height))
-                    //                      .Where(t => t.Container == SetFileContainer(fileext))
-                    //                     // .Select(h => h.Url).ToList();
-                    //                     .First()
-                    //                      ;
-
-                    //// Combine them into a collection
-                    //var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
 
                     VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
-                   // videoTitle = (NewPath + "\\" + VideoInfo.Title + ".mp4").Replace("/", "").Replace("\"", "");
-                    videoTitle = (NewPath + "\\" + VideoInfo.Title + ".mp3").Replace("/", "").Replace("\"", "");
+                    videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + ".mp3";
 
                     if (ClassHelp.MyFileExists(videoTitle, 3000))
                     {
@@ -269,8 +249,6 @@ namespace PlaylistEditor
                         {
                             case DialogResult.Yes:
                                 // Download and process them into one file
-                              //  await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
-                              //  await converter.DownloadVideoAsync(audioStreamInfo2, videoTitle);
                                 await converter.DownloadVideoAsync(videoId, videoTitle);
                                 break;
 
@@ -282,7 +260,6 @@ namespace PlaylistEditor
                     else
                     {
                         // Download and process them into one file
-                        //  await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, "mp4");
                         await converter.DownloadVideoAsync(videoId, videoTitle);
 
                     }
@@ -300,6 +277,11 @@ namespace PlaylistEditor
 
         }
 
+
+        private static string RemoveSpecialCharacters(string path)
+        {
+            return Path.GetInvalidFileNameChars().Aggregate(path, (current, c) => current.Replace(c.ToString(), string.Empty));
+        }
 
 
 
