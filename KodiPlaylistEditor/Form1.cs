@@ -2221,6 +2221,8 @@ namespace PlaylistEditor
                 button_download.BackgroundImage = Resources.download_outline_green;
                 panel1.Visible = true;
                 button_cancel.Visible = true;
+                button_download.Visible = true;
+
             }
         }
 

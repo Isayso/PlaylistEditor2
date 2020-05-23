@@ -1,0 +1,2 @@
+﻿- download button gone after cancel
+- download abortet after cancel

@@ -175,8 +175,12 @@ namespace PlaylistEditor
         {
             Cursor.Current = Cursors.WaitCursor;
 
+
             int maxres = Settings.Default.maxres;  //-> SetVideoQuality
             int cvideo = Settings.Default.combovideo; //-> SetFileContainer .mp4 | .webm
+
+            if (!CheckForFfmpeg() && maxres >= 720) return videofilename = "error";
+
 
             Task.Run(async () => { await ClassYTExplode.DownloadStream(videolink, NewPath, maxres, cvideo); }).Wait();  //-> videoUrlnew   audioUrl 
 
@@ -186,6 +190,28 @@ namespace PlaylistEditor
             return videofilename = ClassYTExplode.videoTitle;
 
         }
+
+        private static bool CheckForFfmpeg()
+        {
+            string filename = NativeMethods.GetFullPathFromWindows("ffmpeg.exe");
+
+            if (string.IsNullOrEmpty(filename))
+            {
+                filename = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\ffmpeg.exe";
+            }
+
+            if (string.IsNullOrEmpty(filename))
+            {
+                MessageBox.Show("ffmpeg not found. Please install for download of higer resolutions",
+                    "Check for ffmpeg.exe", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return false;
+
+            }
+
+            return true;
+        }
+
 
 
         /// <summary>

@@ -286,6 +286,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Changelog.txt" />
+    <Content Include="Errors.txt" />
     <Content Include="KodiPlaylistEditor.ico" />
     <Content Include="KodiPlaylistEditor2.ico" />
     <Content Include="KodiPlaylistEditor3.ico" />
