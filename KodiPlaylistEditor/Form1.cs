@@ -2206,22 +2206,21 @@ namespace PlaylistEditor
             {
                 //this.dataGridView1.Location = new Point(this.dataGridView1.Location.X, 56);
                 //this.dataGridView1.Height = 310;//def 310
-                //  button_download.Visible = true;
-                button_download.BackgroundImage = Resources.download_outline;
+                 button_download.Visible = true;
+               // button_download.BackgroundImage = Resources.download_outline;
                 button_cancel.Visible = false;
                 panel1.Visible = false;
             }
-            else
+            else  //true
             {
                 comboBox_audio.SelectedIndex = Settings.Default.comboaudio;
                 comboBox_video.SelectedIndex = Settings.Default.combovideo;
                 //this.dataGridView1.Location = new Point(this.dataGridView1.Location.X, 110);
                 //this.dataGridView1.Height = 256;//def 310
-                // button_download.Visible = false;
-                button_download.BackgroundImage = Resources.download_outline_green;
+                button_download.Visible = false;
+               // button_download.BackgroundImage = Resources.download_outline_green;
                 panel1.Visible = true;
                 button_cancel.Visible = true;
-                button_download.Visible = true;
 
             }
         }
@@ -3087,6 +3086,28 @@ namespace PlaylistEditor
             File.WriteAllLines(mruFile, mruItems);  //overwrite
             button_revert.Visible = true;
             panel2.Visible = false;
+        }
+
+        private void button_path_Click(object sender, EventArgs e)
+        {
+            DialogResult result = folderBrowserDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+
+                output = folderBrowserDialog.SelectedPath;
+                comboBox_download.Items.Add(output);
+
+                comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
+                Settings.Default.combodown = comboBox_download.SelectedIndex;
+                Settings.Default.Save();
+
+                //downPath = lastPath;  //NewPath to store the path
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
         }
 
 

@@ -191,25 +191,25 @@ namespace PlaylistEditor
 
         }
 
+        /// <summary>
+        /// check if ffmpeg.exe is there
+        /// </summary>
+        /// <returns></returns>
         private static bool CheckForFfmpeg()
         {
-            string filename = NativeMethods.GetFullPathFromWindows("ffmpeg.exe");
 
-            if (string.IsNullOrEmpty(filename))
+            if (!string.IsNullOrEmpty(NativeMethods.GetFullPathFromWindows("ffmpeg.exe")) ||
+              File.Exists(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\ffmpeg.exe"))
             {
-                filename = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\ffmpeg.exe";
-            }
-
-            if (string.IsNullOrEmpty(filename))
-            {
-                MessageBox.Show("ffmpeg not found. Please install for download of higer resolutions",
-                    "Check for ffmpeg.exe", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                return false;
+                return true; // File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe");
 
             }
 
-            return true;
+            MessageBox.Show("ffmpeg not found. Please install for download of higher resolutions",
+              "Check for ffmpeg.exe", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            return false;
+
         }
 
 

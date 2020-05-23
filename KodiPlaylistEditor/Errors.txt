@@ -1,2 +1,6 @@
 ﻿- download button gone after cancel
 - download abortet after cancel
+- ffmpeg check
+- ffmpeg fallback low res
+- newpath cancel performance
+- progress indicator

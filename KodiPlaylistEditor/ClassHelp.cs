@@ -413,7 +413,10 @@ namespace PlaylistEditor
 
             int maxres = Properties.Settings.Default.maxres;
 
-            Task.Run(async () => { await ClassYTExplode.PullDASH(videolink, maxres); }).Wait();
+        //    if (maxres <= 3)
+                Task.Run(async () => { await ClassYTExplode.PullDASH(videolink, maxres); }).Wait();
+            //else
+            //    Task.Run(async () => { await ClassYTExplode.PullNoDASH(videolink, maxres); }).Wait();
 
             Cursor.Current = Cursors.Default;
 

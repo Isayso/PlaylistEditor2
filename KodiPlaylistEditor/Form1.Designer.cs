@@ -350,7 +350,7 @@
             this.comboBox_video.Name = "comboBox_video";
             this.comboBox_video.Size = new System.Drawing.Size(88, 28);
             this.comboBox_video.TabIndex = 53;
-            this.toolTip1.SetToolTip(this.comboBox_video, "youtube-dl option");
+            this.toolTip1.SetToolTip(this.comboBox_video, "video type");
             this.comboBox_video.Click += new System.EventHandler(this.ComboBox_Click);
             // 
             // comboBox_audio
@@ -368,7 +368,7 @@
             this.comboBox_audio.Name = "comboBox_audio";
             this.comboBox_audio.Size = new System.Drawing.Size(88, 28);
             this.comboBox_audio.TabIndex = 54;
-            this.toolTip1.SetToolTip(this.comboBox_audio, "youtube-dl option");
+            this.toolTip1.SetToolTip(this.comboBox_audio, "audio format");
             this.comboBox_audio.Click += new System.EventHandler(this.ComboBox_Click);
             // 
             // RedoButton
@@ -660,7 +660,6 @@
             this.button_path.BackColor = System.Drawing.Color.MidnightBlue;
             this.button_path.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_path.BackgroundImage")));
             this.button_path.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_path.Enabled = false;
             this.button_path.FlatAppearance.BorderSize = 0;
             this.button_path.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_path.Location = new System.Drawing.Point(356, 7);
@@ -670,6 +669,7 @@
             this.button_path.TabIndex = 69;
             this.toolTip1.SetToolTip(this.button_path, "new download path");
             this.button_path.UseVisualStyleBackColor = false;
+            this.button_path.Click += new System.EventHandler(this.button_path_Click);
             // 
             // button_download_start
             // 

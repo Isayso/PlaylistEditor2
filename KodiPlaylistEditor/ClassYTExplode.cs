@@ -15,6 +15,7 @@ namespace PlaylistEditor
     class ClassYTExplode
     {
         public static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos;
+        public static IReadOnlyList<MuxedStreamInfo> MuxedStreamInfos;
 
         public static string videoUrlnew;
         public static string videoTitle;
@@ -163,6 +164,57 @@ namespace PlaylistEditor
                 //IsProgressIndeterminate = false;
             }
         }
+
+        public static async Task PullNoDASH(string videoId, int height = 2)
+        {
+            _youtube = new YoutubeClient();
+
+            try
+            {
+
+                // Get data
+                var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
+              //  MuxedStreamInfos = streamManifest.GetMuxed().ToArray();
+                MuxedStreamInfos = streamManifest.GetMuxed()
+                    .Where(s => s.VideoQuality <= SetVideoQuality(height))
+                    .ToArray();
+                //AudioOnlyStreamInfos = streamManifest.GetAudioOnly().ToArray();
+               // VideoOnlyStreamInfos = streamManifest.GetVideoOnly().ToArray();
+                //ClosedCaptionTrackInfos = trackManifest.Tracks;
+                //var streamInfo = streamManifest
+                //                 .GetVideoOnly()
+                //                 .Where(s => s.Container == Container.Mp4)
+                //                 .WithHighestVideoQuality();
+                var testinfo = streamManifest.GetVideoOnly()
+                    //  .Where(s => s.VideoQuality <= VideoQuality.High1080)
+                    .Where(s => s.VideoQuality <= SetVideoQuality(height))
+                    .Where(t => t.Container == Container.Mp4)
+                    .Select(h => h.Url).ToList();
+
+                videoUrlnew = testinfo[0];
+
+                var streamInfoA = streamManifest.GetAudioOnly().WithHighestBitrate();
+
+                audioUrl = streamInfoA.Url;
+
+            }
+            catch (Exception e)
+            {
+                //#if DEBUG
+                MessageBox.Show("Get DASH Arguments failed. " + e.Message, "Get DASH Arguments", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //#endif
+
+            }
+
+            finally
+            {
+                // Exit busy state
+                //IsBusy = false;
+                //IsProgressIndeterminate = false;
+            }
+        }
+
+
 
         public static async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext=0)
         {
