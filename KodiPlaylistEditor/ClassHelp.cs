@@ -27,11 +27,29 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YoutubeExplode;
+using YoutubeExplode.Videos;
+using YoutubeExplode.Videos.Streams;
 
 namespace PlaylistEditor
 {
     static class ClassHelp
     {
+      //  private static bool _isBusy;
+       // private static Video _video;
+     //   private static IReadOnlyList<MuxedStreamInfo> _muxedStreamInfos;
+     //   private static IReadOnlyList<AudioOnlyStreamInfo> _audioOnlyStreamInfos;
+      //  private static IReadOnlyList<VideoOnlyStreamInfo> _videoOnlyStreamInfos;
+     //   private static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos;
+        // private static IReadOnlyList<ClosedCaptionTrackInfo>? _closedCaptionTrackInfos;
+      //  private static string videoUrlnew;
+       // private static string videoTitle;
+        //private static string audioUrl;
+        //private static Video VideoInfo;
+
+     //   private static YoutubeClient _youtube;
+
+
 
         /// <summary>
         /// detects if fietype is video or IPTV
@@ -172,7 +190,25 @@ namespace PlaylistEditor
             return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
         }
 
-        
+
+        public static string GetTitle_client(string url)
+        {
+            // https://stackoverflow.com/questions/329307/how-to-get-website-title-from-c-sharp
+           // var youtube = new YoutubeClient();
+
+
+            ClassYTExplode.VideoInfo = null;
+
+            Task.Run(async () => { await ClassYTExplode.PullInfo(url); }).Wait();
+
+            if (string.IsNullOrEmpty(ClassYTExplode.videoTitle))
+                return "N/A";
+            else
+                return ClassYTExplode.videoTitle;
+        }
+
+
+
 
 
         //public static string GetTitle_html(string link)
@@ -275,71 +311,124 @@ namespace PlaylistEditor
         /// </summary>
         /// <param name="videolink"></param>
         /// <returns>command line arg or false if no DASH avaliable</returns>
-        public static string GetVlcDashArg(string videolink)
+        //public static string GetVlcDashArg(string videolink)
+        //{
+        //    string[] height = { "2160", "1440", "1080", "720", "480", "360" };
+           
+        //    int maxres = Properties.Settings.Default.maxres;
+           
+        //    string videoUrl = "";
+
+        // //   PullData(videolink);
+
+        //    // vlc "https://video.stream" --input-slave="https://audio.stream"
+
+        //    string filename = NativeMethods.GetFullPathFromWindows("youtube-dl.exe");
+
+        //    if (string.IsNullOrEmpty(filename))
+        //    {
+        //        filename = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
+        //    }
+
+
+
+        //    // Set cursor as hourglass
+        //    Cursor.Current = Cursors.WaitCursor;
+
+        //    //no cmd window
+        //    ProcessStartInfo ps = new ProcessStartInfo();
+        //    ps.FileName = filename;// Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
+        //    ps.ErrorDialog = false;
+        //    //ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]\" -g " + videolink;  //-f "bestvideo[height<=720]" -g 2FcRM-p4koo
+        //    // ps.Arguments = "-f bestaudio -g " + videolink;
+        //    // error keys with -  -> -- seperator
+        //    ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]+bestaudio\" -g -- " + videolink;  //-f "bestvideo[height<=720]+bestaudio" -g 2FcRM-p4koo
+
+        //    ps.CreateNoWindow = true; // comment this out
+        //    ps.UseShellExecute = false; // true
+        //    ps.RedirectStandardOutput = true; // false
+        //    ps.EnvironmentVariables.Add("VARIABLE1", "1");
+        //    ps.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; // comment this out
+
+        //    using (Process proc = new Process())
+        //    {
+        //        proc.StartInfo = ps;
+        //        //proc.Exited += new EventHandler(proc_Exited);
+        //        //proc.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(proc_OutputDataReceived);
+        //        proc.Start();
+        //        StreamReader sr = proc.StandardOutput;
+        //        videoUrl = sr.ReadToEnd();
+        //        proc.WaitForExit();
+        //        //proc.BeginOutputReadLine(); // Comment this out
+        //    }
+
+        //    // Set cursor as default arrow
+        //    Cursor.Current = Cursors.Default;
+
+        //    if (string.IsNullOrEmpty(videoUrl)) return "false";  //sumtingwong
+        //    else if (videoUrl.Contains("manifest")) return "nodash";  //no dash
+
+        //    //   string[] splitUrl = videoUrl.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+        //    string[] splitUrl = videoUrl.Split(new[] { "\r\n", "\r", "\n" },StringSplitOptions.None);
+
+        //    string result = splitUrl[0] + " --input-slave=" + splitUrl[1];
+
+        //    return result;  //test
+
+
+        //}
+
+        //public static bool IsBusy
+        //{
+        //    get => _isBusy;
+        //    private set
+        //    {
+        //        Set(ref _isBusy, value);
+        //        PullDataCommand.RaiseCanExecuteChanged();
+        //        DownloadStreamCommand.RaiseCanExecuteChanged();
+        //    }
+        //}
+
+        //public static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos
+        //{
+        //    get => _videoOnlyStreamInfos;
+        //    private set
+        //    {
+        //        Set(ref _videoOnlyStreamInfos, value);
+        //        RaisePropertyChanged(nameof(IsDataAvailable));
+        //    }
+        //}
+
+
+
+
+
+        public static string GetVlcDashArg2(string videolink)
         {
-            string[] height = { "2160", "1440", "1080", "720", "480", "360" };
-           
-            int maxres = Properties.Settings.Default.maxres;
-           
-            string videoUrl = "";
+            // var youtube = new YoutubeClient();
 
-            // vlc "https://video.stream" --input-slave="https://audio.stream"
-
-            string filename = NativeMethods.GetFullPathFromWindows("youtube-dl.exe");
-
-            if (string.IsNullOrEmpty(filename))
-            {
-                filename = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
-            }
-
-
-
-            // Set cursor as hourglass
+            //  string[] height = { "2160", "1440", "1080", "720", "480", "360" };
             Cursor.Current = Cursors.WaitCursor;
 
-            //no cmd window
-            ProcessStartInfo ps = new ProcessStartInfo();
-            ps.FileName = filename;// Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
-            ps.ErrorDialog = false;
-            //ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]\" -g " + videolink;  //-f "bestvideo[height<=720]" -g 2FcRM-p4koo
-            // ps.Arguments = "-f bestaudio -g " + videolink;
-            // error keys with -  -> -- seperator
-            ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]+bestaudio\" -g -- " + videolink;  //-f "bestvideo[height<=720]+bestaudio" -g 2FcRM-p4koo
+            int maxres = Properties.Settings.Default.maxres;
 
-            ps.CreateNoWindow = true; // comment this out
-            ps.UseShellExecute = false; // true
-            ps.RedirectStandardOutput = true; // false
-            ps.EnvironmentVariables.Add("VARIABLE1", "1");
-            ps.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; // comment this out
+        //    if (maxres <= 3)
+                Task.Run(async () => { await ClassYTExplode.PullDASH(videolink, maxres); }).Wait();
+            //else
+            //    Task.Run(async () => { await ClassYTExplode.PullNoDASH(videolink, maxres); }).Wait();
 
-            using (Process proc = new Process())
-            {
-                proc.StartInfo = ps;
-                //proc.Exited += new EventHandler(proc_Exited);
-                //proc.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(proc_OutputDataReceived);
-                proc.Start();
-                StreamReader sr = proc.StandardOutput;
-                videoUrl = sr.ReadToEnd();
-                proc.WaitForExit();
-                //proc.BeginOutputReadLine(); // Comment this out
-            }
-
-            // Set cursor as default arrow
             Cursor.Current = Cursors.Default;
 
-            if (string.IsNullOrEmpty(videoUrl)) return "false";  //sumtingwong
-            else if (videoUrl.Contains("manifest")) return "nodash";  //no dash
 
-            //   string[] splitUrl = videoUrl.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-
-            string[] splitUrl = videoUrl.Split(new[] { "\r\n", "\r", "\n" },StringSplitOptions.None);
-
-            string result = splitUrl[0] + " --input-slave=" + splitUrl[1];
-
-            return result;  //test
-
+            if (string.IsNullOrEmpty(ClassYTExplode.videoUrlnew))
+                return "false";
+            else
+                return ClassYTExplode.videoUrlnew + " --input-slave=" + ClassYTExplode.audioUrl;
 
         }
+
+
 
         /// <summary>
         /// runs vlc with commandline args

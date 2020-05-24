@@ -1,4 +1,9 @@
-﻿2.1.4
+﻿2.2.0
+- switch to YotubeExplode instead youtube-dl
+- .Net 4.8
+- youtube-dl code removed clean up
+
+2.1.4
 -  --no-qt-error-dialogs
 - bugfix youtube link variants
 - fallback for missing DASH links

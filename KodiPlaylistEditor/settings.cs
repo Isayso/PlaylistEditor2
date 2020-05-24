@@ -39,7 +39,7 @@ namespace PlaylistEditor
         static char character2 = (char)unicode2;
         string hotText = character.ToString();
         string hotText2 = character2.ToString();
-        bool _youtube_dl = false; // File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe");
+     //   bool _youtube_dl = false; // File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe");
 
 
 
@@ -87,16 +87,17 @@ namespace PlaylistEditor
             //    if (string.IsNullOrEmpty(vlcpath)) tabPage4.Visible = false; //no vlc installed
             //}
 
-            _youtube_dl = ClassHelp.YT_dl();
+           // _youtube_dl = ClassHelp.YT_dl();
+            button_update.Visible = false;
 
-            if (_youtube_dl)
-            {
-                button_update.Visible = true;
-            }
-            else
-            {
-                button_update.Visible = false;
-            }
+            //if (_youtube_dl)
+            //{
+            //    button_update.Visible = true;
+            //}
+            //else
+            //{
+            //    button_update.Visible = false;
+            //}
 
 
 
@@ -109,7 +110,7 @@ namespace PlaylistEditor
            
 
             checkBox3.Checked = Settings.Default.useDash;
-            if (!_youtube_dl) checkBox3.Checked = false;
+         //   if (!_youtube_dl) checkBox3.Checked = false;
             checkBox2.Checked = Settings.Default.replaceDrive;
           //  checkBox_verb.Checked = Properties.Settings.Default.verbose;
 
@@ -310,16 +311,15 @@ namespace PlaylistEditor
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            
-            if (!_youtube_dl) checkBox3.Checked = false;
+
         }
 
 
-      
 
-     
-     
-      
+
+
+
+
 
         private void button_edit_Click(object sender, EventArgs e)
         {

@@ -48,7 +48,7 @@ using System.Windows.Forms;
 
 //BUG  vlc error with # in name play over nfs
 
-    //todo translate to nfs path on import
+//todo translate to nfs path on import
 
 
 
@@ -72,7 +72,7 @@ namespace PlaylistEditor
 
         bool isModified = false;
 
-       // private bool doubleClick = false;
+        // private bool doubleClick = false;
 
         //zoom of fonts
         public float zoomf = 1;
@@ -115,7 +115,7 @@ namespace PlaylistEditor
         public bool _taglink = false;
         public bool _vlcfound = false;
         public bool _savenow = false;
-        bool _youtube_dl = false;
+    //    bool _youtube_dl = false;
         public bool _mark = false;
 
         string vlcpath = Settings.Default.vlcpath;
@@ -147,10 +147,10 @@ namespace PlaylistEditor
             if (Settings.Default.cleanexit == false)
             {
                 Properties.Settings.Default.Upgrade();
-               // Settings.Default.Reset();  //if an unusual shutdown occured, reset settings
+                // Settings.Default.Reset();  //if an unusual shutdown occured, reset settings
                 ClassHelp.PopupForm("Last Settings loaded! Please control settings!", "red", 3000);
                 //  MessageBox.Show("First run or no clean application exit. Please select settings.");
-               
+
 
                 //settings s = new settings();
                 //s.ShowDialog();
@@ -175,9 +175,9 @@ namespace PlaylistEditor
 
 #endif
 
-            _youtube_dl = ClassHelp.YT_dl();
+         //   _youtube_dl = ClassHelp.YT_dl();
 
-           
+
             //if (Debugger.IsAttached)
             //   Settings.Default.Reset();
 
@@ -190,10 +190,10 @@ namespace PlaylistEditor
             comboBox_audio.SelectedIndex = Settings.Default.comboaudio;
             comboBox_video.SelectedIndex = Settings.Default.combovideo;
             checkBox_rlink.Checked = Settings.Default.replaceDrive;
-            checkBox_verb.Checked = false; // Settings.Default.verbose;
-            checkBox_subs.Checked = false;
-            checkBox_fps.Checked = false; //Frames pr sec
-            checkBox_F.Checked = false; //show formats only
+            //checkBox_verb.Checked = false; // Settings.Default.verbose;
+            //checkBox_subs.Checked = false;
+            //checkBox_fps.Checked = false; //Frames pr sec
+            //checkBox_F.Checked = false; //show formats only
 
             // dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
             //dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -240,7 +240,7 @@ namespace PlaylistEditor
             //Modifier keys codes: Alt = 1, Ctrl = 2, Shift = 4, Win = 8  must be added
             //   RegisterHotKey(this.Handle, mActionHotKeyID, 1, (int)Keys.Y);  //ALT-Y
             NativeMethods.RegisterHotKey(this.Handle, mActionHotKeyID, spec_key, hotlabel);  //ALT-Y
-            
+
             if (Settings.Default.kodi_hotkey)
                 NativeMethods.RegisterHotKey(this.Handle, mActionHotKeyID2, spec_key2, hotlabel2);  //WIN-Y
 
@@ -248,17 +248,20 @@ namespace PlaylistEditor
             plabel_Filename.Text = "";
             button_revert.Visible = false;
             button_cancel.Visible = false;
+            downloadYTFileToolStripMenuItem.Visible = true;
+            button_download.Visible = true;
 
-            if (_youtube_dl)
-            {
-                button_download.Visible = true;
-                downloadYTFileToolStripMenuItem.Visible = true;
-            }
-            else
-            {
-                // button_download.Visible = false;
-                downloadYTFileToolStripMenuItem.Visible = false;
-            }
+
+            //if (_youtube_dl)
+            //{
+            //    button_download.Visible = true;
+            //    downloadYTFileToolStripMenuItem.Visible = true;
+            //}
+            //else
+            //{
+            //    // button_download.Visible = false;
+            //    downloadYTFileToolStripMenuItem.Visible = false;
+            //}
 
             _vlcfound = !string.IsNullOrEmpty(vlcpath) ? true : false;
 
@@ -313,7 +316,7 @@ namespace PlaylistEditor
                 // copy to clipboard -> crtl-y -> youtube url -> parse titel from url -> cut strings -> add line -> add entries
                 //get from clipboard
                 //detect wich app has focus, send ctrl-c
-                
+
                 //Process[] local = Process.GetProcessesByName("vivaldi");
                 //if (local.Length > 0)
                 //{
@@ -328,7 +331,7 @@ namespace PlaylistEditor
                 //        MessageBox.Show(Clipboard.GetText());
                 //    }
                 //}
- 
+
                 //if (ClassHelp.ActivateApp("Vivaldi"))
                 //{
                 //    //SendKeys.SendWait("^(a)");
@@ -338,16 +341,16 @@ namespace PlaylistEditor
                 //    //    MessageBox.Show(Clipboard.GetText());
                 //    //}
                 //}
-                    
-                
+
+
 
 
                 IDataObject yLink = Clipboard.GetDataObject();
 
                 string yt_Link = (String)yLink.GetData(DataFormats.Text);
 
-               // if (string.IsNullOrEmpty(yt_Link)) return; //clipboard empty Goodbye
-                if (string.IsNullOrEmpty(yt_Link) || yt_Link.Contains("search_query=")) return ; //clipboard empty Goodbye
+                // if (string.IsNullOrEmpty(yt_Link)) return; //clipboard empty Goodbye
+                if (string.IsNullOrEmpty(yt_Link) || yt_Link.Contains("search_query=")) return; //clipboard empty Goodbye
 
 
                 // possible YT links:
@@ -435,7 +438,8 @@ namespace PlaylistEditor
                         }
                         // var url = (String)yt_Link.GetData(DataFormats.Text);
                         // string name = ClassHelp.GetTitle(url);
-                        string name = ClassHelp.GetTitle_html(url);
+                        //  string name = ClassHelp.GetTitle_html(url);
+                        string name = ClassHelp.GetTitle_client(url);  //new client
                         //  if (string.IsNullOrEmpty(name)) name = ClassHelp.GetTitle_new(yUrl_search);
                         //string name = GetTitle(yUrl);
 #if DEBUG
@@ -477,7 +481,7 @@ namespace PlaylistEditor
                         //  MessageBox.Show("Wrong input. Use full YouTube link.");
                     }
                 }
-                else if ( (yt_Link.StartsWith("http") || yt_Link.StartsWith("\\\\") || yt_Link.Contains(@":\")) 
+                else if ((yt_Link.StartsWith("http") || yt_Link.StartsWith("\\\\") || yt_Link.Contains(@":\"))
                     && videotypes.Any(yt_Link.EndsWith))  //option http
                 {
                     var url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
@@ -499,7 +503,7 @@ namespace PlaylistEditor
                         name = url.Split('/').Last();
                         ytPluginLink = url;
                     }
-                    
+
 #if DEBUG
                     Console.WriteLine(name);
 #endif
@@ -530,7 +534,7 @@ namespace PlaylistEditor
                         toSave(true);
                     }
                 }
-                
+
 
             }
 
@@ -592,7 +596,7 @@ namespace PlaylistEditor
                 "Save Playlist", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogSave == DialogResult.Yes)
                     button_save.PerformClick();
-            
+
             }
 
             Label obj = sender as Label;
@@ -605,13 +609,13 @@ namespace PlaylistEditor
             if (obj.Name == "label4") SortMruItems(4);
             if (obj.Name == "label5") SortMruItems(5);
 
-           if (importDataset(mruItems[0], false))
+            if (importDataset(mruItems[0], false))
             {
                 File.WriteAllLines(mruFile, mruItems);  //overwrite
                 button_revert.Visible = true;
                 panel2.Visible = false;
             }
-                      
+
         }
 
         /// <summary>
@@ -641,7 +645,7 @@ namespace PlaylistEditor
                 Settings.Default.combopathlist.Add(item.ToString());
             }
 
-           
+
             Settings.Default.combodown = 0;  //to avoid false start
             Settings.Default.cleanexit = true; //clean exit
             Settings.Default.Save();
@@ -654,13 +658,13 @@ namespace PlaylistEditor
                 DialogResult dialogSave = MessageBox.Show("Do you want to save your current playlist?",
                 "Save Playlist", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogSave == DialogResult.Yes) button_save.PerformClick();
-              
+
             }
 
             File.WriteAllLines(mruFile, mruItems);  //overwrite
 
 
-          //  Application.Exit();
+            //  Application.Exit();
         }
 
 
@@ -698,7 +702,7 @@ namespace PlaylistEditor
                 //openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = false;
                 //openFileDialog1.CheckFileExists = true;
-                
+
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     if (importDataset(openFileDialog.FileName, false))
@@ -718,7 +722,7 @@ namespace PlaylistEditor
                         File.WriteAllLines(mruFile, mruItems);  //overwrite
                     }
 
-                   
+
 
                     button_revert.Visible = true;
 
@@ -793,7 +797,7 @@ namespace PlaylistEditor
             using (settings s = new settings())
             {
                 s.ShowDialog();
-            }          
+            }
 
             comboBox1.SelectedIndex = Settings.Default.maxres;
 
@@ -844,16 +848,18 @@ namespace PlaylistEditor
                     string[] key = playcell.Split('=');  //variant normal or YT playlist link
                     if (key.Length > 1)     //if link has no '='
                     {
-                        if (!useDash || !_youtube_dl)  // normal res or no youtube_dl
+                        if (!useDash /*|| !_youtube_dl*/)  // normal res or no youtube_dl
                         {
                             param = YTURL + key[1];
                         }
                         else
                         {
-                            param = ClassHelp.GetVlcDashArg(key[1]);
+                            //  param = ClassHelp.GetVlcDashArg(key[1]);
+                            param = ClassHelp.GetVlcDashArg2(key[1]);  //youtube-dl delete
 
                             if (param == "false")
                             {
+                                // return;
                                 param = YTURL + key[1];
                             }
                             if (param == "nodash")
@@ -956,13 +962,13 @@ namespace PlaylistEditor
                     }
                     continue;
                 }
-               
+
                 else if (line.Contains("//") || line.Contains("/storage") || line.Contains(":\\") || line.StartsWith("\\\\"))  //2. row after plugin
                 {
-                    if (_aimp && checkBox_unix.Checked && rDrive) 
+                    if (_aimp && checkBox_unix.Checked && rDrive)
                         data[1] = ClassHelp.ConvertAIPM(line, nfs_server);
-                    else 
-                        data[1] = line; 
+                    else
+                        data[1] = line;
                 }
                 else
                 {
@@ -980,7 +986,7 @@ namespace PlaylistEditor
                     {
                         //  MessageBox.Show("An entry has been omitted due to its incorrect format");
                         ClassHelp.PopupForm("An entry has been omitted due to its incorrect format", "red", 2000);
-                         continue;
+                        continue;
                     }
                 }
                 data.Clear();  //dataset delete
@@ -1008,7 +1014,7 @@ namespace PlaylistEditor
             return true;
         }
 
-      
+
 
         private void button_delLine_Click(object sender, EventArgs e)
         {
@@ -1107,7 +1113,7 @@ namespace PlaylistEditor
                 }
                 mruItems[0] = tmp;
 
-              
+
                 File.WriteAllLines(mruFile, mruItems);  //overwrite
 
 
@@ -1538,7 +1544,7 @@ namespace PlaylistEditor
 
                         //  if (!await ClassKodi.Run2(jLink)) continue;  //don't know exactly what I wan't to do with the bool
 
-                        _= await ClassKodi.Run(jLink);
+                        _ = await ClassKodi.Run(jLink);
 
                         Thread.Sleep(4000);  //Kodi needs a delay between Player.open and Playlist.Add, Internet speed dependent?
 
@@ -1551,7 +1557,7 @@ namespace PlaylistEditor
                     jLink = "{ \"id\":0,\"jsonrpc\":\"2.0\",\"method\":\"Playlist.Add\",\"params\": {\"item\":{\"file\":\"" + jLink + "\"},\"playlistid\":1}}";  //OK
 
                     if (!await ClassKodi.Run(jLink)) continue;
-                  
+
                     //x = await ClassKodi.Run(jLink);
                     //if (!x) break;
                 }
@@ -1565,7 +1571,7 @@ namespace PlaylistEditor
 
                 //  if (ClassHelp.PingHost(rpi_ip,22))
                 _ = await ClassKodi.Run(jLink);
-              
+
                 // if (!await ClassKodi.Run(jLink)) break;
             }
 
@@ -1577,7 +1583,7 @@ namespace PlaylistEditor
 
             string jLink;
             if (dataGridView1.SelectedRows.Count > 1)
-            {   
+            {
                 //  foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 foreach (DataGridViewRow row in dataGridView1.GetSelectedRows())  //top down
                 {
@@ -1585,7 +1591,7 @@ namespace PlaylistEditor
                     jLink = dataGridView1.Rows[row.Index].Cells[1].Value.ToString();
                     jLink = "{ \"id\":0,\"jsonrpc\":\"2.0\",\"method\":\"Playlist.Add\",\"params\": {\"item\":{\"file\":\"" + jLink + "\"},\"playlistid\":1}}";  //OK
                     if (!await ClassKodi.Run(jLink)) continue;
-                  
+
                     //x = await ClassKodi.Run(jLink);
                     //if (!x) break;
                 }
@@ -1597,7 +1603,7 @@ namespace PlaylistEditor
                 jLink = "{ \"id\":0,\"jsonrpc\":\"2.0\",\"method\":\"Playlist.Add\",\"params\": {\"item\":{\"file\":\"" + jLink + "\"},\"playlistid\":1}}";  //OK
 
                 _ = await ClassKodi.Run(jLink);
-              
+
             }
 
             // wait for OK, delay next?  Run link array
@@ -1609,16 +1615,16 @@ namespace PlaylistEditor
         private void downloadYTFileTSMenuItem_Click(object sender, EventArgs e)
         {
 
-            if (!_youtube_dl)
-            {
-                _youtube_dl = ClassHelp.YT_dl();
-                if (!_youtube_dl)
-                {
-                    ClassHelp.PopupForm("youtube_dl not found", "red", 3000);
-                    // _youtube_dl = true;
-                }
-                return;
-            }
+            //if (!_youtube_dl)
+            //{
+            //    _youtube_dl = ClassHelp.YT_dl();
+            //    if (!_youtube_dl)
+            //    {
+            //        ClassHelp.PopupForm("youtube_dl not found", "red", 3000);
+            //        // _youtube_dl = true;
+            //    }
+            //    return;
+            //}
 
             //int counter = 0;
             //dataGridView1.FirstDisplayedScrollingRowIndex = counter; //dataGridView1.Rows(counter).Index;
@@ -1632,9 +1638,9 @@ namespace PlaylistEditor
             if (ModifierKeys == Keys.Control && panel1.Visible == false)  //download with last options
             {
                 RWSettings("read"); //gets values and write
-                checkBox_verb.Checked = false;  //no verbose on accident
-                checkBox_subs.Checked = false;
-                checkBox_F.Checked = false; //no -F on accident
+                //checkBox_verb.Checked = false;  //no verbose on accident
+                //checkBox_subs.Checked = false;
+                //checkBox_F.Checked = false; //no -F on accident
 
                 if (comboBox_download.SelectedIndex > 0
                     && comboBox_download.SelectedIndex < comboBox_download.Items.Count)  //to avoid no path
@@ -1647,36 +1653,30 @@ namespace PlaylistEditor
             {
                 RWSettings("read");
 
-                checkBox_verb.Checked = false;  //no verbose on accident
-                checkBox_subs.Checked = false;
-                checkBox_F.Checked = false; //no -F on accident
+                //checkBox_verb.Checked = false;  //no verbose on accident
+                //checkBox_subs.Checked = false;
+                //checkBox_F.Checked = false; //no -F on accident
 
                 ShowPanel(true);
 
             }
 
-            else if (panel1.Visible == true)  //extended options second click
-            {
-                //read out UI
-                RWSettings("write"); //gets values and write
+            //else if (panel1.Visible == true)  //extended options second click
+            //{
+            //    //read out UI
+            //    RWSettings("write"); //gets values and write
 
-                StartDownload();
+            //    StartDownload();
 
-                //read out UI
-                // RWSettings("write"); //gets values and write
+            //    //read out UI
+            //    // RWSettings("write"); //gets values and write
 
-                ShowPanel(false);
+            //    ShowPanel(false);
 
-                UIVisible(true);
+            //    UIVisible(true);
 
-            }
+            //}
 
-            void UIVisible(bool show)
-            {
-                button_settings.Visible = show;
-                button_vlc.Visible = show;
-                button_search.Visible = show;
-            }
         }
 
 
@@ -2151,7 +2151,7 @@ namespace PlaylistEditor
                 toSave(true);
             }
 
-           
+
 
 
         }
@@ -2197,7 +2197,7 @@ namespace PlaylistEditor
         }
 
         /// <summary>
-        /// shows or hide youtube-dl option panel
+        /// shows or hide download option panel
         /// </summary>
         /// <param name="_show">true show, false hide</param>
         private void ShowPanel(bool _show)
@@ -2206,23 +2206,50 @@ namespace PlaylistEditor
             {
                 //this.dataGridView1.Location = new Point(this.dataGridView1.Location.X, 56);
                 //this.dataGridView1.Height = 310;//def 310
-                //  button_download.Visible = true;
-                button_download.BackgroundImage = Resources.download_outline;
+                 button_download.Visible = true;
+               // button_download.BackgroundImage = Resources.download_outline;
                 button_cancel.Visible = false;
                 panel1.Visible = false;
             }
-            else
+            else  //true
             {
                 comboBox_audio.SelectedIndex = Settings.Default.comboaudio;
                 comboBox_video.SelectedIndex = Settings.Default.combovideo;
                 //this.dataGridView1.Location = new Point(this.dataGridView1.Location.X, 110);
                 //this.dataGridView1.Height = 256;//def 310
-                // button_download.Visible = false;
-                button_download.BackgroundImage = Resources.download_outline_green;
+                button_download.Visible = false;
+               // button_download.BackgroundImage = Resources.download_outline_green;
                 panel1.Visible = true;
                 button_cancel.Visible = true;
+
             }
         }
+
+        private void button_download_start_Click(object sender, EventArgs e)
+        {
+            RWSettings("write"); //gets values and write
+
+            StartDownload();
+
+            //read out UI
+            // RWSettings("write"); //gets values and write
+
+            ShowPanel(false);
+
+            UIVisible(true);
+
+
+
+        }
+
+        private void UIVisible(bool show)
+        {
+            button_settings.Visible = show;
+            button_vlc.Visible = show;
+            button_search.Visible = show;
+            button_download.Visible = show;
+        }
+
 
         /// <summary>
         /// reads or writes the youtube-dl UI
@@ -2238,10 +2265,10 @@ namespace PlaylistEditor
                 comboBox_audio.SelectedIndex = Settings.Default.comboaudio;
                 comboBox_video.SelectedIndex = Settings.Default.combovideo;
                 checkBox_rlink.Checked = Settings.Default.replaceDrive;
-                checkBox_verb.Checked = Settings.Default.verbose;
-                checkBox_F.Checked = Settings.Default.showFormats;
-                checkBox_subs.Checked = Settings.Default.allsubs;
-                
+                //checkBox_verb.Checked = Settings.Default.verbose;
+                //checkBox_F.Checked = Settings.Default.showFormats;
+                //checkBox_subs.Checked = Settings.Default.allsubs;
+
             }
             else if (_rw == "read1st")
             {
@@ -2249,9 +2276,9 @@ namespace PlaylistEditor
                 comboBox_audio.SelectedIndex = Settings.Default.comboaudio;
                 comboBox_video.SelectedIndex = Settings.Default.combovideo;
                 checkBox_rlink.Checked = Settings.Default.replaceDrive;
-                checkBox_verb.Checked = Settings.Default.verbose;
-                checkBox_F.Checked = Settings.Default.showFormats;
-                checkBox_subs.Checked = Settings.Default.allsubs;
+                //checkBox_verb.Checked = Settings.Default.verbose;
+                //checkBox_F.Checked = Settings.Default.showFormats;
+                //checkBox_subs.Checked = Settings.Default.allsubs;
             }
             else if (_rw == "write")
             {
@@ -2261,10 +2288,10 @@ namespace PlaylistEditor
                 Settings.Default.combovideo = comboBox_video.SelectedIndex;
                 Settings.Default.maxres = comboBox1.SelectedIndex;
                 Settings.Default.replaceDrive = checkBox_rlink.Checked;
-                Settings.Default.fps = checkBox_fps.Checked;
-                Settings.Default.verbose = checkBox_verb.Checked;
-                Settings.Default.allsubs = checkBox_subs.Checked;
-                Settings.Default.showFormats = checkBox_F.Checked;
+                //Settings.Default.fps = checkBox_fps.Checked;
+                //Settings.Default.verbose = checkBox_verb.Checked;
+                //Settings.Default.allsubs = checkBox_subs.Checked;
+                //Settings.Default.showFormats = checkBox_F.Checked;
 
                 Settings.Default.combopathlist.Clear();
 
@@ -2283,7 +2310,7 @@ namespace PlaylistEditor
         /// </summary>
         private void StartDownload()
         {
-            if (comboBox_download.SelectedIndex <= 0 && checkBox_F.Checked == false)  //select folder new path 0 or n select -1
+            if (comboBox_download.SelectedIndex <= 0 /*&& checkBox_F.Checked == false*/)  //select folder new path 0 or n select -1
             {
                 DialogResult result = folderBrowserDialog.ShowDialog();
                 if (result == DialogResult.OK)
@@ -2534,6 +2561,7 @@ namespace PlaylistEditor
                     if (key.Length > 1)
                     {
                         if (ClassHelp.GetTitle_html(YTURL + key[1]) == "YouTube")
+                        //  if (ClassHelp.GetTitle_client(YTURL + key[1]) == "N/A")
                         {
                             for (int i = 0; i < 2; i++)
                             {
@@ -2749,8 +2777,17 @@ namespace PlaylistEditor
             bool _done = false;
             // string videofilename = "";
 
-            string fpsValue = textBox1.Text.Trim();
-            if (!fpsValue.StartsWith("<") && !fpsValue.StartsWith(">")) fpsValue = "";
+            WaitWindow waitmove = new WaitWindow();
+            waitmove.Owner = this;
+            var x = Location.X - 40 + (Width - waitmove.Width) / 2;
+            var y = Location.Y + (Height - waitmove.Height) / 2;
+            waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
+            waitmove.StartPosition = FormStartPosition.Manual;
+
+
+
+            //string fpsValue = textBox1.Text.Trim();
+            //if (!fpsValue.StartsWith("<") && !fpsValue.StartsWith(">")) fpsValue = "";
 
             //foreach (DataGridViewRow row in dataGridView1.SelectedRows)
             foreach (DataGridViewRow row in dataGridView1.GetSelectedRows())
@@ -2760,25 +2797,30 @@ namespace PlaylistEditor
 
                 playcell = dataGridView1.Rows[row.Index].Cells[1].Value.ToString();
                 //  namecell = dataGridView1.Rows[row.Index].Cells[0].Value.ToString();
+                //   ClassYTExplode.HandleProgress = new EventHandler(showProgress);
+
 
                 if (playcell.Contains("plugin") && playcell.Contains("youtube"))
                 {
                     string[] key = playcell.Split('=');  //variant normal or YT playlist link
                     if (key.Length > 1)
                     {
-                        if (!string.IsNullOrEmpty(ClassDownload.DownloadYTLink
-                                        (YTURL + key[1], downpath, fpsValue, out string videofilename)))
+                        //if (!string.IsNullOrEmpty(ClassDownload.DownloadYTLink
+                        //                (YTURL + key[1], downpath, fpsValue, out string videofilename)))
+                        if (!string.IsNullOrEmpty(ClassDownload.DownloadYTLinkEx
+                                        (YTURL + key[1], downpath, out string videofilename)))
+
                         {
-                            if (videofilename == "false") return;  //for -F flag
+                            if (videofilename == "error") continue;  //for download error -> next foreach
 
                             _done = true;
 
-                            WaitWindow waitmove = new WaitWindow();
-                            waitmove.Owner = this;
-                            var x = Location.X - 40 + (Width - waitmove.Width) / 2;
-                            var y = Location.Y + (Height - waitmove.Height) / 2;
-                            waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
-                            waitmove.StartPosition = FormStartPosition.Manual;
+                            //WaitWindow waitmove = new WaitWindow();
+                            //waitmove.Owner = this;
+                            //var x = Location.X - 40 + (Width - waitmove.Width) / 2;
+                            //var y = Location.Y + (Height - waitmove.Height) / 2;
+                            //waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
+                            //waitmove.StartPosition = FormStartPosition.Manual;
 #if DEBUG
                             Console.WriteLine(videofilename);   //
 #endif
@@ -2815,7 +2857,7 @@ namespace PlaylistEditor
                                     errorfilename = "";
                                 }
                             }
-                           // waitmove.Dispose();  
+                            // waitmove.Dispose();  
 
                             string UNCfileName = NativeMethods.UNCPath(videofilename);
 
@@ -2876,7 +2918,7 @@ namespace PlaylistEditor
                 }
                 else if (playcell.StartsWith("html"))
                 {
-                   
+
                     if (!string.IsNullOrEmpty(ClassDownload.DownloadLink
                                        (playcell, downpath, out string videofilename)))
                     {
@@ -2975,7 +3017,7 @@ namespace PlaylistEditor
             }
         }
 
-       
+
         private void panel2_VisibleChanged(object sender, EventArgs e)
         {
             //read mru
@@ -3034,7 +3076,7 @@ namespace PlaylistEditor
                 {
                     // Get the control that is displaying this context menu
                     Control sourceControl = owner.SourceControl;
-                   // MessageBox.Show(sourceControl.Name);
+                    // MessageBox.Show(sourceControl.Name);
 
                     if (sourceControl.Name == "label1") { mruItems[0] = "file1"; sourceControl.Text = "file"; }
                     if (sourceControl.Name == "label2") { mruItems[1] = "file2"; sourceControl.Text = "file"; }
@@ -3048,6 +3090,29 @@ namespace PlaylistEditor
             button_revert.Visible = true;
             panel2.Visible = false;
         }
+
+        private void button_path_Click(object sender, EventArgs e)
+        {
+            DialogResult result = folderBrowserDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+
+                output = folderBrowserDialog.SelectedPath;
+                comboBox_download.Items.Add(output);
+
+                comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
+                Settings.Default.combodown = comboBox_download.SelectedIndex;
+                Settings.Default.Save();
+
+                //downPath = lastPath;  //NewPath to store the path
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
+        }
+
 
         //private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         //{

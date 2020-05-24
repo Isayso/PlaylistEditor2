@@ -1,0 +1,7 @@
+﻿OK - download button gone after cancel
+- download abortet after cancel
+- ffmpeg check
+- ffmpeg fallback low res
+OK - newpath cancel performance
+- progress indicator
+- vlc starts after dash error

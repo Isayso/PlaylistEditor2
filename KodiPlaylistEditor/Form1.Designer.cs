@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -55,10 +55,6 @@
             this.comboBox_download = new System.Windows.Forms.ComboBox();
             this.comboBox_video = new System.Windows.Forms.ComboBox();
             this.comboBox_audio = new System.Windows.Forms.ComboBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.checkBox_fps = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.checkBox_F = new System.Windows.Forms.CheckBox();
             this.RedoButton = new System.Windows.Forms.Button();
             this.UndoButton = new System.Windows.Forms.Button();
             this.button_check = new System.Windows.Forms.Button();
@@ -76,13 +72,13 @@
             this.button_delLine = new System.Windows.Forms.Button();
             this.button_save = new System.Windows.Forms.Button();
             this.button_open = new System.Windows.Forms.Button();
-            this.buttonR_MoveDown = new RepeatingButton();
-            this.buttonR_moveUp = new RepeatingButton();
-            this.checkBox_verb = new System.Windows.Forms.CheckBox();
-            this.checkBox_subs = new System.Windows.Forms.CheckBox();
+            this.button_path = new System.Windows.Forms.Button();
+            this.button_download_start = new System.Windows.Forms.Button();
             this.textBox_find = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.checkBox_rlink = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,6 +94,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label_progress = new System.Windows.Forms.Label();
+            this.buttonR_MoveDown = new RepeatingButton();
+            this.buttonR_moveUp = new RepeatingButton();
             this.plabel_Filename = new PathLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -116,14 +115,14 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.163636F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.163636F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.Location = new System.Drawing.Point(-3, 56);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
@@ -331,10 +330,10 @@
             this.comboBox_download.ItemHeight = 20;
             this.comboBox_download.Items.AddRange(new object[] {
             "new path"});
-            this.comboBox_download.Location = new System.Drawing.Point(24, 11);
+            this.comboBox_download.Location = new System.Drawing.Point(14, 11);
             this.comboBox_download.Margin = new System.Windows.Forms.Padding(0);
             this.comboBox_download.Name = "comboBox_download";
-            this.comboBox_download.Size = new System.Drawing.Size(351, 28);
+            this.comboBox_download.Size = new System.Drawing.Size(329, 28);
             this.comboBox_download.TabIndex = 43;
             this.toolTip1.SetToolTip(this.comboBox_download, "download path");
             this.comboBox_download.Click += new System.EventHandler(this.ComboBox_Click);
@@ -345,92 +344,33 @@
             this.comboBox_video.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox_video.FormattingEnabled = true;
             this.comboBox_video.Items.AddRange(new object[] {
-            "bestvideo",
-            "bestvideo[ext!=webm]",
-            "bestvideo[ext=mp4]",
-            "bestvideo[ext=mkv]",
-            "novideo"});
-            this.comboBox_video.Location = new System.Drawing.Point(24, 88);
+            "mp4",
+            "webm",
+            "no video"});
+            this.comboBox_video.Location = new System.Drawing.Point(24, 70);
             this.comboBox_video.Name = "comboBox_video";
-            this.comboBox_video.Size = new System.Drawing.Size(203, 28);
+            this.comboBox_video.Size = new System.Drawing.Size(88, 28);
             this.comboBox_video.TabIndex = 53;
-            this.toolTip1.SetToolTip(this.comboBox_video, "youtube-dl option");
+            this.toolTip1.SetToolTip(this.comboBox_video, "video type");
             this.comboBox_video.Click += new System.EventHandler(this.ComboBox_Click);
             // 
             // comboBox_audio
             // 
             this.comboBox_audio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_audio.Enabled = false;
             this.comboBox_audio.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox_audio.FormattingEnabled = true;
             this.comboBox_audio.Items.AddRange(new object[] {
-            "bestaudio",
-            "bestaudio[ext=m4a]",
-            "bestaudio[ext=aac]",
-            "bestaudio[ext=ogg]"});
-            this.comboBox_audio.Location = new System.Drawing.Point(24, 122);
+            "auto",
+            "m4a",
+            "aac",
+            "ogg"});
+            this.comboBox_audio.Location = new System.Drawing.Point(123, 70);
             this.comboBox_audio.Name = "comboBox_audio";
-            this.comboBox_audio.Size = new System.Drawing.Size(203, 28);
+            this.comboBox_audio.Size = new System.Drawing.Size(88, 28);
             this.comboBox_audio.TabIndex = 54;
-            this.toolTip1.SetToolTip(this.comboBox_audio, "youtube-dl option");
+            this.toolTip1.SetToolTip(this.comboBox_audio, "audio format");
             this.comboBox_audio.Click += new System.EventHandler(this.ComboBox_Click);
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.LinkColor = System.Drawing.Color.Cyan;
-            this.linkLabel1.Location = new System.Drawing.Point(346, 165);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(40, 20);
-            this.linkLabel1.TabIndex = 56;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "help";
-            this.toolTip1.SetToolTip(this.linkLabel1, "youtube-dl url");
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
-            // checkBox_fps
-            // 
-            this.checkBox_fps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox_fps.Checked = true;
-            this.checkBox_fps.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_fps.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_fps.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_fps.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_fps.Location = new System.Drawing.Point(214, 165);
-            this.checkBox_fps.Name = "checkBox_fps";
-            this.checkBox_fps.Size = new System.Drawing.Size(110, 24);
-            this.checkBox_fps.TabIndex = 59;
-            this.checkBox_fps.Text = "          fps";
-            this.toolTip1.SetToolTip(this.checkBox_fps, "force yt-dl to download high framerate videos");
-            this.checkBox_fps.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.MidnightBlue;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.SystemColors.Control;
-            this.textBox1.Location = new System.Drawing.Point(237, 165);
-            this.textBox1.MaxLength = 3;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(37, 27);
-            this.textBox1.TabIndex = 60;
-            this.textBox1.Text = ">25";
-            this.toolTip1.SetToolTip(this.textBox1, "< or > fps");
-            // 
-            // checkBox_F
-            // 
-            this.checkBox_F.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox_F.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_F.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_F.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_F.Location = new System.Drawing.Point(146, 165);
-            this.checkBox_F.Name = "checkBox_F";
-            this.checkBox_F.Size = new System.Drawing.Size(50, 24);
-            this.checkBox_F.TabIndex = 61;
-            this.checkBox_F.Text = "-F";
-            this.toolTip1.SetToolTip(this.checkBox_F, "shows all avaliable Formats only\r\nNo download\r\n");
-            this.checkBox_F.UseVisualStyleBackColor = true;
             // 
             // RedoButton
             // 
@@ -489,10 +429,10 @@
             this.button_cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button_cancel.FlatAppearance.BorderSize = 0;
             this.button_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_cancel.Location = new System.Drawing.Point(684, 10);
+            this.button_cancel.Location = new System.Drawing.Point(88, 112);
             this.button_cancel.Margin = new System.Windows.Forms.Padding(0);
             this.button_cancel.Name = "button_cancel";
-            this.button_cancel.Size = new System.Drawing.Size(40, 37);
+            this.button_cancel.Size = new System.Drawing.Size(114, 46);
             this.button_cancel.TabIndex = 59;
             this.toolTip1.SetToolTip(this.button_cancel, "cancel");
             this.button_cancel.UseVisualStyleBackColor = true;
@@ -506,12 +446,12 @@
             this.button_download.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button_download.FlatAppearance.BorderSize = 0;
             this.button_download.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_download.Location = new System.Drawing.Point(734, 9);
+            this.button_download.Location = new System.Drawing.Point(732, 11);
             this.button_download.Margin = new System.Windows.Forms.Padding(0);
             this.button_download.Name = "button_download";
-            this.button_download.Size = new System.Drawing.Size(40, 37);
+            this.button_download.Size = new System.Drawing.Size(37, 37);
             this.button_download.TabIndex = 40;
-            this.toolTip1.SetToolTip(this.button_download, "download YT video\r\n+Ctrl download with last options");
+            this.toolTip1.SetToolTip(this.button_download, "download YT video\r\n+Ctrl start immidiately");
             this.button_download.UseVisualStyleBackColor = true;
             this.button_download.Click += new System.EventHandler(this.downloadYTFileTSMenuItem_Click);
             // 
@@ -715,66 +655,39 @@
             this.button_open.UseVisualStyleBackColor = true;
             this.button_open.Click += new System.EventHandler(this.button_open_Click);
             // 
-            // buttonR_MoveDown
+            // button_path
             // 
-            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
-            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
-            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
-            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
-            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_MoveDown.TabIndex = 32;
-            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
-            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
-            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
+            this.button_path.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_path.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_path.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_path.BackgroundImage")));
+            this.button_path.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_path.FlatAppearance.BorderSize = 0;
+            this.button_path.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_path.Location = new System.Drawing.Point(356, 7);
+            this.button_path.Margin = new System.Windows.Forms.Padding(0);
+            this.button_path.Name = "button_path";
+            this.button_path.Size = new System.Drawing.Size(38, 37);
+            this.button_path.TabIndex = 69;
+            this.toolTip1.SetToolTip(this.button_path, "new download path");
+            this.button_path.UseVisualStyleBackColor = false;
+            this.button_path.Click += new System.EventHandler(this.button_path_Click);
             // 
-            // buttonR_moveUp
+            // button_download_start
             // 
-            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
-            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
-            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
-            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_moveUp.Name = "buttonR_moveUp";
-            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_moveUp.TabIndex = 31;
-            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
-            this.buttonR_moveUp.UseVisualStyleBackColor = true;
-            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
-            // 
-            // checkBox_verb
-            // 
-            this.checkBox_verb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox_verb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_verb.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_verb.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_verb.Location = new System.Drawing.Point(24, 165);
-            this.checkBox_verb.Name = "checkBox_verb";
-            this.checkBox_verb.Size = new System.Drawing.Size(99, 24);
-            this.checkBox_verb.TabIndex = 57;
-            this.checkBox_verb.Text = "--verbose";
-            this.toolTip1.SetToolTip(this.checkBox_verb, "cmd stays open");
-            this.checkBox_verb.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_subs
-            // 
-            this.checkBox_subs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox_subs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_subs.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_subs.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_subs.Location = new System.Drawing.Point(276, 92);
-            this.checkBox_subs.Name = "checkBox_subs";
-            this.checkBox_subs.Size = new System.Drawing.Size(99, 24);
-            this.checkBox_subs.TabIndex = 62;
-            this.checkBox_subs.Text = "--all-subs";
-            this.toolTip1.SetToolTip(this.checkBox_subs, "cmd stays open");
-            this.checkBox_subs.UseVisualStyleBackColor = true;
-            this.checkBox_subs.Visible = false;
+            this.button_download_start.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_download_start.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_download_start.BackgroundImage = global::PlaylistEditor.Properties.Resources.download_outline_green;
+            this.button_download_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_download_start.FlatAppearance.BorderSize = 0;
+            this.button_download_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_download_start.Location = new System.Drawing.Point(223, 112);
+            this.button_download_start.Margin = new System.Windows.Forms.Padding(0);
+            this.button_download_start.Name = "button_download_start";
+            this.button_download_start.Size = new System.Drawing.Size(107, 46);
+            this.button_download_start.TabIndex = 65;
+            this.toolTip1.SetToolTip(this.button_download_start, "download YT video\r\n");
+            this.button_download_start.UseVisualStyleBackColor = true;
+            this.button_download_start.Click += new System.EventHandler(this.button_download_start_Click);
             // 
             // textBox_find
             // 
@@ -791,21 +704,43 @@
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.checkBox_subs);
-            this.panel1.Controls.Add(this.checkBox_F);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.checkBox_fps);
+            this.panel1.Controls.Add(this.label_progress);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.button_download_start);
+            this.panel1.Controls.Add(this.button_path);
             this.panel1.Controls.Add(this.checkBox_rlink);
-            this.panel1.Controls.Add(this.checkBox_verb);
-            this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.comboBox_audio);
+            this.panel1.Controls.Add(this.button_cancel);
             this.panel1.Controls.Add(this.comboBox_video);
             this.panel1.Controls.Add(this.comboBox_download);
             this.panel1.Location = new System.Drawing.Point(673, 57);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(402, 200);
+            this.panel1.Size = new System.Drawing.Size(402, 174);
             this.panel1.TabIndex = 44;
             this.panel1.Visible = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.Control;
+            this.label8.Location = new System.Drawing.Point(125, 47);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(49, 20);
+            this.label8.TabIndex = 71;
+            this.label8.Text = "audio";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.Control;
+            this.label7.Location = new System.Drawing.Point(27, 47);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 20);
+            this.label7.TabIndex = 70;
+            this.label7.Text = "video";
             // 
             // checkBox_rlink
             // 
@@ -815,7 +750,7 @@
             this.checkBox_rlink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_rlink.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox_rlink.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_rlink.Location = new System.Drawing.Point(24, 45);
+            this.checkBox_rlink.Location = new System.Drawing.Point(227, 70);
             this.checkBox_rlink.Name = "checkBox_rlink";
             this.checkBox_rlink.Size = new System.Drawing.Size(160, 24);
             this.checkBox_rlink.TabIndex = 58;
@@ -973,6 +908,48 @@
             this.deleteEntryToolStripMenuItem.Text = "Delete entry";
             this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
             // 
+            // label_progress
+            // 
+            this.label_progress.AutoSize = true;
+            this.label_progress.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_progress.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_progress.Location = new System.Drawing.Point(20, 134);
+            this.label_progress.Name = "label_progress";
+            this.label_progress.Size = new System.Drawing.Size(0, 24);
+            this.label_progress.TabIndex = 72;
+            // 
+            // buttonR_MoveDown
+            // 
+            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
+            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
+            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
+            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
+            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_MoveDown.TabIndex = 32;
+            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
+            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
+            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
+            // 
+            // buttonR_moveUp
+            // 
+            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
+            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
+            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
+            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_moveUp.Name = "buttonR_moveUp";
+            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_moveUp.TabIndex = 31;
+            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
+            this.buttonR_moveUp.UseVisualStyleBackColor = true;
+            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
+            // 
             // plabel_Filename
             // 
             this.plabel_Filename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -997,12 +974,11 @@
             this.Controls.Add(this.RedoButton);
             this.Controls.Add(this.UndoButton);
             this.Controls.Add(this.button_check);
-            this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button_download);
             this.Controls.Add(this.button_vlc);
             this.Controls.Add(this.button_revert);
             this.Controls.Add(this.button_tag);
+            this.Controls.Add(this.button_download);
             this.Controls.Add(this.button_dup);
             this.Controls.Add(this.textBox_find);
             this.Controls.Add(this.button_search);
@@ -1081,16 +1057,12 @@
         public System.Windows.Forms.ComboBox comboBox_download;
         private System.Windows.Forms.ComboBox comboBox_video;
         private System.Windows.Forms.ComboBox comboBox_audio;
-        private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.CheckBox checkBox_rlink;
         private System.Windows.Forms.Button button_cancel;
-        private System.Windows.Forms.CheckBox checkBox_fps;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button_check;
         private System.Windows.Forms.ToolStripMenuItem searchGoogletoolStriptem;
         private System.Windows.Forms.Button UndoButton;
         private System.Windows.Forms.Button RedoButton;
-        private System.Windows.Forms.CheckBox checkBox_F;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
@@ -1106,8 +1078,11 @@
         private System.Windows.Forms.ToolStripMenuItem editF2ToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
         private System.Windows.Forms.ToolStripMenuItem deleteEntryToolStripMenuItem;
-        private System.Windows.Forms.CheckBox checkBox_subs;
-        private System.Windows.Forms.CheckBox checkBox_verb;
+        private System.Windows.Forms.Button button_download_start;
+        private System.Windows.Forms.Button button_path;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.Label label_progress;
     }
 }
 
