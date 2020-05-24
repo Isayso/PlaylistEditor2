@@ -144,7 +144,10 @@ namespace PlaylistEditor
 
                 videoUrlnew = testinfo[0];
 
-                var streamInfoA = streamManifest.GetAudioOnly().WithHighestBitrate();
+                //      var streamInfoA = streamManifest.GetAudioOnly().WithHighestBitrate();
+                var streamInfoA = streamManifest.GetAudio()
+                            .Where(s => s.Container == Container.Mp4)
+                            .WithHighestBitrate();
 
                 audioUrl = streamInfoA.Url;
 
@@ -185,13 +188,7 @@ namespace PlaylistEditor
                 //                 .GetVideoOnly()
                 //                 .Where(s => s.Container == Container.Mp4)
                 //                 .WithHighestVideoQuality();
-                var testinfo = streamManifest.GetVideoOnly()
-                    //  .Where(s => s.VideoQuality <= VideoQuality.High1080)
-                    .Where(s => s.VideoQuality <= SetVideoQuality(height))
-                    .Where(t => t.Container == Container.Mp4)
-                    .Select(h => h.Url).ToList();
 
-                videoUrlnew = testinfo[0];
 
                 var streamInfoA = streamManifest.GetAudioOnly().WithHighestBitrate();
 
@@ -231,12 +228,16 @@ namespace PlaylistEditor
                     var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
 
                     // Select audio stream
-                    var audioStreamInfo = streamManifest.GetAudio().WithHighestBitrate();
+                  //  var audioStreamInfo2 = streamManifest.GetAudio().WithHighestBitrate();
+                    var audioStreamInfo = streamManifest.GetAudio()
+                                           .Where(s => s.Container == SetFileContainer(fileext))
+                                           .WithHighestBitrate();
 
-        /*            { 327, new ItagDescriptor(Container.WebM, AudioEncoding.Aac, null, null)},
-        { 338, new ItagDescriptor(Container.WebM, AudioEncoding.Opus, null, null)},
-        { 339, new ItagDescriptor(Container.WebM, AudioEncoding.Vorbis, null, null)}
-        */
+
+                    /*            { 327, new ItagDescriptor(Container.WebM, AudioEncoding.Aac, null, null)},
+                    { 338, new ItagDescriptor(Container.WebM, AudioEncoding.Opus, null, null)},
+                    { 339, new ItagDescriptor(Container.WebM, AudioEncoding.Vorbis, null, null)}
+                    */
                     // Select video stream
                     //  var videoStreamInfo = streamManifest.GetVideo().FirstOrDefault(s => s.VideoQualityLabel == "1080p60");
                     //var videoStreamInfo = streamManifest.GetVideoOnly()
@@ -244,12 +245,12 @@ namespace PlaylistEditor
 
                     var videoStreamInfo2 = streamManifest.GetVideoOnly()
                                           .Where(s => s.VideoQuality <= SetVideoQuality(height))
-                                          .Where(t => t.Container == SetFileContainer(fileext))
+                                          .Where(s => s.Container == SetFileContainer(fileext))
                                          // .Select(h => h.Url).ToList();
                                          .First()
                                           ;
 
-                    // Combine them into a collection
+                    // Combine them into a collectionb
                     var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
 
                     VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
@@ -262,6 +263,7 @@ namespace PlaylistEditor
                             case DialogResult.Yes:
                                 // Download and process them into one file
                                 await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext]);
+                               // await converter.DownloadVideoAsync(VideoInfo.Url, videoTitle, filetype[fileext]);
                                 break;
 
                             case DialogResult.No:
