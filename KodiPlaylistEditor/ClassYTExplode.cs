@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,10 +10,17 @@ using YoutubeExplode;
 using YoutubeExplode.Converter;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
+using static PlaylistEditor.Form1;
 
 namespace PlaylistEditor
 {
-    class ClassYTExplode
+    public class ThresholdReachedEventArgs : EventArgs
+    {
+        public int Threshold { get; set; }
+        public DateTime TimeReached { get; set; }
+    }
+
+    public class ClassYTExplode
     {
         public static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos;
         public static IReadOnlyList<MuxedStreamInfo> MuxedStreamInfos;
@@ -23,6 +31,42 @@ namespace PlaylistEditor
         public static Video VideoInfo;
 
         private static YoutubeClient _youtube;
+
+        //private double downProgress; 
+       // private double _progress;
+      //  private static IProgress<double> progr = new Progress<double>(HandleProgress);
+        public static double _progress;
+        //  private static ClassYTExplode _prog = new ClassYTExplode();
+
+        //   protected bool Set<T>(ref T field, T newValue = default, bool broadcast = false, [CallerMemberName] string propertyName = null);
+
+        //public double ProgressValue
+        //{
+        //    get { return downProgress; }
+        //    set
+        //    {
+        //        downProgress = value;
+        //        if (ValueChanged != null) ValueChanged(value);
+        //    }
+        //}
+
+        //public event ValueChangedEventHandler ValueChanged;
+
+        public static double Progress
+        {
+            get => _progress;
+            private set => OnProgressChanged(_progress);
+
+        }
+
+        public static void OnProgressChanged(double progress)
+        {
+            //  Form1 f = new Form1();
+            Console.WriteLine(progress.ToString());
+            _progress = progress;
+            //  var _progress = progress.ToString();
+            //  f.label_progress.Text = progress.ToString();
+        }
 
         public static async Task PullInfo(string videoId)
         {
@@ -90,9 +134,9 @@ namespace PlaylistEditor
                     extension = Container.WebM;
                     break;
 
-                //case 2:
-                //    extension = Container.Tgpp;
-                //    break;
+                    //case 2:
+                    //    extension = Container.Tgpp;
+                    //    break;
             }
             return extension;
         }
@@ -100,6 +144,7 @@ namespace PlaylistEditor
         public static async Task PullDASH(string videoId, int height = 2)
         {
             _youtube = new YoutubeClient();
+            videoUrlnew = "";
 
             try
             {
@@ -177,12 +222,12 @@ namespace PlaylistEditor
 
                 // Get data
                 var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
-              //  MuxedStreamInfos = streamManifest.GetMuxed().ToArray();
+                //  MuxedStreamInfos = streamManifest.GetMuxed().ToArray();
                 MuxedStreamInfos = streamManifest.GetMuxed()
                     .Where(s => s.VideoQuality <= SetVideoQuality(height))
                     .ToArray();
                 //AudioOnlyStreamInfos = streamManifest.GetAudioOnly().ToArray();
-               // VideoOnlyStreamInfos = streamManifest.GetVideoOnly().ToArray();
+                // VideoOnlyStreamInfos = streamManifest.GetVideoOnly().ToArray();
                 //ClosedCaptionTrackInfos = trackManifest.Tracks;
                 //var streamInfo = streamManifest
                 //                 .GetVideoOnly()
@@ -211,18 +256,26 @@ namespace PlaylistEditor
             }
         }
 
+        //public double Progress
+        //{
+        //    get => _progress;
+        //    private set => Set(ref _progress, value);
+        //}
 
 
-        public static async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext=0)
+    public static async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext=0)
         {
             _youtube = new YoutubeClient();
             var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
+
 
             if (fileext < 2)
             {
                 try
                 {
                     string[] filetype = { "mp4", "webm" };
+                  //  Progress = 0;
+
 
                     // Get stream manifest
                     var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
@@ -256,6 +309,10 @@ namespace PlaylistEditor
                     VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
                     videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + "." + filetype[fileext];
 
+                   //   var progressHandler = new Progress<double>(p => Progress = p);
+                    //  var progressHandler = new Progress<double>(p => Progress = p);
+                 //   var progressHandler = new Progress<double>(p => Progress = p);
+
                     if (ClassHelp.MyFileExists(videoTitle, 3000))
                     {
                         switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
@@ -263,6 +320,7 @@ namespace PlaylistEditor
                             case DialogResult.Yes:
                                 // Download and process them into one file
                                 await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext]);
+                              //  await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progressHandler);
                                // await converter.DownloadVideoAsync(VideoInfo.Url, videoTitle, filetype[fileext]);
                                 break;
 
@@ -274,6 +332,7 @@ namespace PlaylistEditor
                     else
                     {
                         // Download and process them into one file
+                      //  await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progressHandler);
                         await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext]);
 
                     }
@@ -285,7 +344,11 @@ namespace PlaylistEditor
                     MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Video Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     videoTitle = "error";
                 }
+                finally
+                {
+                 //   Progress = 0;
 
+                }
 
             }
 

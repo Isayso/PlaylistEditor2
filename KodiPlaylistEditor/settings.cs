@@ -39,7 +39,7 @@ namespace PlaylistEditor
         static char character2 = (char)unicode2;
         string hotText = character.ToString();
         string hotText2 = character2.ToString();
-        bool _youtube_dl = false; // File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe");
+     //   bool _youtube_dl = false; // File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe");
 
 
 

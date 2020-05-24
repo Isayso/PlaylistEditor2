@@ -2785,6 +2785,7 @@ namespace PlaylistEditor
             waitmove.StartPosition = FormStartPosition.Manual;
 
 
+
             //string fpsValue = textBox1.Text.Trim();
             //if (!fpsValue.StartsWith("<") && !fpsValue.StartsWith(">")) fpsValue = "";
 
@@ -2796,6 +2797,8 @@ namespace PlaylistEditor
 
                 playcell = dataGridView1.Rows[row.Index].Cells[1].Value.ToString();
                 //  namecell = dataGridView1.Rows[row.Index].Cells[0].Value.ToString();
+                //   ClassYTExplode.HandleProgress = new EventHandler(showProgress);
+
 
                 if (playcell.Contains("plugin") && playcell.Contains("youtube"))
                 {

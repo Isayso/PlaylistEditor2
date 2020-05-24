@@ -94,6 +94,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label_progress = new System.Windows.Forms.Label();
             this.buttonR_MoveDown = new RepeatingButton();
             this.buttonR_moveUp = new RepeatingButton();
             this.plabel_Filename = new PathLabel();
@@ -345,7 +346,7 @@
             this.comboBox_video.Items.AddRange(new object[] {
             "mp4",
             "webm",
-            "novideo"});
+            "no video"});
             this.comboBox_video.Location = new System.Drawing.Point(24, 70);
             this.comboBox_video.Name = "comboBox_video";
             this.comboBox_video.Size = new System.Drawing.Size(88, 28);
@@ -428,7 +429,7 @@
             this.button_cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button_cancel.FlatAppearance.BorderSize = 0;
             this.button_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_cancel.Location = new System.Drawing.Point(83, 139);
+            this.button_cancel.Location = new System.Drawing.Point(88, 112);
             this.button_cancel.Margin = new System.Windows.Forms.Padding(0);
             this.button_cancel.Name = "button_cancel";
             this.button_cancel.Size = new System.Drawing.Size(114, 46);
@@ -679,7 +680,7 @@
             this.button_download_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button_download_start.FlatAppearance.BorderSize = 0;
             this.button_download_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_download_start.Location = new System.Drawing.Point(228, 139);
+            this.button_download_start.Location = new System.Drawing.Point(223, 112);
             this.button_download_start.Margin = new System.Windows.Forms.Padding(0);
             this.button_download_start.Name = "button_download_start";
             this.button_download_start.Size = new System.Drawing.Size(107, 46);
@@ -703,6 +704,7 @@
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.label_progress);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.button_download_start);
@@ -714,7 +716,7 @@
             this.panel1.Controls.Add(this.comboBox_download);
             this.panel1.Location = new System.Drawing.Point(673, 57);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(402, 194);
+            this.panel1.Size = new System.Drawing.Size(402, 174);
             this.panel1.TabIndex = 44;
             this.panel1.Visible = false;
             // 
@@ -906,6 +908,16 @@
             this.deleteEntryToolStripMenuItem.Text = "Delete entry";
             this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
             // 
+            // label_progress
+            // 
+            this.label_progress.AutoSize = true;
+            this.label_progress.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_progress.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_progress.Location = new System.Drawing.Point(20, 134);
+            this.label_progress.Name = "label_progress";
+            this.label_progress.Size = new System.Drawing.Size(0, 24);
+            this.label_progress.TabIndex = 72;
+            // 
             // buttonR_MoveDown
             // 
             this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
@@ -1070,6 +1082,7 @@
         private System.Windows.Forms.Button button_path;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.Label label_progress;
     }
 }
 
