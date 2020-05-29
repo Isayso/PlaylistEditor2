@@ -1,3 +1,3 @@
 # PlaylistEditor2
 
-dev branch: YoutubeExplode NuGet package instead of youtube-dl
+here you find the code for the Playlist Editor
