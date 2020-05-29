@@ -174,7 +174,7 @@ namespace PlaylistEditor
         public static string DownloadYTLinkEx(string videolink, string NewPath, out string videofilename)
         {
             Cursor.Current = Cursors.WaitCursor;
-
+            ClassYTExplode tt = new ClassYTExplode();
 
             int maxres = Settings.Default.maxres;  //-> SetVideoQuality
             int cvideo = Settings.Default.combovideo; //-> SetFileContainer .mp4 | .webm
@@ -182,12 +182,15 @@ namespace PlaylistEditor
             if (!CheckForFfmpeg() && maxres >= 720) return videofilename = "error";
 
 
-            Task.Run(async () => { await ClassYTExplode.DownloadStream(videolink, NewPath, maxres, cvideo); }).Wait();  //-> videoUrlnew   audioUrl 
+            Task.Run(async () => { await tt.DownloadStream(videolink, NewPath, maxres, cvideo); }).Wait();  //-> videoUrlnew   audioUrl 
 
             Cursor.Current = Cursors.Default;
 
+            var _videoname = ClassYTExplode.videoTitle;
 
-            return videofilename = ClassYTExplode.videoTitle;
+            if (string.IsNullOrEmpty(_videoname))
+                return videofilename = "error";
+            else return videofilename = _videoname;
 
         }
 

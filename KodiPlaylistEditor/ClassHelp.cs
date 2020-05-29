@@ -194,12 +194,12 @@ namespace PlaylistEditor
         public static string GetTitle_client(string url)
         {
             // https://stackoverflow.com/questions/329307/how-to-get-website-title-from-c-sharp
-           // var youtube = new YoutubeClient();
-
+            // var youtube = new YoutubeClient();
+            ClassYTExplode yte = new ClassYTExplode();
 
             ClassYTExplode.VideoInfo = null;
 
-            Task.Run(async () => { await ClassYTExplode.PullInfo(url); }).Wait();
+            Task.Run(async () => { await yte.PullInfo(url); }).Wait();
 
             if (string.IsNullOrEmpty(ClassYTExplode.videoTitle))
                 return "N/A";
@@ -407,14 +407,14 @@ namespace PlaylistEditor
         public static string GetVlcDashArg2(string videolink)
         {
             // var youtube = new YoutubeClient();
-
+            ClassYTExplode yte = new ClassYTExplode();
             //  string[] height = { "2160", "1440", "1080", "720", "480", "360" };
             Cursor.Current = Cursors.WaitCursor;
 
             int maxres = Properties.Settings.Default.maxres;
 
         //    if (maxres <= 3)
-                Task.Run(async () => { await ClassYTExplode.PullDASH(videolink, maxres); }).Wait();
+                Task.Run(async () => { await yte.PullDASH(videolink, maxres); }).Wait();
             //else
             //    Task.Run(async () => { await ClassYTExplode.PullNoDASH(videolink, maxres); }).Wait();
 

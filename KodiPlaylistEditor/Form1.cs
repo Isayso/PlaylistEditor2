@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -2764,6 +2765,14 @@ namespace PlaylistEditor
 
         //  https://www.google.com/search?q=%s
 
+        private void ProgressEventHandler(double getit)
+        {
+            //   progressbar.Value += e.Progress;
+            //double perc = 0;
+            //perc += e.Progress;
+            label9.Text = getit.ToString();
+        }
+
 
         /// <summary>
         /// download YT file
@@ -2784,12 +2793,12 @@ namespace PlaylistEditor
             waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
             waitmove.StartPosition = FormStartPosition.Manual;
 
-
-
             //string fpsValue = textBox1.Text.Trim();
             //if (!fpsValue.StartsWith("<") && !fpsValue.StartsWith(">")) fpsValue = "";
 
-            //foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            ClassYTExplode yte = new ClassYTExplode();
+            yte.ValueChanged += ProgressEventHandler; 
+
             foreach (DataGridViewRow row in dataGridView1.GetSelectedRows())
             {
 
@@ -2797,8 +2806,6 @@ namespace PlaylistEditor
 
                 playcell = dataGridView1.Rows[row.Index].Cells[1].Value.ToString();
                 //  namecell = dataGridView1.Rows[row.Index].Cells[0].Value.ToString();
-                //   ClassYTExplode.HandleProgress = new EventHandler(showProgress);
-
 
                 if (playcell.Contains("plugin") && playcell.Contains("youtube"))
                 {
@@ -2815,12 +2822,6 @@ namespace PlaylistEditor
 
                             _done = true;
 
-                            //WaitWindow waitmove = new WaitWindow();
-                            //waitmove.Owner = this;
-                            //var x = Location.X - 40 + (Width - waitmove.Width) / 2;
-                            //var y = Location.Y + (Height - waitmove.Height) / 2;
-                            //waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
-                            //waitmove.StartPosition = FormStartPosition.Manual;
 #if DEBUG
                             Console.WriteLine(videofilename);   //
 #endif
@@ -2857,7 +2858,6 @@ namespace PlaylistEditor
                                     errorfilename = "";
                                 }
                             }
-                            // waitmove.Dispose();  
 
                             string UNCfileName = NativeMethods.UNCPath(videofilename);
 
@@ -3024,12 +3024,6 @@ namespace PlaylistEditor
             mruItems.Clear();
 
             mruItems = File.ReadAllLines(mruFile).ToList();
-
-
-            //foreach (object item in Settings.Default.FilePaths)
-            //{
-            //    info.Add(item.ToString());
-            //}
 
             labels = new List<Label> { label1, label2, label3, label4, label5 };
             int i = 0;

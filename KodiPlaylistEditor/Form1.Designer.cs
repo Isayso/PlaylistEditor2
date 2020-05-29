@@ -74,9 +74,13 @@
             this.button_open = new System.Windows.Forms.Button();
             this.button_path = new System.Windows.Forms.Button();
             this.button_download_start = new System.Windows.Forms.Button();
+            this.buttonR_MoveDown = new RepeatingButton();
+            this.buttonR_moveUp = new RepeatingButton();
             this.textBox_find = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label_progress = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.checkBox_rlink = new System.Windows.Forms.CheckBox();
@@ -94,9 +98,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label_progress = new System.Windows.Forms.Label();
-            this.buttonR_MoveDown = new RepeatingButton();
-            this.buttonR_moveUp = new RepeatingButton();
             this.plabel_Filename = new PathLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -323,6 +324,7 @@
             // 
             this.comboBox_download.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox_download.BackColor = System.Drawing.Color.MidnightBlue;
+            this.comboBox_download.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_download.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox_download.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox_download.ForeColor = System.Drawing.Color.White;
@@ -689,6 +691,38 @@
             this.button_download_start.UseVisualStyleBackColor = true;
             this.button_download_start.Click += new System.EventHandler(this.button_download_start_Click);
             // 
+            // buttonR_MoveDown
+            // 
+            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
+            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
+            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
+            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
+            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_MoveDown.TabIndex = 32;
+            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
+            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
+            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
+            // 
+            // buttonR_moveUp
+            // 
+            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
+            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
+            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
+            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_moveUp.Name = "buttonR_moveUp";
+            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_moveUp.TabIndex = 31;
+            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
+            this.buttonR_moveUp.UseVisualStyleBackColor = true;
+            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
+            // 
             // textBox_find
             // 
             this.textBox_find.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -704,6 +738,7 @@
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label_progress);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.label7);
@@ -719,6 +754,27 @@
             this.panel1.Size = new System.Drawing.Size(402, 174);
             this.panel1.TabIndex = 44;
             this.panel1.Visible = false;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.Control;
+            this.label9.Location = new System.Drawing.Point(26, 138);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(75, 20);
+            this.label9.TabIndex = 73;
+            this.label9.Text = "progress";
+            // 
+            // label_progress
+            // 
+            this.label_progress.AutoSize = true;
+            this.label_progress.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_progress.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_progress.Location = new System.Drawing.Point(20, 134);
+            this.label_progress.Name = "label_progress";
+            this.label_progress.Size = new System.Drawing.Size(0, 24);
+            this.label_progress.TabIndex = 72;
             // 
             // label8
             // 
@@ -908,48 +964,6 @@
             this.deleteEntryToolStripMenuItem.Text = "Delete entry";
             this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
             // 
-            // label_progress
-            // 
-            this.label_progress.AutoSize = true;
-            this.label_progress.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_progress.ForeColor = System.Drawing.SystemColors.Control;
-            this.label_progress.Location = new System.Drawing.Point(20, 134);
-            this.label_progress.Name = "label_progress";
-            this.label_progress.Size = new System.Drawing.Size(0, 24);
-            this.label_progress.TabIndex = 72;
-            // 
-            // buttonR_MoveDown
-            // 
-            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
-            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
-            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
-            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
-            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_MoveDown.TabIndex = 32;
-            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
-            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
-            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
-            // 
-            // buttonR_moveUp
-            // 
-            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
-            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
-            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
-            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_moveUp.Name = "buttonR_moveUp";
-            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_moveUp.TabIndex = 31;
-            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
-            this.buttonR_moveUp.UseVisualStyleBackColor = true;
-            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
-            // 
             // plabel_Filename
             // 
             this.plabel_Filename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1083,6 +1097,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.Label label_progress;
+        private System.Windows.Forms.Label label9;
     }
 }
 
