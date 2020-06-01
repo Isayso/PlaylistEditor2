@@ -171,34 +171,12 @@ namespace PlaylistEditor
         //}
 
 
-        public static string DownloadYTLinkEx(string videolink, string NewPath, out string videofilename)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            ClassYTExplode tt = new ClassYTExplode();
-
-            int maxres = Settings.Default.maxres;  //-> SetVideoQuality
-            int cvideo = Settings.Default.combovideo; //-> SetFileContainer .mp4 | .webm
-
-            if (!CheckForFfmpeg() && maxres >= 720) return videofilename = "error";
-
-
-            Task.Run(async () => { await tt.DownloadStream(videolink, NewPath, maxres, cvideo); }).Wait();  //-> videoUrlnew   audioUrl 
-
-            Cursor.Current = Cursors.Default;
-
-            var _videoname = ClassYTExplode.videoTitle;
-
-            if (string.IsNullOrEmpty(_videoname))
-                return videofilename = "error";
-            else return videofilename = _videoname;
-
-        }
 
         /// <summary>
         /// check if ffmpeg.exe is there
         /// </summary>
         /// <returns></returns>
-        private static bool CheckForFfmpeg()
+        public static bool CheckForFfmpeg()
         {
 
             if (!string.IsNullOrEmpty(NativeMethods.GetFullPathFromWindows("ffmpeg.exe")) ||

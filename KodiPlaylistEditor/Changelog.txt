@@ -1,4 +1,8 @@
-﻿2.2.0
+﻿2.2.1
+- file selected in folder
+- progress bar download
+
+2.2.0
 - switch to YotubeExplode instead youtube-dl
 - .Net 4.8
 - youtube-dl code removed clean up

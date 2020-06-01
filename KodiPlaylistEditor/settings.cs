@@ -304,15 +304,8 @@ namespace PlaylistEditor
 
         }
 
-        private void comboBox_res_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Settings.Default.maxres = comboBox_res.SelectedIndex;
-        }
 
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
 
-        }
 
 
 

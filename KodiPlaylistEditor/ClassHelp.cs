@@ -553,16 +553,16 @@ namespace PlaylistEditor
         /// check if youtube-dl is availiable
         /// </summary>
         /// <returns>bool</returns>
-        public static bool YT_dl()
-        {
-            if (!string.IsNullOrEmpty(NativeMethods.GetFullPathFromWindows("youtube-dl.exe")) ||
-                File.Exists(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe"))
-            {
-                return true; // File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe");
+        //public static bool YT_dl()
+        //{
+        //    if (!string.IsNullOrEmpty(NativeMethods.GetFullPathFromWindows("youtube-dl.exe")) ||
+        //        File.Exists(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe"))
+        //    {
+        //        return true; // File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe");
 
-            }
-            return false;
-        }
+        //    }
+        //    return false;
+        //}
           
 
 
@@ -570,48 +570,48 @@ namespace PlaylistEditor
     /// Launch the folder view
     /// </summary>
     /// <param name="p_Filename">The fully qualified path and filename of the target to open as highlighted by explorer</param>
-    public static bool LaunchFolderView(string p_Filename)
-        {
-            bool l_result = false;
+    //public static bool LaunchFolderView(string p_Filename)
+    //    {
+    //        bool l_result = false;
 
-            // Check the file exists
-            if (File.Exists(p_Filename))
-            {
-                // Check the folder we get from the file exists
-                // this function would just get "C:\Hello" from
-                // an input of "C:\Hello\World.txt"
-                string l_folder = Path.GetDirectoryName(p_Filename);//FileSystemHelpers.GetPathFromQualifiedPath(p_Filename);
+    //        // Check the file exists
+    //        if (File.Exists(p_Filename))
+    //        {
+    //            // Check the folder we get from the file exists
+    //            // this function would just get "C:\Hello" from
+    //            // an input of "C:\Hello\World.txt"
+    //            string l_folder = Path.GetDirectoryName(p_Filename);//FileSystemHelpers.GetPathFromQualifiedPath(p_Filename);
 
-                // Check the folder exists
-                if (Directory.Exists(l_folder))
-                {
-                    try
-                    {
-                        // Start a new process for explorer
-                        // in this location     
-                        ProcessStartInfo l_psi = new ProcessStartInfo();
-                        l_psi.FileName = "explorer.exe";
-                         l_psi.Arguments = string.Format("/root,{0} /select,{1}", l_folder, p_Filename);
-                        // l_psi.Arguments = string.Format("/root,{0}",l_folder);
-                      //  l_psi.Arguments = string.Format(" {0} /select,{1}", l_folder, p_Filename);
-                        l_psi.UseShellExecute = true;
+    //            // Check the folder exists
+    //            if (Directory.Exists(l_folder))
+    //            {
+    //                try
+    //                {
+    //                    // Start a new process for explorer
+    //                    // in this location     
+    //                    ProcessStartInfo l_psi = new ProcessStartInfo();
+    //                    l_psi.FileName = "explorer.exe";
+    //                     l_psi.Arguments = string.Format("/root,{0} /select,{1}", l_folder, p_Filename);
+    //                    // l_psi.Arguments = string.Format("/root,{0}",l_folder);
+    //                  //  l_psi.Arguments = string.Format(" {0} /select,{1}", l_folder, p_Filename);
+    //                    l_psi.UseShellExecute = true;
 
-                        Process l_newProcess = new Process();
-                        l_newProcess.StartInfo = l_psi;
-                        l_newProcess.Start();
+    //                    Process l_newProcess = new Process();
+    //                    l_newProcess.StartInfo = l_psi;
+    //                    l_newProcess.Start();
 
-                        // No error
-                        l_result = true;
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new Exception("Error in 'LaunchFolderView'.", exception);
-                    }
-                }
-            }
+    //                    // No error
+    //                    l_result = true;
+    //                }
+    //                catch (Exception exception)
+    //                {
+    //                    throw new Exception("Error in 'LaunchFolderView'.", exception);
+    //                }
+    //            }
+    //        }
 
-            return l_result;
-        }
+    //        return l_result;
+    //    }
 
 
         /// <summary>
@@ -822,29 +822,29 @@ namespace PlaylistEditor
             return !Enumerable.Range(0, instance.GetLength(0)).Any(x => !instance[x].SequenceEqual(dgvRows[x].Cells.Cast<DataGridViewCell>().Select(c => c.Value).ToArray()));
         }
 
-        public static bool CheckClipboard()
-        {
-            DataObject o = (DataObject)Clipboard.GetDataObject();
+        //public static bool CheckClipboard()
+        //{
+        //    DataObject o = (DataObject)Clipboard.GetDataObject();
 
-            if (Clipboard.ContainsText())
-            {
-                try
-                {
+        //    if (Clipboard.ContainsText())
+        //    {
+        //        try
+        //        {
 
-                    string[] pastedRows = System.Text.RegularExpressions.Regex.Split(o.GetData(DataFormats.UnicodeText).ToString().TrimEnd("\r\n".ToCharArray()), "\r\n");
-                    string[] pastedRowCells = pastedRows[0].Split(new char[] { '\t' });
+        //            string[] pastedRows = System.Text.RegularExpressions.Regex.Split(o.GetData(DataFormats.UnicodeText).ToString().TrimEnd("\r\n".ToCharArray()), "\r\n");
+        //            string[] pastedRowCells = pastedRows[0].Split(new char[] { '\t' });
 
-                    if (pastedRowCells.Length == 3) return true;
+        //            if (pastedRowCells.Length == 3) return true;
 
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Paste operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show("Paste operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        }
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         /// <summary>
         /// send ping to kodi IP

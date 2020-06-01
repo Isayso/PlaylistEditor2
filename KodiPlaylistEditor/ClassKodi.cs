@@ -138,79 +138,79 @@ namespace PlaylistEditor
         }
 
 
-        public bool RunOnKodi(string Link)
-        {
-            return false;
-        }
+        //public bool RunOnKodi(string Link)
+        //{
+        //    return false;
+        //}
 
 
-        public static async Task<bool> Run2(string link)
-        {
-            string kodiIP = Settings.Default.rpi;
-            string kodiUser = Settings.Default.username.Trim();
-            string kodiPort = Settings.Default.port;
-            //  string kodiPass = Properties.Settings.Default.password; https://stackoverflow.com/questions/12657792/how-to-securely-save-username-password-local
-            byte[] plaintext = null;
-            string kodiPass = "";
+//        public static async Task<bool> Run2(string link)
+//        {
+//            string kodiIP = Settings.Default.rpi;
+//            string kodiUser = Settings.Default.username.Trim();
+//            string kodiPort = Settings.Default.port;
+//            //  string kodiPass = Properties.Settings.Default.password; https://stackoverflow.com/questions/12657792/how-to-securely-save-username-password-local
+//            byte[] plaintext = null;
+//            string kodiPass = "";
 
-            if (Settings.Default.cipher != null && Settings.Default.entropy != null)
-            {
-                plaintext = ProtectedData.Unprotect(Settings.Default.cipher, Settings.Default.entropy,
-                                                    DataProtectionScope.CurrentUser);
-                kodiPass = ClassHelp.ByteArrayToString(plaintext);
-            }
+//            if (Settings.Default.cipher != null && Settings.Default.entropy != null)
+//            {
+//                plaintext = ProtectedData.Unprotect(Settings.Default.cipher, Settings.Default.entropy,
+//                                                    DataProtectionScope.CurrentUser);
+//                kodiPass = ClassHelp.ByteArrayToString(plaintext);
+//            }
 
-            kodiPass = kodiPass.Trim();
+//            kodiPass = kodiPass.Trim();
 
-            var values = new Dictionary<string, string>
-            {
-                {kodiUser,kodiPass}
+//            var values = new Dictionary<string, string>
+//            {
+//                {kodiUser,kodiPass}
 
-            };
+//            };
 
-            string url = "http://" + kodiIP + ":" + kodiPort + "/jsonrpc?request=";
+//            string url = "http://" + kodiIP + ":" + kodiPort + "/jsonrpc?request=";
 
-            //url = "http://192.168.178.91:8080/jsonrpc"; //?request=";
+//            //url = "http://192.168.178.91:8080/jsonrpc"; //?request=";
 
-            try
-            {
-                using (var webClient = new WebClient())
-                {
-                    // Required to prevent HTTP 401: Unauthorized messages
-                    webClient.Credentials = new NetworkCredential(kodiUser, kodiPass);
-                    // API Doc: http://kodi.wiki/view/JSON-RPC_API/v6
-                    //  var json = "{\"jsonrpc\":\"2.0\",\"method\":\"GUI.ShowNotification\",\"params\":{\"title\":\"This is the title of the message\",\"message\":\"This is the body of the message\"},\"id\":1}";
-                    string response = webClient.UploadString($"http://{kodiIP}:{kodiPort}/jsonrpc", "POST", link);
+//            try
+//            {
+//                using (var webClient = new WebClient())
+//                {
+//                    // Required to prevent HTTP 401: Unauthorized messages
+//                    webClient.Credentials = new NetworkCredential(kodiUser, kodiPass);
+//                    // API Doc: http://kodi.wiki/view/JSON-RPC_API/v6
+//                    //  var json = "{\"jsonrpc\":\"2.0\",\"method\":\"GUI.ShowNotification\",\"params\":{\"title\":\"This is the title of the message\",\"message\":\"This is the body of the message\"},\"id\":1}";
+//                    string response = webClient.UploadString($"http://{kodiIP}:{kodiPort}/jsonrpc", "POST", link);
 
 
-                    if (response.Contains("OK") /*&& link.Contains("Playlist.Add")*/)
-                    {
-                        // Form pop = new popup2();
-                        ClassHelp.PopupForm("Kodi response: OK", "ok", 1300);
+//                    if (response.Contains("OK") /*&& link.Contains("Playlist.Add")*/)
+//                    {
+//                        // Form pop = new popup2();
+//                        ClassHelp.PopupForm("Kodi response: OK", "ok", 1300);
 
-#if DEBUG
-                        MessageBox.Show(response);
-                        Console.WriteLine(response);
-                        Console.ReadLine();
-#endif
-                    }
-                    else if (response.Contains("error") /*&& link.Contains("Playlist.Add")*/)
-                    {
-                        ClassHelp.PopupForm("Kodi response: ERROR", "error", 1300);
-                        return false;
-                    }
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Kodi not responding. " + ex.Message, "Play", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
+//#if DEBUG
+//                        MessageBox.Show(response);
+//                        Console.WriteLine(response);
+//                        Console.ReadLine();
+//#endif
+//                    }
+//                    else if (response.Contains("error") /*&& link.Contains("Playlist.Add")*/)
+//                    {
+//                        ClassHelp.PopupForm("Kodi response: ERROR", "error", 1300);
+//                        return false;
+//                    }
+//                    return true;
+//                }
+//            }
+//            catch (Exception ex)
+//            {
+//                MessageBox.Show("Kodi not responding. " + ex.Message, "Play", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+//                return false;
+//            }
             
-            // https://stackoverflow.com/questions/22392362/making-a-json-rpc-http-call-using-c-sharp
+//            // https://stackoverflow.com/questions/22392362/making-a-json-rpc-http-call-using-c-sharp
            
-        }
+//        }
 
 
     }
