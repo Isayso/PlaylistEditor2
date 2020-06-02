@@ -39,7 +39,6 @@ namespace PlaylistEditor
         static char character2 = (char)unicode2;
         string hotText = character.ToString();
         string hotText2 = character2.ToString();
-     //   bool _youtube_dl = false; // File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe");
 
 
 
@@ -192,25 +191,6 @@ namespace PlaylistEditor
 
        
 
-      
-
-        //private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (!checkBox_link.Checked)
-        //    {
-        //        textBox1.Visible = false;
-        //        textBox2.Visible = false;
-              
-        //    }
-        //    else
-        //    {
-        //        textBox1.Visible = true;
-        //        textBox2.Visible = true;
-                
-        //    }
-
-        //}
-
         private void getHotkeyInt()
         {
            
@@ -303,15 +283,6 @@ namespace PlaylistEditor
         {
 
         }
-
-
-
-
-
-
-
-
-
 
 
         private void button_edit_Click(object sender, EventArgs e)

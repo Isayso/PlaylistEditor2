@@ -1,6 +1,7 @@
 ﻿2.2.1
-- file selected in folder
+- file selected in folder CTRL-L
 - progress bar download
+- code clean-up
 
 2.2.0
 - switch to YotubeExplode instead youtube-dl

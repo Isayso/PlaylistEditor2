@@ -1,11 +1,28 @@
-﻿using System;
+﻿/*
+ *      GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
+ *
+ *         This program stores the YouTube Links on local device
+ *         Copyright (C) <2019>  <Github: Isayso>
+ *
+ *         This program is free software: you can redistribute it and/or modify
+ *         it under the terms of the GNU General Public License as published by
+ *         the Free Software Foundation, either version 3 of the License, or
+ *         (at your option) any later version.
+ *
+ *         This program is distributed in the hope that it will be useful,
+ *         but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *         GNU General Public License for more details.
+ *
+ *         You should have received a copy of the GNU General Public License
+ *         along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YoutubeExplode;
-using YoutubeExplode.Converter;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
 
@@ -25,22 +42,6 @@ namespace PlaylistEditor
         public Form1 frm1;
 
         private static YoutubeClient _youtube;
-      //  public double _progress;
-
-        //public double Progress
-        //{
-        //    get { return _progress; }
-        //    set { _progress = value;
-        //       // Console.WriteLine(_progress.ToString());
-        //        test(_progress);
-        //        ValueChanged?.Invoke(value);
-        //    }
-        //    //get => _progress;
-        //    //private set => _progress;
-        //}
-
-       // public event ValueChangedEventHandler ValueChanged;
-
 
         public async Task PullInfo(string videoId)
         {
