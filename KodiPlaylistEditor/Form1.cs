@@ -119,13 +119,14 @@ namespace PlaylistEditor
         public bool _taglink = false;
         public bool _vlcfound = false;
         public bool _savenow = false;
-    //    bool _youtube_dl = false;
         public bool _mark = false;
+
+        public static string videoTitle;
+
+        public static Video VideoInfo;
 
         private static YoutubeClient _youtube;
         public double _progress;
-        public static string videoTitle2;
-        public static Video VideoInfo2;
 
 
         string vlcpath = Settings.Default.vlcpath;
@@ -2181,14 +2182,6 @@ namespace PlaylistEditor
 
         }
 
-        //private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    //select path -> open file dialog
-        //    //start download
-        //    //store path in text file
-
-        //}
-
         private void button_cancel_Click(object sender, EventArgs e)
         {
             ShowPanel(false);
@@ -2252,7 +2245,7 @@ namespace PlaylistEditor
 
         #region Download
 
-        public void StartDownload()
+        private void StartDownload()
         {
             if (comboBox_download.SelectedIndex <= 0 /*&& checkBox_F.Checked == false*/)  //select folder new path 0 or n select -1
             {
@@ -2292,10 +2285,9 @@ namespace PlaylistEditor
             bool _rLink = checkBox_rlink.Checked;  //flag to replace link
 
             DownloadYTFile(output, movepath, _rLink);  //Download yt file
-
         }
 
-        public void DownloadYTFile(string downpath, string movepath, bool _rLink)
+        private void DownloadYTFile(string downpath, string movepath, bool _rLink)
         {
             string playcell = "";
             bool _done = false;
@@ -2458,16 +2450,14 @@ namespace PlaylistEditor
                 if (value != _progress)
                 {
                     _progress = value;
-                    Console.WriteLine(_progress.ToString());
+                ///    Console.WriteLine(_progress.ToString());
                      progressBar1.Value = (int)_progress;
-                   // UpdateProgressPosition(_progress);
-                    // Invoke(new MethodInvoker(UpdateProgressPosition));
                 }
             }
         }
 
 
-        public string DownloadYTLinkEx(string videolink, string NewPath, out string videofilename)
+        private string DownloadYTLinkEx(string videolink, string NewPath, out string videofilename)
         {
             Cursor.Current = Cursors.WaitCursor;
             // ClassYTExplode tt = new ClassYTExplode();
@@ -2483,7 +2473,7 @@ namespace PlaylistEditor
 
             Cursor.Current = Cursors.Default;
 
-            var _videoname = videoTitle2;
+            var _videoname = videoTitle;
 
             if (string.IsNullOrEmpty(_videoname))
                 return videofilename = "error";
@@ -2491,7 +2481,7 @@ namespace PlaylistEditor
 
         }
 
-        public async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext = 0)
+        private async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext = 0)
         {
             _youtube = new YoutubeClient();
             var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
@@ -2523,22 +2513,19 @@ namespace PlaylistEditor
                     // Combine them into a collectionb
                     var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
 
-                    VideoInfo2 = await _youtube.Videos.GetAsync(videoId);  //video info
-                    videoTitle2 = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo2.Title) + "." + filetype[fileext];
+                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
+                    videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + "." + filetype[fileext];
 
                     var progHandler = new Progress<double>(p => Progress2 = p * 100);
-                  //  var progHandler = new Progress<double>(p => progressBar1.Value = (int)(p * 100));
-                 //   var progHandler = new Progress<double>(p => worker.ReportProgress((int)(p*100)));
                     
 
-                    if (ClassHelp.MyFileExists(videoTitle2, 3000))
+                    if (ClassHelp.MyFileExists(videoTitle, 3000))
                     {
                         switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
                         {
                             case DialogResult.Yes:
                                 // Download and process them into one file
-                                // await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext]);
-                                await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle2, filetype[fileext], progHandler);
+                                await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
                                 break;
 
                             case DialogResult.No:
@@ -2550,15 +2537,14 @@ namespace PlaylistEditor
                     {
                         // Download and process them into one file
 
-                        await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle2, filetype[fileext], progHandler);
-                        //  await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext]);
+                        await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
 
                     }
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(videoTitle2 + Environment.NewLine + e.Message, "Video Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    videoTitle2 = "error";
+                    MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Video Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    videoTitle = "error";
                 }
                 finally
                 {
@@ -2573,16 +2559,17 @@ namespace PlaylistEditor
                 try
                 {
 
-                    VideoInfo2 = await _youtube.Videos.GetAsync(videoId);  //video info
-                    videoTitle2 = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo2.Title) + ".mp3";
+                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
+                    videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + ".mp3";
+                    var progHandler = new Progress<double>(p => Progress2 = p * 100);
 
-                    if (ClassHelp.MyFileExists(videoTitle2, 3000))
+                    if (ClassHelp.MyFileExists(videoTitle, 3000))
                     {
                         switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
                         {
                             case DialogResult.Yes:
                                 // Download and process them into one file
-                                await converter.DownloadVideoAsync(videoId, videoTitle2);
+                                await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
                                 break;
 
                             case DialogResult.No:
@@ -2593,7 +2580,7 @@ namespace PlaylistEditor
                     else
                     {
                         // Download and process them into one file
-                        await converter.DownloadVideoAsync(videoId, videoTitle2);
+                        await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
 
                     }
 
@@ -2601,13 +2588,13 @@ namespace PlaylistEditor
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(videoTitle2 + Environment.NewLine + e.Message, "Audio Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    videoTitle2 = "error";
+                    MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Audio Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    videoTitle = "error";
                 }
             }
         }
 
-        private string RemoveSpecialCharacters(string path)
+        private static string RemoveSpecialCharacters(string path)
         {
             return Path.GetInvalidFileNameChars().Aggregate(path, (current, c) => current.Replace(c.ToString(), string.Empty));
         }

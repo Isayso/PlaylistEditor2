@@ -74,9 +74,12 @@
             this.button_open = new System.Windows.Forms.Button();
             this.button_path = new System.Windows.Forms.Button();
             this.button_download_start = new System.Windows.Forms.Button();
+            this.buttonR_MoveDown = new RepeatingButton();
+            this.buttonR_moveUp = new RepeatingButton();
             this.textBox_find = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label9 = new System.Windows.Forms.Label();
             this.label_progress = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -96,9 +99,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.buttonR_MoveDown = new RepeatingButton();
-            this.buttonR_moveUp = new RepeatingButton();
             this.plabel_Filename = new PathLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -688,6 +688,38 @@
             this.button_download_start.UseVisualStyleBackColor = true;
             this.button_download_start.Click += new System.EventHandler(this.button_download_start_Click);
             // 
+            // buttonR_MoveDown
+            // 
+            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
+            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
+            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
+            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
+            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_MoveDown.TabIndex = 32;
+            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
+            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
+            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
+            // 
+            // buttonR_moveUp
+            // 
+            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
+            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
+            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
+            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_moveUp.Name = "buttonR_moveUp";
+            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_moveUp.TabIndex = 31;
+            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
+            this.buttonR_moveUp.UseVisualStyleBackColor = true;
+            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
+            // 
             // textBox_find
             // 
             this.textBox_find.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -720,6 +752,14 @@
             this.panel1.Size = new System.Drawing.Size(402, 169);
             this.panel1.TabIndex = 44;
             this.panel1.Visible = false;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(14, 142);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(75, 20);
+            this.progressBar1.TabIndex = 78;
+            this.progressBar1.Visible = false;
             // 
             // label9
             // 
@@ -931,46 +971,6 @@
             this.deleteEntryToolStripMenuItem.Text = "Delete entry";
             this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(14, 142);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(75, 20);
-            this.progressBar1.TabIndex = 78;
-            this.progressBar1.Visible = false;
-            // 
-            // buttonR_MoveDown
-            // 
-            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
-            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
-            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
-            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
-            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_MoveDown.TabIndex = 32;
-            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
-            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
-            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
-            // 
-            // buttonR_moveUp
-            // 
-            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
-            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
-            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
-            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_moveUp.Name = "buttonR_moveUp";
-            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_moveUp.TabIndex = 31;
-            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
-            this.buttonR_moveUp.UseVisualStyleBackColor = true;
-            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
-            // 
             // plabel_Filename
             // 
             this.plabel_Filename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1105,7 +1105,7 @@
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.Label label_progress;
         private System.Windows.Forms.Label label9;
-        public System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
