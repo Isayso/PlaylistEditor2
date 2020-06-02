@@ -20,16 +20,22 @@
 using PlaylistEditor.Properties;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YoutubeExplode;
+using YoutubeExplode.Converter;
+using YoutubeExplode.Videos;
+using YoutubeExplode.Videos.Streams;
 
 //ToDo drag&drop
 //ToDo move block of rows
@@ -72,8 +78,6 @@ namespace PlaylistEditor
 
         bool isModified = false;
 
-        // private bool doubleClick = false;
-
         //zoom of fonts
         public float zoomf = 1;
         //  private static readonly int ROWHEIGHT = 25;
@@ -115,20 +119,20 @@ namespace PlaylistEditor
         public bool _taglink = false;
         public bool _vlcfound = false;
         public bool _savenow = false;
-    //    bool _youtube_dl = false;
         public bool _mark = false;
+
+        public static string videoTitle;
+
+        public static Video VideoInfo;
+
+        private static YoutubeClient _youtube;
+        public double _progress;
+
 
         string vlcpath = Settings.Default.vlcpath;
         public bool useDash = Settings.Default.useDash;
 
         //  https://www.codeproject.com/articles/811035/drag-and-move-rows-in-datagridview-control
-        // int rowIndexFromMouseDown;
-        // DataGridViewRow rw;
-
-        // private Rectangle dragBoxFromMouseDown;
-        //// private int rowIndexFromMouseDown;
-        // private int rowIndexOfItemUnderMouseToDrop;
-
 
         public SortableBindingList<PlayEntry> GetList()
         {
@@ -668,6 +672,7 @@ namespace PlaylistEditor
         }
 
 
+        #region Button
 
         private void button_open_Click(object sender, EventArgs e)
         {
@@ -1390,10 +1395,11 @@ namespace PlaylistEditor
             }
 
         }
-
+#endregion
         /*--------------------------------------------------------------------------------*/
         // contextMenueStrip Entries
         /*--------------------------------------------------------------------------------*/
+        #region RightClick
         private void cutTSMenuItem_Click(object sender, EventArgs e)
         {
             if (dataGridView1.RowCount == 0) return;
@@ -1716,7 +1722,9 @@ namespace PlaylistEditor
             }
             // if (ClassHelp.LaunchFolderView(linkcell)) ;
             //if (Directory.Exists(folderPath))  
-            Process.Start("explorer.exe ", folderPath);
+            Process.Start("explorer.exe", string.Format("/select,\"{0}\"", linkcell));
+
+           // Process.Start("explorer.exe ", folderPath);
 
         }
 
@@ -1798,6 +1806,7 @@ namespace PlaylistEditor
 
         }
 
+#endregion
         /*--------------------------------------------------------------------------------*/
         /*-------------------end right click menue-------------------------------------*/
         /*--------------------------------------------------------------------------------*/
@@ -2173,14 +2182,6 @@ namespace PlaylistEditor
 
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //select path -> open file dialog
-            //start download
-            //store path in text file
-
-        }
-
         private void button_cancel_Click(object sender, EventArgs e)
         {
             ShowPanel(false);
@@ -2210,6 +2211,8 @@ namespace PlaylistEditor
                // button_download.BackgroundImage = Resources.download_outline;
                 button_cancel.Visible = false;
                 panel1.Visible = false;
+                progressBar1.Visible = false;
+                label9.Visible = false;
             }
             else  //true
             {
@@ -2221,6 +2224,7 @@ namespace PlaylistEditor
                // button_download.BackgroundImage = Resources.download_outline_green;
                 panel1.Visible = true;
                 button_cancel.Visible = true;
+                
 
             }
         }
@@ -2229,18 +2233,373 @@ namespace PlaylistEditor
         {
             RWSettings("write"); //gets values and write
 
-            StartDownload();
+            BarDefault();
 
-            //read out UI
-            // RWSettings("write"); //gets values and write
+            StartDownload();
 
             ShowPanel(false);
 
             UIVisible(true);
 
+        }
 
+        #region Download
+
+        private void StartDownload()
+        {
+            if (comboBox_download.SelectedIndex <= 0 /*&& checkBox_F.Checked == false*/)  //select folder new path 0 or n select -1
+            {
+                DialogResult result = folderBrowserDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+
+                    output = folderBrowserDialog.SelectedPath;
+                    comboBox_download.Items.Add(output);
+
+                    comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
+                    Settings.Default.combodown = comboBox_download.SelectedIndex;
+                    Settings.Default.Save();
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+            else if (comboBox_download.SelectedIndex >= 0 && comboBox_download.SelectedIndex < comboBox_download.Items.Count)
+            {
+                output = comboBox_download.Text;
+            }
+
+            string movepath = "";
+
+            if (!string.IsNullOrEmpty(output) && NativeMethods.UNCPath(output).StartsWith(@"\\"))  //copy to network path
+            {
+                movepath = output;     //store downpath in movepath
+                output = Path.GetTempPath();  //temp path
+
+            }
+
+            if (dataGridView1.SelectedRows.Count < 1)
+                dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Selected = true;
+
+            bool _rLink = checkBox_rlink.Checked;  //flag to replace link
+
+            DownloadYTFile(output, movepath, _rLink);  //Download yt file
+        }
+
+        private void DownloadYTFile(string downpath, string movepath, bool _rLink)
+        {
+            string playcell = "";
+            bool _done = false;
+            // string videofilename = "";
+
+            WaitWindow waitmove = new WaitWindow();
+            waitmove.Owner = this;
+            var x = Location.X - 40 + (Width - waitmove.Width) / 2;
+            var y = Location.Y + (Height - waitmove.Height) / 2;
+            waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
+            waitmove.StartPosition = FormStartPosition.Manual;
+
+            int i = 1;
+            //string fpsValue = textBox1.Text.Trim();
+            //if (!fpsValue.StartsWith("<") && !fpsValue.StartsWith(">")) fpsValue = "";
+
+            //ClassYTExplode yte = new ClassYTExplode();
+            //yte.ValueChanged += ProgressEventHandler; 
+
+            foreach (DataGridViewRow row in dataGridView1.GetSelectedRows())
+            {
+
+                //ToDO if UNC of downpath starts with \\ use temp first than copy store filenames in stringarray List<string>
+                label9.Text = i + " / " + dataGridView1.SelectedRows.Count; i++;
+
+
+                playcell = dataGridView1.Rows[row.Index].Cells[1].Value.ToString();
+                //  namecell = dataGridView1.Rows[row.Index].Cells[0].Value.ToString();
+
+                if (playcell.Contains("plugin") && playcell.Contains("youtube"))
+                {
+                    string[] key = playcell.Split('=');  //variant normal or YT playlist link
+                    if (key.Length > 1)
+                    {
+                        //if (!string.IsNullOrEmpty(ClassDownload.DownloadYTLink
+                        //                (YTURL + key[1], downpath, fpsValue, out string videofilename)))
+                        if (!string.IsNullOrEmpty(DownloadYTLinkEx
+                                        (YTURL + key[1], downpath, out string videofilename)))
+                        {
+                            if (videofilename == "error") continue;  //for download error -> next foreach
+
+                            _done = true;
+
+#if DEBUG
+                            Console.WriteLine(videofilename);   //
+#endif
+                            if (!string.IsNullOrEmpty(movepath) && Path.GetExtension(videofilename) != ".part")
+                            {
+                                var errorfilename = videofilename;
+                                //don't move part files
+
+                                if (ClassHelp.MyDirectoryExists(movepath, 4000))
+                                {
+                                    waitmove.Show();
+                                    waitmove.Refresh();
+                                    videofilename = ClassHelp.FileMove(videofilename, movepath);
+                                    if (videofilename == "error")
+                                    {
+                                        waitmove.Close();
+                                        continue;
+                                    }
+                                    waitmove.Close();
+                                }
+                                else  //path not avaliable
+                                {
+                                    DialogResult dialogSave = MessageBox.Show("Target path not avaliable Do you want to save to different path?",
+                                    "Save Playlist", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                    if (dialogSave == DialogResult.Yes)
+                                    {
+                                        saveFileDialog1.FileName = errorfilename;
+                                        saveFileDialog1.ShowDialog();
+                                    }
+                                    else
+                                    {
+                                        return;
+                                    }
+                                    errorfilename = "";
+                                }
+                            }
+
+                            string UNCfileName = NativeMethods.UNCPath(videofilename);
+
+                            //with replace Link
+                            if (checkBox_unix.Checked && rDrive && _rLink
+                                && !UNCfileName.EndsWith(".part") /* && comboBox_video.SelectedIndex !=4*/)  //unix and replace drive true, no .part, no audio only
+                            {
+
+                                if (UNCfileName.Contains("\\\\"))  // \\192.168.xxx.xxx
+                                {
+                                    if (!string.IsNullOrEmpty(nfs_server))
+                                    {
+                                        nfs_server = nfs_server.TrimEnd('/');  //replace last /
+                                        nfs_server = nfs_server.Replace("/", "\\");
+
+                                        if (UNCfileName.Contains(nfs_server))
+                                        {
+                                            string rest = UNCfileName.Replace(nfs_server, "");
+                                            rest = rest.Replace("\\\\\\", "\\");
+
+                                            playcell = "nfs://" + nfs_server + rest;
+                                            dataGridView1.Rows[row.Index].Cells[1].Value = playcell.Replace("\\", "/");
+                                        }
+                                    }
+
+                                    if (!string.IsNullOrEmpty(rpi_ip))
+                                    {
+                                        rpi_ip = rpi_ip.Replace("/", "\\");
+
+                                        if (UNCfileName.Contains(rpi_ip))
+                                        {
+                                            string rest = UNCfileName.Replace(rpi_ip, "");
+                                            rest = rest.Replace("\\\\\\", "\\");
+
+                                            playcell = "/storage/" + rest;
+                                            dataGridView1.Rows[row.Index].Cells[1].Value = playcell.Replace("\\Videos", "videos").Replace("\\", "/");  //Bug 1.9.3
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    dataGridView1.Rows[row.Index].Cells[1].Value = UNCfileName;
+                                }
+                            }
+                            else if (!checkBox_unix.Checked && rDrive && _rLink && !UNCfileName.Contains("part"))
+                            {
+                                //  dataGridView1.Rows[row.Index].Cells[1].Value = videofilename;
+                            }
+
+                            // if (_rLink) ClassHelp.popupForm("Link replaced", "blue", 1500);
+                            // no replace link
+                        }
+                        else
+                        {
+                            ClassHelp.PopupForm("Error " + videofilename, "red", 3000);
+                        }
+                    }
+                }
+                else if (playcell.StartsWith("html"))
+                {
+
+                    if (!string.IsNullOrEmpty(ClassDownload.DownloadLink
+                                       (playcell, downpath, out string videofilename)))
+                    {
+
+                    }
+                }
+
+            }
+
+            if (_done) ClassHelp.PopupForm("Download finished", "green", 3000);
 
         }
+
+
+        public double Progress2
+        {
+            get { return _progress; }
+            set
+            {
+                if (value != _progress)
+                {
+                    _progress = value;
+                ///    Console.WriteLine(_progress.ToString());
+                     progressBar1.Value = (int)_progress;
+                }
+            }
+        }
+
+
+        private string DownloadYTLinkEx(string videolink, string NewPath, out string videofilename)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            // ClassYTExplode tt = new ClassYTExplode();
+            Form1 frm1 = new Form1();
+
+            int maxres = Settings.Default.maxres;  //-> SetVideoQuality
+            int cvideo = Settings.Default.combovideo; //-> SetFileContainer .mp4 | .webm
+
+            if (!ClassDownload.CheckForFfmpeg() && maxres >= 720) return videofilename = "error";
+
+
+            Task.Run(async () => { await DownloadStream(videolink, NewPath, maxres, cvideo); }).Wait();  //-> videoUrlnew   audioUrl 
+
+            Cursor.Current = Cursors.Default;
+
+            var _videoname = videoTitle;
+
+            if (string.IsNullOrEmpty(_videoname))
+                return videofilename = "error";
+            else return videofilename = _videoname;
+
+        }
+
+        private async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext = 0)
+        {
+            _youtube = new YoutubeClient();
+            var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
+
+            if (fileext < 2)
+            {
+                try
+                {
+                    string[] filetype = { "mp4", "webm" };
+                 //   Progress = 0;
+
+
+                    // Get stream manifest
+                    var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
+
+                    // Select audio stream
+                    //  var audioStreamInfo2 = streamManifest.GetAudio().WithHighestBitrate();
+                    var audioStreamInfo = streamManifest.GetAudio()
+                                           .Where(s => s.Container == ClassYTExplode.SetFileContainer(fileext))
+                                           .WithHighestBitrate();
+
+                    var videoStreamInfo2 = streamManifest.GetVideoOnly()
+                                          .Where(s => s.VideoQuality <= ClassYTExplode.SetVideoQuality(height))
+                                          .Where(s => s.Container == ClassYTExplode.SetFileContainer(fileext))
+                                         // .Select(h => h.Url).ToList();
+                                         .First()
+                                          ;
+
+                    // Combine them into a collectionb
+                    var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
+
+                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
+                    videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + "." + filetype[fileext];
+
+                    var progHandler = new Progress<double>(p => Progress2 = p * 100);
+                    
+
+                    if (ClassHelp.MyFileExists(videoTitle, 3000))
+                    {
+                        switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
+                        {
+                            case DialogResult.Yes:
+                                // Download and process them into one file
+                                await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
+                                break;
+
+                            case DialogResult.No:
+                                //  return "error";
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        // Download and process them into one file
+
+                        await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Video Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    videoTitle = "error";
+                }
+                finally
+                {
+                  //  Progress = 0;
+
+                }
+
+            }
+
+            else  //audio only
+            {
+                try
+                {
+
+                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
+                    videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + ".mp3";
+                    var progHandler = new Progress<double>(p => Progress2 = p * 100);
+
+                    if (ClassHelp.MyFileExists(videoTitle, 3000))
+                    {
+                        switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
+                        {
+                            case DialogResult.Yes:
+                                // Download and process them into one file
+                                await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
+                                break;
+
+                            case DialogResult.No:
+                                //  return "error";
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        // Download and process them into one file
+                        await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
+
+                    }
+
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Audio Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    videoTitle = "error";
+                }
+            }
+        }
+
+        private static string RemoveSpecialCharacters(string path)
+        {
+            return Path.GetInvalidFileNameChars().Aggregate(path, (current, c) => current.Replace(c.ToString(), string.Empty));
+        }
+
+        #endregion
 
         private void UIVisible(bool show)
         {
@@ -2308,117 +2667,13 @@ namespace PlaylistEditor
         /// <summary>
         /// start download YT file
         /// </summary>
-        private void StartDownload()
-        {
-            if (comboBox_download.SelectedIndex <= 0 /*&& checkBox_F.Checked == false*/)  //select folder new path 0 or n select -1
-            {
-                DialogResult result = folderBrowserDialog.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-
-                    output = folderBrowserDialog.SelectedPath;
-                    comboBox_download.Items.Add(output);
-
-                    comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
-                    Settings.Default.combodown = comboBox_download.SelectedIndex;
-                    Settings.Default.Save();
-
-                    //downPath = lastPath;  //NewPath to store the path
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    return;
-                }
-            }
-            else if (comboBox_download.SelectedIndex >= 0 && comboBox_download.SelectedIndex < comboBox_download.Items.Count)
-            {
-                output = comboBox_download.Text;
-            }
-
-            string movepath = "";
-
-            if (!string.IsNullOrEmpty(output) && NativeMethods.UNCPath(output).StartsWith(@"\\"))  //copy to network path
-            {
-                movepath = output;     //store downpath in movepath
-                output = Path.GetTempPath();  //temp path
-
-            }
-
-            if (dataGridView1.SelectedRows.Count < 1)
-                dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Selected = true;
-
-            bool _rLink = checkBox_rlink.Checked;  //flag to replace link
-
-            DownloadYTFile(output, movepath, _rLink);  //Download yt file
-
-            //  ShowPanel(false);
-        }
-
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("https://github.com/ytdl-org/youtube-dl/blob/master/README.md#format-selection");
-        }
+        //private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        //{
+        //    Process.Start("https://github.com/ytdl-org/youtube-dl/blob/master/README.md#format-selection");
+        //}
 
 
 
-        private void DataGridView1_MouseClick(object sender, MouseEventArgs e)
-        {
-            //if (dataGridView1.SelectedRows.Count == 1)
-            //{
-            //    if (e.Button == MouseButtons.Left)
-            //    {
-            //        rw = dataGridView1.SelectedRows[0];
-            //        rowIndexFromMouseDown = dataGridView1.SelectedRows[0].Index;
-            //        dataGridView1.DoDragDrop(rw, DragDropEffects.Move);
-            //    }
-            //}
-        }
-
-        private void DataGridView1_MouseMove(object sender, MouseEventArgs e)
-        {
-            //if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
-            //{
-            //    // If the mouse moves outside the rectangle, start the drag.
-            //    if (dragBoxFromMouseDown != Rectangle.Empty &&
-            //    !dragBoxFromMouseDown.Contains(e.X, e.Y))
-            //    {
-            //        // Proceed with the drag and drop, passing in the list item.                    
-            //        DragDropEffects dropEffect = dataGridView1.DoDragDrop(
-            //              dataGridView1.Rows[rowIndexFromMouseDown],
-            //              DragDropEffects.Move);
-            //    }
-            //}
-        }
-
-        private void DataGridView1_MouseDown(object sender, MouseEventArgs e)
-        {
-            //// Get the index of the item the mouse is below.
-            //rowIndexFromMouseDown = dataGridView1.HitTest(e.X, e.Y).RowIndex;
-
-            //if (rowIndexFromMouseDown != -1)
-            //{
-            //    // Remember the point where the mouse down occurred. 
-            //    // The DragSize indicates the size that the mouse can move 
-            //    // before a drag event should be started.                
-            //    Size dragSize = SystemInformation.DragSize;
-
-            //    // Create a rectangle using the DragSize, with the mouse position being
-            //    // at the center of the rectangle.
-            //    dragBoxFromMouseDown = new Rectangle(
-            //              new Point(
-            //                e.X - (dragSize.Width / 2),
-            //                e.Y - (dragSize.Height / 2)),
-            //          dragSize);
-            //}
-            //else
-            //    // Reset the rectangle if the mouse is not over an item in the ListBox.
-            //    dragBoxFromMouseDown = Rectangle.Empty;
-        }
-
-        private void DataGridView1_DragOver(object sender, DragEventArgs e)
-        {
-            //e.Effect = DragDropEffects.Move;
-        }
 
         private void ComboBox_Click(object sender, EventArgs e)
         {
@@ -2762,8 +3017,6 @@ namespace PlaylistEditor
             //}
         }
 
-        //  https://www.google.com/search?q=%s
-
 
         /// <summary>
         /// download YT file
@@ -2771,173 +3024,25 @@ namespace PlaylistEditor
         /// <param name="downpath">download path</param>
         /// <param name="movepath">path to move if download to network path</param>
         /// <param name="_rLink">overwrite link</param>
-        private void DownloadYTFile(string downpath, string movepath, bool _rLink)
-        {
-            string playcell = "";
-            bool _done = false;
-            // string videofilename = "";
-
-            WaitWindow waitmove = new WaitWindow();
-            waitmove.Owner = this;
-            var x = Location.X - 40 + (Width - waitmove.Width) / 2;
-            var y = Location.Y + (Height - waitmove.Height) / 2;
-            waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
-            waitmove.StartPosition = FormStartPosition.Manual;
 
 
-
-            //string fpsValue = textBox1.Text.Trim();
-            //if (!fpsValue.StartsWith("<") && !fpsValue.StartsWith(">")) fpsValue = "";
-
-            //foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-            foreach (DataGridViewRow row in dataGridView1.GetSelectedRows())
-            {
-
-                //ToDO if UNC of downpath starts with \\ use temp first than copy store filenames in stringarray List<string>
-
-                playcell = dataGridView1.Rows[row.Index].Cells[1].Value.ToString();
-                //  namecell = dataGridView1.Rows[row.Index].Cells[0].Value.ToString();
-                //   ClassYTExplode.HandleProgress = new EventHandler(showProgress);
-
-
-                if (playcell.Contains("plugin") && playcell.Contains("youtube"))
-                {
-                    string[] key = playcell.Split('=');  //variant normal or YT playlist link
-                    if (key.Length > 1)
-                    {
-                        //if (!string.IsNullOrEmpty(ClassDownload.DownloadYTLink
-                        //                (YTURL + key[1], downpath, fpsValue, out string videofilename)))
-                        if (!string.IsNullOrEmpty(ClassDownload.DownloadYTLinkEx
-                                        (YTURL + key[1], downpath, out string videofilename)))
-
-                        {
-                            if (videofilename == "error") continue;  //for download error -> next foreach
-
-                            _done = true;
-
-                            //WaitWindow waitmove = new WaitWindow();
-                            //waitmove.Owner = this;
-                            //var x = Location.X - 40 + (Width - waitmove.Width) / 2;
-                            //var y = Location.Y + (Height - waitmove.Height) / 2;
-                            //waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
-                            //waitmove.StartPosition = FormStartPosition.Manual;
-#if DEBUG
-                            Console.WriteLine(videofilename);   //
-#endif
-                            if (!string.IsNullOrEmpty(movepath) && Path.GetExtension(videofilename) != ".part")
-                            {
-                                var errorfilename = videofilename;
-                                //don't move part files
-
-                                if (ClassHelp.MyDirectoryExists(movepath, 4000))
-                                {
-                                    waitmove.Show();
-                                    waitmove.Refresh();
-                                    videofilename = ClassHelp.FileMove(videofilename, movepath);
-                                    if (videofilename == "error")
-                                    {
-                                        waitmove.Close();
-                                        continue;
-                                    }
-                                    waitmove.Close();
-                                }
-                                else  //path not avaliable
-                                {
-                                    DialogResult dialogSave = MessageBox.Show("Target path not avaliable Do you want to save to different path?",
-                                    "Save Playlist", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                    if (dialogSave == DialogResult.Yes)
-                                    {
-                                        saveFileDialog1.FileName = errorfilename;
-                                        saveFileDialog1.ShowDialog();
-                                    }
-                                    else
-                                    {
-                                        return;
-                                    }
-                                    errorfilename = "";
-                                }
-                            }
-                            // waitmove.Dispose();  
-
-                            string UNCfileName = NativeMethods.UNCPath(videofilename);
-
-                            //with replace Link
-                            if (checkBox_unix.Checked && rDrive && _rLink
-                                && !UNCfileName.EndsWith(".part") /* && comboBox_video.SelectedIndex !=4*/)  //unix and replace drive true, no .part, no audio only
-                            {
-
-                                if (UNCfileName.Contains("\\\\"))  // \\192.168.xxx.xxx
-                                {
-                                    if (!string.IsNullOrEmpty(nfs_server))
-                                    {
-                                        nfs_server = nfs_server.TrimEnd('/');  //replace last /
-                                        nfs_server = nfs_server.Replace("/", "\\");
-
-                                        if (UNCfileName.Contains(nfs_server))
-                                        {
-                                            string rest = UNCfileName.Replace(nfs_server, "");
-                                            rest = rest.Replace("\\\\\\", "\\");
-
-                                            playcell = "nfs://" + nfs_server + rest;
-                                            dataGridView1.Rows[row.Index].Cells[1].Value = playcell.Replace("\\", "/");
-                                        }
-                                    }
-
-                                    if (!string.IsNullOrEmpty(rpi_ip))
-                                    {
-                                        rpi_ip = rpi_ip.Replace("/", "\\");
-
-                                        if (UNCfileName.Contains(rpi_ip))
-                                        {
-                                            string rest = UNCfileName.Replace(rpi_ip, "");
-                                            rest = rest.Replace("\\\\\\", "\\");
-
-                                            playcell = "/storage/" + rest;
-                                            dataGridView1.Rows[row.Index].Cells[1].Value = playcell.Replace("\\Videos", "videos").Replace("\\", "/");  //Bug 1.9.3
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    dataGridView1.Rows[row.Index].Cells[1].Value = UNCfileName;
-                                }
-                            }
-                            else if (!checkBox_unix.Checked && rDrive && _rLink && !UNCfileName.Contains("part"))
-                            {
-                                //  dataGridView1.Rows[row.Index].Cells[1].Value = videofilename;
-                            }
-
-                            // if (_rLink) ClassHelp.popupForm("Link replaced", "blue", 1500);
-                            // no replace link
-                        }
-                        else
-                        {
-                            ClassHelp.PopupForm("Error " + videofilename, "red", 3000);
-                        }
-                    }
-                }
-                else if (playcell.StartsWith("html"))
-                {
-
-                    if (!string.IsNullOrEmpty(ClassDownload.DownloadLink
-                                       (playcell, downpath, out string videofilename)))
-                    {
-
-                    }
-                }
-
-            }
-
-            // comboBox_download.Visible = false;
-            if (_done) ClassHelp.PopupForm("Download finished", "green", 3000);
-
-        }
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             // e.Control.ContextMenu = new ContextMenu();
             e.Control.ContextMenuStrip = contextMenuStrip2;
         }
+
+        private void BarDefault()
+        {
+            progressBar1.Visible = true;
+            label9.Visible = true;
+            progressBar1.Maximum = 100;
+            progressBar1.Minimum = 0;
+            progressBar1.Step = 1;
+            progressBar1.Value = 0;
+        }
+
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -3008,7 +3113,6 @@ namespace PlaylistEditor
 
         private void editCellPaste_Click(object sender, EventArgs e)
         {
-            // toolStripPaste.PerformClick();
             string s = Clipboard.GetText();
             if (dataGridView1.EditingControl is TextBox)
             {
@@ -3024,12 +3128,6 @@ namespace PlaylistEditor
             mruItems.Clear();
 
             mruItems = File.ReadAllLines(mruFile).ToList();
-
-
-            //foreach (object item in Settings.Default.FilePaths)
-            //{
-            //    info.Add(item.ToString());
-            //}
 
             labels = new List<Label> { label1, label2, label3, label4, label5 };
             int i = 0;
@@ -3056,7 +3154,6 @@ namespace PlaylistEditor
         private void dataGridView1_Click(object sender, EventArgs e)
         {
             if (panel2.Visible) panel2.Visible = false;
-
         }
 
         private void editF2ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3076,7 +3173,6 @@ namespace PlaylistEditor
                 {
                     // Get the control that is displaying this context menu
                     Control sourceControl = owner.SourceControl;
-                    // MessageBox.Show(sourceControl.Name);
 
                     if (sourceControl.Name == "label1") { mruItems[0] = "file1"; sourceControl.Text = "file"; }
                     if (sourceControl.Name == "label2") { mruItems[1] = "file2"; sourceControl.Text = "file"; }
@@ -3112,38 +3208,6 @@ namespace PlaylistEditor
             }
 
         }
-
-
-        //private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        //{
-        //    //doubleClickTimer.Tick += new EventHandler(doubleClickTimer_Tick);
-        //    //if (!doubleClick)
-        //    //{
-        //    //    doubleClick = true;
-        //    //    doubleClickTimer.Start();
-        //    //}
-        //    //else
-        //    //{
-        //    //    // wäre an dieser Stelle ein Doppelklick
-        //    //    return;
-        //    //}
-        //    //if (e.Button == MouseButtons.Right)
-        //    //{
-        //    //    // Führe etwas aus
-        //    //    contextMenuStrip2.Visible = true;
-        //    //}
-        //    //else if (e.Button == MouseButtons.Left)
-        //    //{
-        //    //    // Führe etwas anderes aus              
-        //    //}
-        //}
-
-        //private void doubleClickTimer_Tick(object sender, EventArgs e)
-        //{
-        //    doubleClickTimer.Stop();
-        //    doubleClick = false;
-        //}
-
 
         private void editCellCut_Click(object sender, EventArgs e)
         {

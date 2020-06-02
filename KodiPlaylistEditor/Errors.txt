@@ -3,5 +3,7 @@
 - ffmpeg check
 - ffmpeg fallback low res
 OK - newpath cancel performance
-- progress indicator
+OK progress indicator
 - vlc starts after dash error
+
+- replace link

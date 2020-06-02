@@ -1,25 +1,35 @@
-﻿using System;
+﻿/*
+ *      GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
+ *
+ *         This program stores the YouTube Links on local device
+ *         Copyright (C) <2019>  <Github: Isayso>
+ *
+ *         This program is free software: you can redistribute it and/or modify
+ *         it under the terms of the GNU General Public License as published by
+ *         the Free Software Foundation, either version 3 of the License, or
+ *         (at your option) any later version.
+ *
+ *         This program is distributed in the hope that it will be useful,
+ *         but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *         GNU General Public License for more details.
+ *
+ *         You should have received a copy of the GNU General Public License
+ *         along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YoutubeExplode;
-using YoutubeExplode.Converter;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
-using static PlaylistEditor.Form1;
 
 namespace PlaylistEditor
 {
-    public class ThresholdReachedEventArgs : EventArgs
-    {
-        public int Threshold { get; set; }
-        public DateTime TimeReached { get; set; }
-    }
 
+    public delegate void ValueChangedEventHandler(double value);
     public class ClassYTExplode
     {
         public static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos;
@@ -29,46 +39,11 @@ namespace PlaylistEditor
         public static string videoTitle;
         public static string audioUrl;
         public static Video VideoInfo;
+        public Form1 frm1;
 
         private static YoutubeClient _youtube;
 
-        //private double downProgress; 
-       // private double _progress;
-      //  private static IProgress<double> progr = new Progress<double>(HandleProgress);
-        public static double _progress;
-        //  private static ClassYTExplode _prog = new ClassYTExplode();
-
-        //   protected bool Set<T>(ref T field, T newValue = default, bool broadcast = false, [CallerMemberName] string propertyName = null);
-
-        //public double ProgressValue
-        //{
-        //    get { return downProgress; }
-        //    set
-        //    {
-        //        downProgress = value;
-        //        if (ValueChanged != null) ValueChanged(value);
-        //    }
-        //}
-
-        //public event ValueChangedEventHandler ValueChanged;
-
-        public static double Progress
-        {
-            get => _progress;
-            private set => OnProgressChanged(_progress);
-
-        }
-
-        public static void OnProgressChanged(double progress)
-        {
-            //  Form1 f = new Form1();
-            Console.WriteLine(progress.ToString());
-            _progress = progress;
-            //  var _progress = progress.ToString();
-            //  f.label_progress.Text = progress.ToString();
-        }
-
-        public static async Task PullInfo(string videoId)
+        public async Task PullInfo(string videoId)
         {
             _youtube = new YoutubeClient();
             try
@@ -84,7 +59,7 @@ namespace PlaylistEditor
             }
         }
 
-        private static VideoQuality SetVideoQuality(int height = 2)
+        public static VideoQuality SetVideoQuality(int height = 2)
         {
             VideoQuality quality = VideoQuality.High1080;
 
@@ -120,7 +95,7 @@ namespace PlaylistEditor
 
         }
 
-        private static Container SetFileContainer(int fileext)
+        public static Container SetFileContainer(int fileext)
         {
             Container extension = Container.Mp4;
 
@@ -141,7 +116,7 @@ namespace PlaylistEditor
             return extension;
         }
 
-        public static async Task PullDASH(string videoId, int height = 2)
+        public async Task PullDASH(string videoId, int height = 2)
         {
             _youtube = new YoutubeClient();
             videoUrlnew = "";
@@ -256,149 +231,10 @@ namespace PlaylistEditor
             }
         }
 
-        //public double Progress
-        //{
-        //    get => _progress;
-        //    private set => Set(ref _progress, value);
-        //}
 
 
-    public static async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext=0)
-        {
-            _youtube = new YoutubeClient();
-            var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
 
 
-            if (fileext < 2)
-            {
-                try
-                {
-                    string[] filetype = { "mp4", "webm" };
-                  //  Progress = 0;
-
-
-                    // Get stream manifest
-                    var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
-
-                    // Select audio stream
-                  //  var audioStreamInfo2 = streamManifest.GetAudio().WithHighestBitrate();
-                    var audioStreamInfo = streamManifest.GetAudio()
-                                           .Where(s => s.Container == SetFileContainer(fileext))
-                                           .WithHighestBitrate();
-
-
-                    /*            { 327, new ItagDescriptor(Container.WebM, AudioEncoding.Aac, null, null)},
-                    { 338, new ItagDescriptor(Container.WebM, AudioEncoding.Opus, null, null)},
-                    { 339, new ItagDescriptor(Container.WebM, AudioEncoding.Vorbis, null, null)}
-                    */
-                    // Select video stream
-                    //  var videoStreamInfo = streamManifest.GetVideo().FirstOrDefault(s => s.VideoQualityLabel == "1080p60");
-                    //var videoStreamInfo = streamManifest.GetVideoOnly()
-                    //  .FirstOrDefault(s => s.VideoQuality <= SetVideoQuality(height));
-
-                    var videoStreamInfo2 = streamManifest.GetVideoOnly()
-                                          .Where(s => s.VideoQuality <= SetVideoQuality(height))
-                                          .Where(s => s.Container == SetFileContainer(fileext))
-                                         // .Select(h => h.Url).ToList();
-                                         .First()
-                                          ;
-
-                    // Combine them into a collectionb
-                    var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
-
-                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
-                    videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + "." + filetype[fileext];
-
-                   //   var progressHandler = new Progress<double>(p => Progress = p);
-                    //  var progressHandler = new Progress<double>(p => Progress = p);
-                 //   var progressHandler = new Progress<double>(p => Progress = p);
-
-                    if (ClassHelp.MyFileExists(videoTitle, 3000))
-                    {
-                        switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
-                        {
-                            case DialogResult.Yes:
-                                // Download and process them into one file
-                                await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext]);
-                              //  await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progressHandler);
-                               // await converter.DownloadVideoAsync(VideoInfo.Url, videoTitle, filetype[fileext]);
-                                break;
-
-                            case DialogResult.No:
-                                //  return "error";
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        // Download and process them into one file
-                      //  await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progressHandler);
-                        await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext]);
-
-                    }
-
-
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Video Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    videoTitle = "error";
-                }
-                finally
-                {
-                 //   Progress = 0;
-
-                }
-
-            }
-
-            else  //audio only
-            {
-                try
-                {
-
-                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
-                    videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + ".mp3";
-
-                    if (ClassHelp.MyFileExists(videoTitle, 3000))
-                    {
-                        switch (MessageBox.Show("File exists, overwrite?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
-                        {
-                            case DialogResult.Yes:
-                                // Download and process them into one file
-                                await converter.DownloadVideoAsync(videoId, videoTitle);
-                                break;
-
-                            case DialogResult.No:
-                                //  return "error";
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        // Download and process them into one file
-                        await converter.DownloadVideoAsync(videoId, videoTitle);
-
-                    }
-
-
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(videoTitle + Environment.NewLine + e.Message, "Audio Download", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    videoTitle = "error";
-                }
-
-
-            }
-
-        }
-
-
-        private static string RemoveSpecialCharacters(string path)
-        {
-            return Path.GetInvalidFileNameChars().Aggregate(path, (current, c) => current.Replace(c.ToString(), string.Empty));
-        }
 
 
 

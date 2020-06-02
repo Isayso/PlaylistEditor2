@@ -131,28 +131,6 @@ namespace PlaylistEditor
 
         }
 
-        /// <summary>
-        /// get the title from youtube videos links
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns>title of YT video</returns>
-        //public static string GetTitle(string url)
-        //{
-        //    var api = $"http://youtube.com/get_video_info?video_id={GetArgs(url, "v", '?')}";
-        //    var retvalue = "";
-
-        //    try
-        //    {
-        //        retvalue = GetArgs(new WebClient().DownloadString(api), "title", '&');
-        //    }
-        //    catch (Exception)
-        //    {
-        //        MessageBox.Show("Error to get YouTube title", "YouTube error", MessageBoxButtons.OK);
-        //    }
-
-        //    return retvalue;
-
-        //}
 
         /// <summary>
         /// gets YouTube video title from html <title></title> tag
@@ -194,12 +172,12 @@ namespace PlaylistEditor
         public static string GetTitle_client(string url)
         {
             // https://stackoverflow.com/questions/329307/how-to-get-website-title-from-c-sharp
-           // var youtube = new YoutubeClient();
-
+            // var youtube = new YoutubeClient();
+            ClassYTExplode yte = new ClassYTExplode();
 
             ClassYTExplode.VideoInfo = null;
 
-            Task.Run(async () => { await ClassYTExplode.PullInfo(url); }).Wait();
+            Task.Run(async () => { await yte.PullInfo(url); }).Wait();
 
             if (string.IsNullOrEmpty(ClassYTExplode.videoTitle))
                 return "N/A";
@@ -236,20 +214,6 @@ namespace PlaylistEditor
         //}
 
 
-        /// <summary>
-        /// gets the argumnts from a youtube video link
-        /// </summary>
-        /// <param name="args"></param>
-        /// <param name="key"></param>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        //private static string GetArgs(string args, string key, char query)
-        //{
-        //    var iqs = args.IndexOf(query);
-        //    return iqs == -1
-        //        ? string.Empty : HttpUtility.ParseQueryString(iqs < args.Length - 1
-        //            ? args.Substring(iqs + 1) : string.Empty)[key];
-        //}
 
         /// <summary>
         /// function to get the path of installed vlc
@@ -305,116 +269,20 @@ namespace PlaylistEditor
             return enc.GetBytes(str);
         }
 
-      
-        /// <summary>
-        /// gets command line arg with youtube-dl.exe for DASH video
-        /// </summary>
-        /// <param name="videolink"></param>
-        /// <returns>command line arg or false if no DASH avaliable</returns>
-        //public static string GetVlcDashArg(string videolink)
-        //{
-        //    string[] height = { "2160", "1440", "1080", "720", "480", "360" };
-           
-        //    int maxres = Properties.Settings.Default.maxres;
-           
-        //    string videoUrl = "";
-
-        // //   PullData(videolink);
-
-        //    // vlc "https://video.stream" --input-slave="https://audio.stream"
-
-        //    string filename = NativeMethods.GetFullPathFromWindows("youtube-dl.exe");
-
-        //    if (string.IsNullOrEmpty(filename))
-        //    {
-        //        filename = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
-        //    }
-
-
-
-        //    // Set cursor as hourglass
-        //    Cursor.Current = Cursors.WaitCursor;
-
-        //    //no cmd window
-        //    ProcessStartInfo ps = new ProcessStartInfo();
-        //    ps.FileName = filename;// Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe";
-        //    ps.ErrorDialog = false;
-        //    //ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]\" -g " + videolink;  //-f "bestvideo[height<=720]" -g 2FcRM-p4koo
-        //    // ps.Arguments = "-f bestaudio -g " + videolink;
-        //    // error keys with -  -> -- seperator
-        //    ps.Arguments = "-f \"bestvideo[height<=" + height[maxres] + "]+bestaudio\" -g -- " + videolink;  //-f "bestvideo[height<=720]+bestaudio" -g 2FcRM-p4koo
-
-        //    ps.CreateNoWindow = true; // comment this out
-        //    ps.UseShellExecute = false; // true
-        //    ps.RedirectStandardOutput = true; // false
-        //    ps.EnvironmentVariables.Add("VARIABLE1", "1");
-        //    ps.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; // comment this out
-
-        //    using (Process proc = new Process())
-        //    {
-        //        proc.StartInfo = ps;
-        //        //proc.Exited += new EventHandler(proc_Exited);
-        //        //proc.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(proc_OutputDataReceived);
-        //        proc.Start();
-        //        StreamReader sr = proc.StandardOutput;
-        //        videoUrl = sr.ReadToEnd();
-        //        proc.WaitForExit();
-        //        //proc.BeginOutputReadLine(); // Comment this out
-        //    }
-
-        //    // Set cursor as default arrow
-        //    Cursor.Current = Cursors.Default;
-
-        //    if (string.IsNullOrEmpty(videoUrl)) return "false";  //sumtingwong
-        //    else if (videoUrl.Contains("manifest")) return "nodash";  //no dash
-
-        //    //   string[] splitUrl = videoUrl.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-
-        //    string[] splitUrl = videoUrl.Split(new[] { "\r\n", "\r", "\n" },StringSplitOptions.None);
-
-        //    string result = splitUrl[0] + " --input-slave=" + splitUrl[1];
-
-        //    return result;  //test
-
-
-        //}
-
-        //public static bool IsBusy
-        //{
-        //    get => _isBusy;
-        //    private set
-        //    {
-        //        Set(ref _isBusy, value);
-        //        PullDataCommand.RaiseCanExecuteChanged();
-        //        DownloadStreamCommand.RaiseCanExecuteChanged();
-        //    }
-        //}
-
-        //public static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos
-        //{
-        //    get => _videoOnlyStreamInfos;
-        //    private set
-        //    {
-        //        Set(ref _videoOnlyStreamInfos, value);
-        //        RaisePropertyChanged(nameof(IsDataAvailable));
-        //    }
-        //}
-
-
 
 
 
         public static string GetVlcDashArg2(string videolink)
         {
             // var youtube = new YoutubeClient();
-
+            ClassYTExplode yte = new ClassYTExplode();
             //  string[] height = { "2160", "1440", "1080", "720", "480", "360" };
             Cursor.Current = Cursors.WaitCursor;
 
             int maxres = Properties.Settings.Default.maxres;
 
         //    if (maxres <= 3)
-                Task.Run(async () => { await ClassYTExplode.PullDASH(videolink, maxres); }).Wait();
+                Task.Run(async () => { await yte.PullDASH(videolink, maxres); }).Wait();
             //else
             //    Task.Run(async () => { await ClassYTExplode.PullNoDASH(videolink, maxres); }).Wait();
 
@@ -547,70 +415,6 @@ namespace PlaylistEditor
 
             int stepsToSame = LevenshteinDistance(source, target);
             return (1.0 - ((double)stepsToSame / (double)Math.Max(source.Length, target.Length)));
-        }
-
-        /// <summary>
-        /// check if youtube-dl is availiable
-        /// </summary>
-        /// <returns>bool</returns>
-        public static bool YT_dl()
-        {
-            if (!string.IsNullOrEmpty(NativeMethods.GetFullPathFromWindows("youtube-dl.exe")) ||
-                File.Exists(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe"))
-            {
-                return true; // File.Exists(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\youtube-dl.exe");
-
-            }
-            return false;
-        }
-          
-
-
-    /// <summary>
-    /// Launch the folder view
-    /// </summary>
-    /// <param name="p_Filename">The fully qualified path and filename of the target to open as highlighted by explorer</param>
-    public static bool LaunchFolderView(string p_Filename)
-        {
-            bool l_result = false;
-
-            // Check the file exists
-            if (File.Exists(p_Filename))
-            {
-                // Check the folder we get from the file exists
-                // this function would just get "C:\Hello" from
-                // an input of "C:\Hello\World.txt"
-                string l_folder = Path.GetDirectoryName(p_Filename);//FileSystemHelpers.GetPathFromQualifiedPath(p_Filename);
-
-                // Check the folder exists
-                if (Directory.Exists(l_folder))
-                {
-                    try
-                    {
-                        // Start a new process for explorer
-                        // in this location     
-                        ProcessStartInfo l_psi = new ProcessStartInfo();
-                        l_psi.FileName = "explorer.exe";
-                         l_psi.Arguments = string.Format("/root,{0} /select,{1}", l_folder, p_Filename);
-                        // l_psi.Arguments = string.Format("/root,{0}",l_folder);
-                      //  l_psi.Arguments = string.Format(" {0} /select,{1}", l_folder, p_Filename);
-                        l_psi.UseShellExecute = true;
-
-                        Process l_newProcess = new Process();
-                        l_newProcess.StartInfo = l_psi;
-                        l_newProcess.Start();
-
-                        // No error
-                        l_result = true;
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new Exception("Error in 'LaunchFolderView'.", exception);
-                    }
-                }
-            }
-
-            return l_result;
         }
 
 
@@ -822,29 +626,6 @@ namespace PlaylistEditor
             return !Enumerable.Range(0, instance.GetLength(0)).Any(x => !instance[x].SequenceEqual(dgvRows[x].Cells.Cast<DataGridViewCell>().Select(c => c.Value).ToArray()));
         }
 
-        public static bool CheckClipboard()
-        {
-            DataObject o = (DataObject)Clipboard.GetDataObject();
-
-            if (Clipboard.ContainsText())
-            {
-                try
-                {
-
-                    string[] pastedRows = System.Text.RegularExpressions.Regex.Split(o.GetData(DataFormats.UnicodeText).ToString().TrimEnd("\r\n".ToCharArray()), "\r\n");
-                    string[] pastedRowCells = pastedRows[0].Split(new char[] { '\t' });
-
-                    if (pastedRowCells.Length == 3) return true;
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Paste operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-
-            return false;
-        }
 
         /// <summary>
         /// send ping to kodi IP
