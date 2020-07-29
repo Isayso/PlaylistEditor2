@@ -1,4 +1,10 @@
-﻿2.2.1
+﻿2.2.2
+- fix CTRL-L 
+- better YT key extract
+- cancel option closing
+- new YTExplode dll
+
+2.2.1
 - file selected in folder CTRL-L
 - progress bar download
 - code clean-up
