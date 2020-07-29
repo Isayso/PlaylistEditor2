@@ -345,7 +345,7 @@
             this.comboBox_video.Items.AddRange(new object[] {
             "mp4",
             "webm",
-            "no video"});
+            "audio"});
             this.comboBox_video.Location = new System.Drawing.Point(14, 70);
             this.comboBox_video.Name = "comboBox_video";
             this.comboBox_video.Size = new System.Drawing.Size(88, 28);

@@ -378,7 +378,7 @@ namespace PlaylistEditor
 
                 if (yt_Link.Contains(".youtube.com") || yt_Link.Contains("www.youtube-nocookie.com") || yt_Link.Contains("youtu.be"))
                 {
-                    if ((yt_Link.Contains("embed") || yt_Link.Contains("youtu.be")) && !yt_Link.Contains("=youtu.be"))  //variant embed link
+                    if ((yt_Link.Contains("embed") || yt_Link.Contains("youtu.be/")) && !yt_Link.Contains("=youtu.be/"))  //variant embed link
                     {
                         string[] key_em = yt_Link.Split('?');
                         key_em[0] = key_em[0].Split('/').Last();
@@ -660,8 +660,13 @@ namespace PlaylistEditor
             if (isModified == true && dataGridView1.RowCount > 0)
             {
                 DialogResult dialogSave = MessageBox.Show("Do you want to save your current playlist?",
-                "Save Playlist", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogSave == DialogResult.Yes) button_save.PerformClick();
+                "Save Playlist", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (dialogSave == DialogResult.Yes)
+                {
+                    button_save.PerformClick();
+                    isModified = false;
+                }
+                if (dialogSave == DialogResult.Cancel) e.Cancel = true;
 
             }
 
@@ -1690,6 +1695,8 @@ namespace PlaylistEditor
         private void openLinkLocationTSMenuItem_Click(object sender, EventArgs e)
         {
             //get link -> open expolorer
+            Cursor.Current = Cursors.WaitCursor;
+
             if (dataGridView1.Rows.Count == 0) return;
 
             var linkcell = dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString();
@@ -1707,24 +1714,30 @@ namespace PlaylistEditor
                 }
             }
 
-            if (linkcell.Contains("plugin")) return; //goodbye
+            // var folderPath = "";
 
-            var folderPath = "";
 
-            if (linkcell.Contains("nfs:"))
+            else if (linkcell.Contains("plugin")) return; //goodbye
+
+            else if (linkcell.Contains("nfs:"))
             {
                 linkcell = linkcell.Replace("nfs:", "").Replace("/", @"\");
-                folderPath = Path.GetDirectoryName(linkcell);
+              //  folderPath = Path.GetDirectoryName(linkcell);
             }
-            else if (linkcell.Contains(@":\"))
-            {
-                folderPath = Path.GetDirectoryName(linkcell);
-            }
+            //else if (linkcell.Contains(@":\"))
+            //{
+            //    folderPath = Path.GetDirectoryName(linkcell);
+            //}
             // if (ClassHelp.LaunchFolderView(linkcell)) ;
             //if (Directory.Exists(folderPath))  
-            Process.Start("explorer.exe", string.Format("/select,\"{0}\"", linkcell));
+            if (!ClassHelp.MyFileExists(linkcell, 5000))
 
-           // Process.Start("explorer.exe ", folderPath);
+                Process.Start("explorer.exe", string.Format("/select,\"{0}\"", linkcell));
+
+            else ClassHelp.PopupForm("File not found ", "red", 3000);
+
+            // Process.Start("explorer.exe ", folderPath);
+            Cursor.Current = Cursors.Default;
 
         }
 
@@ -1958,7 +1971,8 @@ namespace PlaylistEditor
                         break;
 
                     case Keys.L:    //open link in explorer
-                        openLinkLocationToolStripMenuItem.PerformClick();
+                        openLinkLocationTSMenuItem_Click(sender, null);
+                     //   openLinkLocationToolStripMenuItem.PerformClick();
                         break;
 
                     case Keys.G:    //search Name with google
