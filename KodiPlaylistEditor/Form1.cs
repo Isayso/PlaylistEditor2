@@ -129,6 +129,14 @@ namespace PlaylistEditor
         public double _progress;
 
 
+        public string[] videotypes = new[] {  ".m4v", ".3g2", ".3gp",".nsv",".tp",".ts",".ty",".strm",".pls",".rm",
+                    ".rmvb",".mpd",".m3u",".m3u8",".ifo",".mov",".qt",".divx",".xvid",".bivx",".vob",".nrg",".pva",
+                    ".wmv",".asf",".asx",".ogm",".m2v",".avi",".dat",".mpg",".mpeg",".mp4",".mkv",".mk3d",".avc",
+                    ".vp3",".svq3",".nuv",".viv",".dv",".fli",".flv",".001",".wpl",".vdr",".dvr-ms",".xsp",".mts",
+                    ".m2t",".m2ts",".evo",".ogv",".sdp",".avs",".rec",".url",".pxml",".vc1",".h264",".rcv",".rss",
+                    ".mpls",".webm",".bdmv",".wtv",".trp",".f4v" };
+
+
         string vlcpath = Settings.Default.vlcpath;
         public bool useDash = Settings.Default.useDash;
 
@@ -307,12 +315,6 @@ namespace PlaylistEditor
         /// <param name="m"></param>
         protected override void WndProc(ref Message m)
         {
-            var videotypes = new[] {  ".m4v", ".3g2", ".3gp",".nsv",".tp",".ts",".ty",".strm",".pls",".rm",
-                    ".rmvb",".mpd",".m3u",".m3u8",".ifo",".mov",".qt",".divx",".xvid",".bivx",".vob",".nrg",".pva",
-                    ".wmv",".asf",".asx",".ogm",".m2v",".avi",".dat",".mpg",".mpeg",".mp4",".mkv",".mk3d",".avc",
-                    ".vp3",".svq3",".nuv",".viv",".dv",".fli",".flv",".001",".wpl",".vdr",".dvr-ms",".xsp",".mts",
-                    ".m2t",".m2ts",".evo",".ogv",".sdp",".avs",".rec",".url",".pxml",".vc1",".h264",".rcv",".rss",
-                    ".mpls",".webm",".bdmv",".wtv",".trp",".f4v" };
 
             if (m.Msg == 0x0312 && m.WParam.ToInt32() == mActionHotKeyID)
             {
@@ -652,6 +654,9 @@ namespace PlaylistEditor
 
             Settings.Default.combodown = 0;  //to avoid false start
             Settings.Default.cleanexit = true; //clean exit
+            Properties.Settings.Default.F2Location = this.Location;
+            Properties.Settings.Default.F2Size = this.Size;
+
             Settings.Default.Save();
 
             NativeMethods.UnregisterHotKey(this.Handle, mActionHotKeyID);
@@ -1960,6 +1965,8 @@ namespace PlaylistEditor
                         break;
 
                     case Keys.N:
+                        Settings.Default.nostart = true;
+                        Settings.Default.Save();
                         RWSettings("write");
                         var info = new ProcessStartInfo(Application.ExecutablePath);
                         Process.Start(info);
@@ -2032,6 +2039,8 @@ namespace PlaylistEditor
 
             dataGridView1.Font = new Font(dataGridView1.Font.FontFamily,
                                          FONTSIZE * f, dataGridView1.Font.Style);
+
+            Properties.Settings.Default.ZoomFactor = f;
 
             //  dataGridView1.RowTemplate.Height = (int)(ROWHEIGHT * f);
 
@@ -2958,6 +2967,11 @@ namespace PlaylistEditor
             if (dataGridView1.Rows.Count == 0) return;
 
             String searchRequest = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+
+            if (searchRequest[searchRequest.Length - 4] == '.') 
+                searchRequest = searchRequest.Substring(0, searchRequest.Length - 4);
+
+          //  searchRequest = searchRequest.Replace(videotypes, " ");
             // searchRequest = new System.Text.RegularExpressions.Regex("(?<=for ?).+$").Match(searchRequest).Value;
 
             Process.Start("https://www.google.com/search?q=" + Uri.EscapeDataString(searchRequest));
@@ -3285,6 +3299,25 @@ namespace PlaylistEditor
             {
                 return;
             }
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            if (Settings.Default.F2Size.Width == 0 || Settings.Default.F2Size.Height == 0
+                 || Settings.Default.nostart)
+            {
+                // first start
+                this.Size = new Size(1140, 422);
+            }
+            else
+            {
+                if (Settings.Default.ZoomFactor != 0) ZoomGrid(Settings.Default.ZoomFactor);
+                this.Location = Settings.Default.F2Location;
+                this.Size = Settings.Default.F2Size;
+            }
+            Settings.Default.nostart = false;
+            Settings.Default.Save();
 
         }
 

@@ -55,6 +55,27 @@
             this.comboBox_download = new System.Windows.Forms.ComboBox();
             this.comboBox_video = new System.Windows.Forms.ComboBox();
             this.comboBox_audio = new System.Windows.Forms.ComboBox();
+            this.button_download_start = new System.Windows.Forms.Button();
+            this.button_path = new System.Windows.Forms.Button();
+            this.button_cancel = new System.Windows.Forms.Button();
+            this.RedoButton = new System.Windows.Forms.Button();
+            this.UndoButton = new System.Windows.Forms.Button();
+            this.button_check = new System.Windows.Forms.Button();
+            this.button_vlc = new System.Windows.Forms.Button();
+            this.button_revert = new System.Windows.Forms.Button();
+            this.button_tag = new System.Windows.Forms.Button();
+            this.button_download = new System.Windows.Forms.Button();
+            this.button_dup = new System.Windows.Forms.Button();
+            this.button_search = new System.Windows.Forms.Button();
+            this.buttonR_MoveDown = new RepeatingButton();
+            this.buttonR_moveUp = new RepeatingButton();
+            this.button_del_all = new System.Windows.Forms.Button();
+            this.button_settings = new System.Windows.Forms.Button();
+            this.button_add = new System.Windows.Forms.Button();
+            this.button_Info = new System.Windows.Forms.Button();
+            this.button_delLine = new System.Windows.Forms.Button();
+            this.button_save = new System.Windows.Forms.Button();
+            this.button_open = new System.Windows.Forms.Button();
             this.textBox_find = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -79,27 +100,6 @@
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.plabel_Filename = new PathLabel();
-            this.button_download_start = new System.Windows.Forms.Button();
-            this.button_path = new System.Windows.Forms.Button();
-            this.button_cancel = new System.Windows.Forms.Button();
-            this.RedoButton = new System.Windows.Forms.Button();
-            this.UndoButton = new System.Windows.Forms.Button();
-            this.button_check = new System.Windows.Forms.Button();
-            this.button_vlc = new System.Windows.Forms.Button();
-            this.button_revert = new System.Windows.Forms.Button();
-            this.button_tag = new System.Windows.Forms.Button();
-            this.button_download = new System.Windows.Forms.Button();
-            this.button_dup = new System.Windows.Forms.Button();
-            this.button_search = new System.Windows.Forms.Button();
-            this.buttonR_MoveDown = new RepeatingButton();
-            this.buttonR_moveUp = new RepeatingButton();
-            this.button_del_all = new System.Windows.Forms.Button();
-            this.button_settings = new System.Windows.Forms.Button();
-            this.button_add = new System.Windows.Forms.Button();
-            this.button_Info = new System.Windows.Forms.Button();
-            this.button_delLine = new System.Windows.Forms.Button();
-            this.button_save = new System.Windows.Forms.Button();
-            this.button_open = new System.Windows.Forms.Button();
             this.betterFolderBrowser1 = new WK.Libraries.BetterFolderBrowserNS.BetterFolderBrowser(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -371,269 +371,6 @@
             this.comboBox_audio.TabIndex = 54;
             this.toolTip1.SetToolTip(this.comboBox_audio, "audio format");
             this.comboBox_audio.Click += new System.EventHandler(this.ComboBox_Click);
-            // 
-            // textBox_find
-            // 
-            this.textBox_find.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_find.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_find.Location = new System.Drawing.Point(886, 66);
-            this.textBox_find.Name = "textBox_find";
-            this.textBox_find.Size = new System.Drawing.Size(167, 28);
-            this.textBox_find.TabIndex = 34;
-            this.textBox_find.Visible = false;
-            this.textBox_find.Click += new System.EventHandler(this.textBox_selectAll_Click);
-            this.textBox_find.TextChanged += new System.EventHandler(this.textBox_find_TextChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.progressBar1);
-            this.panel1.Controls.Add(this.label9);
-            this.panel1.Controls.Add(this.label_progress);
-            this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.button_download_start);
-            this.panel1.Controls.Add(this.button_path);
-            this.panel1.Controls.Add(this.checkBox_rlink);
-            this.panel1.Controls.Add(this.comboBox_audio);
-            this.panel1.Controls.Add(this.button_cancel);
-            this.panel1.Controls.Add(this.comboBox_video);
-            this.panel1.Controls.Add(this.comboBox_download);
-            this.panel1.Location = new System.Drawing.Point(673, 57);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(402, 169);
-            this.panel1.TabIndex = 44;
-            this.panel1.Visible = false;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(14, 142);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(75, 20);
-            this.progressBar1.TabIndex = 78;
-            this.progressBar1.Visible = false;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.SystemColors.Control;
-            this.label9.Location = new System.Drawing.Point(20, 119);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 20);
-            this.label9.TabIndex = 73;
-            this.label9.Text = "1 / 2";
-            this.label9.Visible = false;
-            // 
-            // label_progress
-            // 
-            this.label_progress.AutoSize = true;
-            this.label_progress.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_progress.ForeColor = System.Drawing.SystemColors.Control;
-            this.label_progress.Location = new System.Drawing.Point(20, 140);
-            this.label_progress.Name = "label_progress";
-            this.label_progress.Size = new System.Drawing.Size(0, 24);
-            this.label_progress.TabIndex = 72;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.Control;
-            this.label8.Location = new System.Drawing.Point(125, 47);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 20);
-            this.label8.TabIndex = 71;
-            this.label8.Text = "audio";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(18, 47);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(48, 20);
-            this.label7.TabIndex = 70;
-            this.label7.Text = "video";
-            // 
-            // checkBox_rlink
-            // 
-            this.checkBox_rlink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox_rlink.Checked = true;
-            this.checkBox_rlink.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_rlink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox_rlink.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_rlink.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_rlink.Location = new System.Drawing.Point(227, 70);
-            this.checkBox_rlink.Name = "checkBox_rlink";
-            this.checkBox_rlink.Size = new System.Drawing.Size(160, 24);
-            this.checkBox_rlink.TabIndex = 58;
-            this.checkBox_rlink.Text = "replace link";
-            this.checkBox_rlink.UseVisualStyleBackColor = true;
-            // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(18, 18);
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem,
-            this.cutToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(158, 76);
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.ShortcutKeyDisplayString = "Crtl-C";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
-            this.copyToolStripMenuItem.Text = "Copy";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.editCellCopy_Click);
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-V";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
-            this.pasteToolStripMenuItem.Text = "Paste";
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.editCellPaste_Click);
-            // 
-            // cutToolStripMenuItem
-            // 
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-X";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
-            this.cutToolStripMenuItem.Text = "Cut";
-            this.cutToolStripMenuItem.Click += new System.EventHandler(this.editCellCut_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.label3);
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.label_open);
-            this.panel2.Location = new System.Drawing.Point(-3, 56);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(213, 235);
-            this.panel2.TabIndex = 63;
-            this.panel2.Visible = false;
-            this.panel2.VisibleChanged += new System.EventHandler(this.panel2_VisibleChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoEllipsis = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.Control;
-            this.label5.Location = new System.Drawing.Point(14, 205);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(186, 24);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "label5";
-            this.label5.Click += new System.EventHandler(this.label_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoEllipsis = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.Control;
-            this.label4.Location = new System.Drawing.Point(14, 171);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(186, 24);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "label4";
-            this.label4.Click += new System.EventHandler(this.label_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoEllipsis = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.Control;
-            this.label3.Location = new System.Drawing.Point(14, 135);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(186, 24);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "label3";
-            this.label3.Click += new System.EventHandler(this.label_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoEllipsis = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.Control;
-            this.label2.Location = new System.Drawing.Point(14, 101);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(186, 24);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "label2";
-            this.label2.Click += new System.EventHandler(this.label_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoEllipsis = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(14, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(186, 23);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "label1";
-            this.label1.Click += new System.EventHandler(this.label_Click);
-            // 
-            // label_open
-            // 
-            this.label_open.AutoSize = true;
-            this.label_open.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_open.ForeColor = System.Drawing.SystemColors.Control;
-            this.label_open.Location = new System.Drawing.Point(18, 13);
-            this.label_open.Name = "label_open";
-            this.label_open.Size = new System.Drawing.Size(134, 24);
-            this.label_open.TabIndex = 1;
-            this.label_open.Text = "Open   Ctrl-O";
-            this.label_open.Click += new System.EventHandler(this.label_open_Click);
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(420, 149);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(202, 60);
-            this.label6.TabIndex = 64;
-            this.label6.Text = "Double Click to open file\r\nDrag \'n Drop video files\r\nCTRL-N Open new Window";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label6.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
-            // 
-            // contextMenuStrip3
-            // 
-            this.contextMenuStrip3.ImageScalingSize = new System.Drawing.Size(18, 18);
-            this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteEntryToolStripMenuItem});
-            this.contextMenuStrip3.Name = "contextMenuStrip3";
-            this.contextMenuStrip3.Size = new System.Drawing.Size(154, 28);
-            // 
-            // deleteEntryToolStripMenuItem
-            // 
-            this.deleteEntryToolStripMenuItem.Name = "deleteEntryToolStripMenuItem";
-            this.deleteEntryToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
-            this.deleteEntryToolStripMenuItem.Text = "Delete entry";
-            this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
-            // 
-            // plabel_Filename
-            // 
-            this.plabel_Filename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.plabel_Filename.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.plabel_Filename.ForeColor = System.Drawing.Color.Cyan;
-            this.plabel_Filename.Location = new System.Drawing.Point(363, 16);
-            this.plabel_Filename.Name = "plabel_Filename";
-            this.plabel_Filename.Size = new System.Drawing.Size(309, 23);
-            this.plabel_Filename.TabIndex = 26;
-            this.plabel_Filename.Text = "pathLabel1";
             // 
             // button_download_start
             // 
@@ -984,6 +721,269 @@
             this.button_open.UseVisualStyleBackColor = true;
             this.button_open.Click += new System.EventHandler(this.button_open_Click);
             // 
+            // textBox_find
+            // 
+            this.textBox_find.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_find.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_find.Location = new System.Drawing.Point(886, 66);
+            this.textBox_find.Name = "textBox_find";
+            this.textBox_find.Size = new System.Drawing.Size(167, 28);
+            this.textBox_find.TabIndex = 34;
+            this.textBox_find.Visible = false;
+            this.textBox_find.Click += new System.EventHandler(this.textBox_selectAll_Click);
+            this.textBox_find.TextChanged += new System.EventHandler(this.textBox_find_TextChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.progressBar1);
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.label_progress);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.button_download_start);
+            this.panel1.Controls.Add(this.button_path);
+            this.panel1.Controls.Add(this.checkBox_rlink);
+            this.panel1.Controls.Add(this.comboBox_audio);
+            this.panel1.Controls.Add(this.button_cancel);
+            this.panel1.Controls.Add(this.comboBox_video);
+            this.panel1.Controls.Add(this.comboBox_download);
+            this.panel1.Location = new System.Drawing.Point(673, 57);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(402, 169);
+            this.panel1.TabIndex = 44;
+            this.panel1.Visible = false;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(14, 142);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(75, 20);
+            this.progressBar1.TabIndex = 78;
+            this.progressBar1.Visible = false;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.Control;
+            this.label9.Location = new System.Drawing.Point(20, 119);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(42, 20);
+            this.label9.TabIndex = 73;
+            this.label9.Text = "1 / 2";
+            this.label9.Visible = false;
+            // 
+            // label_progress
+            // 
+            this.label_progress.AutoSize = true;
+            this.label_progress.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_progress.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_progress.Location = new System.Drawing.Point(20, 140);
+            this.label_progress.Name = "label_progress";
+            this.label_progress.Size = new System.Drawing.Size(0, 24);
+            this.label_progress.TabIndex = 72;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.Control;
+            this.label8.Location = new System.Drawing.Point(125, 47);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(49, 20);
+            this.label8.TabIndex = 71;
+            this.label8.Text = "audio";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.Control;
+            this.label7.Location = new System.Drawing.Point(18, 47);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 20);
+            this.label7.TabIndex = 70;
+            this.label7.Text = "video";
+            // 
+            // checkBox_rlink
+            // 
+            this.checkBox_rlink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox_rlink.Checked = true;
+            this.checkBox_rlink.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_rlink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox_rlink.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_rlink.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_rlink.Location = new System.Drawing.Point(227, 70);
+            this.checkBox_rlink.Name = "checkBox_rlink";
+            this.checkBox_rlink.Size = new System.Drawing.Size(160, 24);
+            this.checkBox_rlink.TabIndex = 58;
+            this.checkBox_rlink.Text = "replace link";
+            this.checkBox_rlink.UseVisualStyleBackColor = true;
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(18, 18);
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.cutToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(158, 76);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.ShortcutKeyDisplayString = "Crtl-C";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
+            this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.editCellCopy_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-V";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
+            this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.editCellPaste_Click);
+            // 
+            // cutToolStripMenuItem
+            // 
+            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+            this.cutToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl-X";
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
+            this.cutToolStripMenuItem.Text = "Cut";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.editCellCut_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.label_open);
+            this.panel2.Location = new System.Drawing.Point(-3, 56);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(213, 235);
+            this.panel2.TabIndex = 63;
+            this.panel2.Visible = false;
+            this.panel2.VisibleChanged += new System.EventHandler(this.panel2_VisibleChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoEllipsis = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.Control;
+            this.label5.Location = new System.Drawing.Point(14, 205);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(186, 24);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "label5";
+            this.label5.Click += new System.EventHandler(this.label_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoEllipsis = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.SystemColors.Control;
+            this.label4.Location = new System.Drawing.Point(14, 171);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(186, 24);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "label4";
+            this.label4.Click += new System.EventHandler(this.label_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoEllipsis = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.Control;
+            this.label3.Location = new System.Drawing.Point(14, 135);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(186, 24);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "label3";
+            this.label3.Click += new System.EventHandler(this.label_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoEllipsis = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.Control;
+            this.label2.Location = new System.Drawing.Point(14, 101);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(186, 24);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "label2";
+            this.label2.Click += new System.EventHandler(this.label_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoEllipsis = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(14, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(186, 23);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.label_Click);
+            // 
+            // label_open
+            // 
+            this.label_open.AutoSize = true;
+            this.label_open.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_open.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_open.Location = new System.Drawing.Point(18, 13);
+            this.label_open.Name = "label_open";
+            this.label_open.Size = new System.Drawing.Size(134, 24);
+            this.label_open.TabIndex = 1;
+            this.label_open.Text = "Open   Ctrl-O";
+            this.label_open.Click += new System.EventHandler(this.label_open_Click);
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label6.Location = new System.Drawing.Point(420, 149);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(202, 60);
+            this.label6.TabIndex = 64;
+            this.label6.Text = "Double Click to open file\r\nDrag \'n Drop video files\r\nCTRL-N Open new Window";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label6.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
+            // 
+            // contextMenuStrip3
+            // 
+            this.contextMenuStrip3.ImageScalingSize = new System.Drawing.Size(18, 18);
+            this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteEntryToolStripMenuItem});
+            this.contextMenuStrip3.Name = "contextMenuStrip3";
+            this.contextMenuStrip3.Size = new System.Drawing.Size(154, 28);
+            // 
+            // deleteEntryToolStripMenuItem
+            // 
+            this.deleteEntryToolStripMenuItem.Name = "deleteEntryToolStripMenuItem";
+            this.deleteEntryToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
+            this.deleteEntryToolStripMenuItem.Text = "Delete entry";
+            this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
+            // 
+            // plabel_Filename
+            // 
+            this.plabel_Filename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.plabel_Filename.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.plabel_Filename.ForeColor = System.Drawing.Color.Cyan;
+            this.plabel_Filename.Location = new System.Drawing.Point(363, 16);
+            this.plabel_Filename.Name = "plabel_Filename";
+            this.plabel_Filename.Size = new System.Drawing.Size(309, 23);
+            this.plabel_Filename.TabIndex = 26;
+            this.plabel_Filename.Text = "pathLabel1";
+            // 
             // betterFolderBrowser1
             // 
             this.betterFolderBrowser1.Multiselect = false;
@@ -1028,6 +1028,7 @@
             this.Name = "Form1";
             this.Text = "Playlist Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);

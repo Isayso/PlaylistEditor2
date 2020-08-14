@@ -2,6 +2,8 @@
 - bug CTRL-L
 - new folder dialog
 - Nuget Update
+- position and size saved
+- google search without file extension
 
 2.2.2
 - fix CTRL-L 
