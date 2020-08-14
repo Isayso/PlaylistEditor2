@@ -1,4 +1,9 @@
-﻿2.2.2
+﻿2.2.3
+- bug CTRL-L
+- new folder dialog
+- Nuget Update
+
+2.2.2
 - fix CTRL-L 
 - better YT key extract
 - cancel option closing

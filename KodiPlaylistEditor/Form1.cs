@@ -1719,7 +1719,7 @@ namespace PlaylistEditor
 
             else if (linkcell.Contains("plugin")) return; //goodbye
 
-            else if (linkcell.Contains("nfs:"))
+            else if (linkcell.StartsWith("nfs:"))
             {
                 linkcell = linkcell.Replace("nfs:", "").Replace("/", @"\");
               //  folderPath = Path.GetDirectoryName(linkcell);
@@ -1730,7 +1730,7 @@ namespace PlaylistEditor
             //}
             // if (ClassHelp.LaunchFolderView(linkcell)) ;
             //if (Directory.Exists(folderPath))  
-            if (!ClassHelp.MyFileExists(linkcell, 5000))
+            if (ClassHelp.MyFileExists(linkcell, 5000))
 
                 Process.Start("explorer.exe", string.Format("/select,\"{0}\"", linkcell));
 
@@ -2259,7 +2259,7 @@ namespace PlaylistEditor
 
         #region Download
 
-        private void StartDownload()
+        private void StartDownload_old()
         {
             if (comboBox_download.SelectedIndex <= 0 /*&& checkBox_F.Checked == false*/)  //select folder new path 0 or n select -1
             {
@@ -2300,6 +2300,49 @@ namespace PlaylistEditor
 
             DownloadYTFile(output, movepath, _rLink);  //Download yt file
         }
+
+        private void StartDownload()
+        {
+            if (comboBox_download.SelectedIndex <= 0 /*&& checkBox_F.Checked == false*/)  //select folder new path 0 or n select -1
+            {
+                DialogResult result = betterFolderBrowser1.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+
+                    output = betterFolderBrowser1.SelectedPath;
+                    comboBox_download.Items.Add(output);
+
+                    comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
+                    Settings.Default.combodown = comboBox_download.SelectedIndex;
+                    Settings.Default.Save();
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+            else if (comboBox_download.SelectedIndex >= 0 && comboBox_download.SelectedIndex < comboBox_download.Items.Count)
+            {
+                output = comboBox_download.Text;
+            }
+
+            string movepath = "";
+
+            if (!string.IsNullOrEmpty(output) && NativeMethods.UNCPath(output).StartsWith(@"\\"))  //copy to network path
+            {
+                movepath = output;     //store downpath in movepath
+                output = Path.GetTempPath();  //temp path
+
+            }
+
+            if (dataGridView1.SelectedRows.Count < 1)
+                dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Selected = true;
+
+            bool _rLink = checkBox_rlink.Checked;  //flag to replace link
+
+            DownloadYTFile(output, movepath, _rLink);  //Download yt file
+        }
+
 
         private void DownloadYTFile(string downpath, string movepath, bool _rLink)
         {
@@ -2808,7 +2851,7 @@ namespace PlaylistEditor
         private void RunStreamCheck(CancellationToken token, IProgress<string> progress)
         {
             string playcell = "";
-            string[] knownip = { };
+            string[] knownip = Array.Empty<string>();
 
             string maxrows = dataGridView1.Rows.Count.ToString();
 
@@ -3201,13 +3244,35 @@ namespace PlaylistEditor
             panel2.Visible = false;
         }
 
-        private void button_path_Click(object sender, EventArgs e)
+        private void button_path_Click_old(object sender, EventArgs e)
         {
             DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
 
                 output = folderBrowserDialog.SelectedPath;
+                comboBox_download.Items.Add(output);
+
+                comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
+                Settings.Default.combodown = comboBox_download.SelectedIndex;
+                Settings.Default.Save();
+
+                //downPath = lastPath;  //NewPath to store the path
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
+        }
+
+        private void button_path_Click(object sender, EventArgs e)
+        {
+            DialogResult result = betterFolderBrowser1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+
+                output = betterFolderBrowser1.SelectedPath;
                 comboBox_download.Items.Add(output);
 
                 comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;

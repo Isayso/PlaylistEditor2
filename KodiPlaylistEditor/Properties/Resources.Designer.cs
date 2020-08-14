@@ -333,6 +333,16 @@ namespace PlaylistEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap shredder {
+            get {
+                object obj = ResourceManager.GetObject("shredder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap stop_circle_outline_red {
             get {
                 object obj = ResourceManager.GetObject("stop_circle_outline_red", resourceCulture);
