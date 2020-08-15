@@ -207,6 +207,8 @@ namespace PlaylistEditor
             //checkBox_fps.Checked = false; //Frames pr sec
             //checkBox_F.Checked = false; //show formats only
 
+           // comboBox1.ContextMenuStrip = contextMenuStrip4;
+
             // dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
             //dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.ShowCellToolTips = false;
@@ -2314,11 +2316,11 @@ namespace PlaylistEditor
         {
             if (comboBox_download.SelectedIndex <= 0 /*&& checkBox_F.Checked == false*/)  //select folder new path 0 or n select -1
             {
-                DialogResult result = betterFolderBrowser1.ShowDialog();
+                DialogResult result = folderBrowserDialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
 
-                    output = betterFolderBrowser1.SelectedPath;
+                    output = folderBrowserDialog.SelectedPath;
                     comboBox_download.Items.Add(output);
 
                     comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
@@ -2974,7 +2976,8 @@ namespace PlaylistEditor
           //  searchRequest = searchRequest.Replace(videotypes, " ");
             // searchRequest = new System.Text.RegularExpressions.Regex("(?<=for ?).+$").Match(searchRequest).Value;
 
-            Process.Start("https://www.google.com/search?q=" + Uri.EscapeDataString(searchRequest));
+           // Process.Start("https://www.google.com/search?q=" + Uri.EscapeDataString(searchRequest));
+            Process.Start(Settings.Default.SearchQuery + Uri.EscapeDataString(searchRequest));
         }
 
         private void DataGridView1_CellValidated(object sender, DataGridViewCellEventArgs e)
@@ -3258,6 +3261,17 @@ namespace PlaylistEditor
             panel2.Visible = false;
         }
 
+        private void cmsDeletePathItem_Click(object sender, EventArgs e)
+        {
+            if (comboBox_download.SelectedIndex != 0)
+                comboBox_download.Items.Remove(comboBox_download.SelectedItem);
+
+            comboBox_download.SelectedIndex = 0;
+            Settings.Default.combodown = 0;
+
+        }
+
+
         private void button_path_Click_old(object sender, EventArgs e)
         {
             DialogResult result = folderBrowserDialog.ShowDialog();
@@ -3282,18 +3296,56 @@ namespace PlaylistEditor
 
         private void button_path_Click(object sender, EventArgs e)
         {
-            DialogResult result = betterFolderBrowser1.ShowDialog();
+            // string newFolder;
+
+            //using (FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog())
+            //{
+            //    if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            //    {
+            //        output = betterFolderBrowser1.SelectedPath;
+            //        comboBox_download.Items.Add(output);
+
+            //        comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
+            //        Settings.Default.combodown = comboBox_download.SelectedIndex;
+            //        Settings.Default.Save();
+
+            //    }
+            //    else
+            //    {
+            //        return;
+            //    }
+
+
+            //}
+
+            //https://stackoverflow.com/questions/705409/how-do-i-open-a-folderbrowserdialog-at-the-selected-folder
+
+            // FolderBrowserDialog diag = new FolderBrowserDialog();
+            //// diag.Description = "Select New ";
+            // diag.SelectedPath = Application.StartupPath;
+
+            // if (diag.ShowDialog() == DialogResult.OK)
+            // {
+            //     output = folderBrowserDialog.SelectedPath;
+            //     comboBox_download.Items.Add(output);
+
+            //     comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
+            //     Settings.Default.combodown = comboBox_download.SelectedIndex;
+            //     Settings.Default.Save();
+
+            // }
+
+            DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
 
-                output = betterFolderBrowser1.SelectedPath;
+                output = folderBrowserDialog.SelectedPath;
                 comboBox_download.Items.Add(output);
 
                 comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
                 Settings.Default.combodown = comboBox_download.SelectedIndex;
                 Settings.Default.Save();
 
-                //downPath = lastPath;  //NewPath to store the path
             }
             else if (result == DialogResult.Cancel)
             {
@@ -3318,6 +3370,16 @@ namespace PlaylistEditor
             }
             Settings.Default.nostart = false;
             Settings.Default.Save();
+
+        }
+
+        private void cms1NewWIndow_Click(object sender, EventArgs e)
+        {
+            Settings.Default.nostart = true;
+            Settings.Default.Save();
+            RWSettings("write");
+            var info = new ProcessStartInfo(Application.ExecutablePath);
+            Process.Start(info);
 
         }
 

@@ -425,5 +425,17 @@ namespace PlaylistEditor.Properties {
                 this["nostart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.google.com/search?q=")]
+        public string SearchQuery {
+            get {
+                return ((string)(this["SearchQuery"]));
+            }
+            set {
+                this["SearchQuery"] = value;
+            }
+        }
     }
 }

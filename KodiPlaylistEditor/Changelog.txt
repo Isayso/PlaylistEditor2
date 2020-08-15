@@ -1,9 +1,10 @@
 ﻿2.2.3
 - bug CTRL-L
-- new folder dialog
 - Nuget Update
 - position and size saved
-- google search without file extension
+- iNet search without file extension
+- iNet search customizable
+- right click menu to delete download path
 
 2.2.2
 - fix CTRL-L 
