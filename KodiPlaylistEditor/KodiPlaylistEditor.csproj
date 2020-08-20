@@ -291,6 +291,11 @@
     <Content Include="KodiPlaylistEditor2.ico" />
     <Content Include="KodiPlaylistEditor3.ico" />
     <Content Include="KodiPlaylistEditorW.ico" />
+    <None Include="Resources\redo_fade.png" />
+    <None Include="Resources\undo_fade.png" />
+    <None Include="Resources\close %281%29.png" />
+    <None Include="Resources\autorenew_black_24dp.png" />
+    <Content Include="TextFile.txt" />
     <None Include="Resources\shredder.png" />
     <None Include="Resources\download_outline_green.png" />
     <None Include="Resources\stop_circle_outline_red1.png" />

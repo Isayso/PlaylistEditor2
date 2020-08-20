@@ -3,8 +3,9 @@
 - Nuget Update
 - position and size saved
 - iNet search without file extension
-- iNet search customizable
+- iNet search engine customizable
 - right click menu to delete download path
+- redo/undo better UI
 
 2.2.2
 - fix CTRL-L 
