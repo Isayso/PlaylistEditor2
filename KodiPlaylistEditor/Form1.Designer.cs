@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -42,7 +42,7 @@
             this.pasteTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.sendToHtttpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cms1Send2Clip = new System.Windows.Forms.ToolStripMenuItem();
             this.searchGoogletoolStriptem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.downloadYTFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,38 +79,38 @@
             this.button_save = new System.Windows.Forms.Button();
             this.button_open = new System.Windows.Forms.Button();
             this.btn_clearfind = new System.Windows.Forms.Button();
+            this.buttonR_MoveDown = new RepeatingButton();
+            this.buttonR_moveUp = new RepeatingButton();
             this.textBox_find = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label9 = new System.Windows.Forms.Label();
+            this.label_counter = new System.Windows.Forms.Label();
             this.label_progress = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lbl8 = new System.Windows.Forms.Label();
+            this.lbl7 = new System.Windows.Forms.Label();
             this.checkBox_rlink = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.panelMRU = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label_open = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.label_central = new System.Windows.Forms.Label();
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonR_MoveDown = new RepeatingButton();
-            this.buttonR_moveUp = new RepeatingButton();
             this.plabel_Filename = new PathLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip4.SuspendLayout();
             this.panel1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.panelMRU.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,14 +123,14 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.163636F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.163636F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.Location = new System.Drawing.Point(-3, 56);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
@@ -162,14 +162,14 @@
             this.pasteTSMenuItem,
             this.cutTSMenuItem,
             this.toolStripSeparator2,
-            this.sendToHtttpToolStripMenuItem,
+            this.cms1Send2Clip,
             this.searchGoogletoolStriptem,
             this.toolStripSeparator3,
             this.downloadYTFileToolStripMenuItem,
             this.editF2ToolStripMenuItem,
             this.cms1NewWIndow});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(282, 262);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(282, 287);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // kodiToolStripMenuItem
@@ -239,13 +239,13 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(278, 6);
             // 
-            // sendToHtttpToolStripMenuItem
+            // cms1Send2Clip
             // 
-            this.sendToHtttpToolStripMenuItem.Name = "sendToHtttpToolStripMenuItem";
-            this.sendToHtttpToolStripMenuItem.ShortcutKeyDisplayString = "Alt+C";
-            this.sendToHtttpToolStripMenuItem.Size = new System.Drawing.Size(281, 24);
-            this.sendToHtttpToolStripMenuItem.Text = "Send YT Link to Clipboard";
-            this.sendToHtttpToolStripMenuItem.Click += new System.EventHandler(this.sendToHtttpTSMenuItem_Click);
+            this.cms1Send2Clip.Name = "cms1Send2Clip";
+            this.cms1Send2Clip.ShortcutKeyDisplayString = "Alt+C";
+            this.cms1Send2Clip.Size = new System.Drawing.Size(281, 24);
+            this.cms1Send2Clip.Text = "Send YT Link to Clipboard";
+            this.cms1Send2Clip.Click += new System.EventHandler(this.sendToHtttpTSMenuItem_Click);
             // 
             // searchGoogletoolStriptem
             // 
@@ -272,7 +272,7 @@
             this.editF2ToolStripMenuItem.Name = "editF2ToolStripMenuItem";
             this.editF2ToolStripMenuItem.ShortcutKeyDisplayString = "F2";
             this.editF2ToolStripMenuItem.Size = new System.Drawing.Size(281, 24);
-            this.editF2ToolStripMenuItem.Text = "Edit";
+            this.editF2ToolStripMenuItem.Text = "Rename";
             this.editF2ToolStripMenuItem.Click += new System.EventHandler(this.editF2ToolStripMenuItem_Click);
             // 
             // cms1NewWIndow
@@ -757,6 +757,38 @@
             this.btn_clearfind.Visible = false;
             this.btn_clearfind.Click += new System.EventHandler(this.btn_clearfind_Click);
             // 
+            // buttonR_MoveDown
+            // 
+            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
+            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
+            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
+            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
+            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_MoveDown.TabIndex = 32;
+            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
+            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
+            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
+            // 
+            // buttonR_moveUp
+            // 
+            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
+            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
+            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
+            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_moveUp.Name = "buttonR_moveUp";
+            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_moveUp.TabIndex = 31;
+            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
+            this.buttonR_moveUp.UseVisualStyleBackColor = true;
+            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
+            // 
             // textBox_find
             // 
             this.textBox_find.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -773,10 +805,10 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.progressBar1);
-            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.label_counter);
             this.panel1.Controls.Add(this.label_progress);
-            this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.lbl8);
+            this.panel1.Controls.Add(this.lbl7);
             this.panel1.Controls.Add(this.button_download_start);
             this.panel1.Controls.Add(this.button_path);
             this.panel1.Controls.Add(this.checkBox_rlink);
@@ -784,7 +816,7 @@
             this.panel1.Controls.Add(this.button_cancel);
             this.panel1.Controls.Add(this.comboBox_video);
             this.panel1.Controls.Add(this.comboBox_download);
-            this.panel1.Location = new System.Drawing.Point(673, 58);
+            this.panel1.Location = new System.Drawing.Point(673, 57);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(402, 169);
             this.panel1.TabIndex = 44;
@@ -798,17 +830,17 @@
             this.progressBar1.TabIndex = 78;
             this.progressBar1.Visible = false;
             // 
-            // label9
+            // label_counter
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.SystemColors.Control;
-            this.label9.Location = new System.Drawing.Point(20, 119);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 20);
-            this.label9.TabIndex = 73;
-            this.label9.Text = "1 / 2";
-            this.label9.Visible = false;
+            this.label_counter.AutoSize = true;
+            this.label_counter.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_counter.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_counter.Location = new System.Drawing.Point(20, 119);
+            this.label_counter.Name = "label_counter";
+            this.label_counter.Size = new System.Drawing.Size(42, 20);
+            this.label_counter.TabIndex = 73;
+            this.label_counter.Text = "1 / 2";
+            this.label_counter.Visible = false;
             // 
             // label_progress
             // 
@@ -820,27 +852,27 @@
             this.label_progress.Size = new System.Drawing.Size(0, 24);
             this.label_progress.TabIndex = 72;
             // 
-            // label8
+            // lbl8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.Control;
-            this.label8.Location = new System.Drawing.Point(125, 47);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 20);
-            this.label8.TabIndex = 71;
-            this.label8.Text = "audio";
+            this.lbl8.AutoSize = true;
+            this.lbl8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl8.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbl8.Location = new System.Drawing.Point(125, 47);
+            this.lbl8.Name = "lbl8";
+            this.lbl8.Size = new System.Drawing.Size(49, 20);
+            this.lbl8.TabIndex = 71;
+            this.lbl8.Text = "audio";
             // 
-            // label7
+            // lbl7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(18, 47);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(48, 20);
-            this.label7.TabIndex = 70;
-            this.label7.Text = "video";
+            this.lbl7.AutoSize = true;
+            this.lbl7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl7.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbl7.Location = new System.Drawing.Point(18, 47);
+            this.lbl7.Name = "lbl7";
+            this.lbl7.Size = new System.Drawing.Size(48, 20);
+            this.lbl7.TabIndex = 70;
+            this.lbl7.Text = "video";
             // 
             // checkBox_rlink
             // 
@@ -891,20 +923,20 @@
             this.cutToolStripMenuItem.Text = "Cut";
             this.cutToolStripMenuItem.Click += new System.EventHandler(this.editCellCut_Click);
             // 
-            // panel2
+            // panelMRU
             // 
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.label3);
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.label_open);
-            this.panel2.Location = new System.Drawing.Point(-3, 56);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(213, 235);
-            this.panel2.TabIndex = 63;
-            this.panel2.Visible = false;
-            this.panel2.VisibleChanged += new System.EventHandler(this.panel2_VisibleChanged);
+            this.panelMRU.Controls.Add(this.label5);
+            this.panelMRU.Controls.Add(this.label4);
+            this.panelMRU.Controls.Add(this.label3);
+            this.panelMRU.Controls.Add(this.label2);
+            this.panelMRU.Controls.Add(this.label1);
+            this.panelMRU.Controls.Add(this.label_open);
+            this.panelMRU.Location = new System.Drawing.Point(-3, 56);
+            this.panelMRU.Name = "panelMRU";
+            this.panelMRU.Size = new System.Drawing.Size(213, 235);
+            this.panelMRU.TabIndex = 63;
+            this.panelMRU.Visible = false;
+            this.panelMRU.VisibleChanged += new System.EventHandler(this.panel2_VisibleChanged);
             // 
             // label5
             // 
@@ -916,7 +948,7 @@
             this.label5.Size = new System.Drawing.Size(186, 24);
             this.label5.TabIndex = 6;
             this.label5.Text = "label5";
-            this.label5.Click += new System.EventHandler(this.label_Click);
+            this.label5.Click += new System.EventHandler(this.labelMRU_Click);
             // 
             // label4
             // 
@@ -928,7 +960,7 @@
             this.label4.Size = new System.Drawing.Size(186, 24);
             this.label4.TabIndex = 5;
             this.label4.Text = "label4";
-            this.label4.Click += new System.EventHandler(this.label_Click);
+            this.label4.Click += new System.EventHandler(this.labelMRU_Click);
             // 
             // label3
             // 
@@ -940,7 +972,7 @@
             this.label3.Size = new System.Drawing.Size(186, 24);
             this.label3.TabIndex = 4;
             this.label3.Text = "label3";
-            this.label3.Click += new System.EventHandler(this.label_Click);
+            this.label3.Click += new System.EventHandler(this.labelMRU_Click);
             // 
             // label2
             // 
@@ -952,7 +984,7 @@
             this.label2.Size = new System.Drawing.Size(186, 24);
             this.label2.TabIndex = 3;
             this.label2.Text = "label2";
-            this.label2.Click += new System.EventHandler(this.label_Click);
+            this.label2.Click += new System.EventHandler(this.labelMRU_Click);
             // 
             // label1
             // 
@@ -964,7 +996,7 @@
             this.label1.Size = new System.Drawing.Size(186, 23);
             this.label1.TabIndex = 2;
             this.label1.Text = "label1";
-            this.label1.Click += new System.EventHandler(this.label_Click);
+            this.label1.Click += new System.EventHandler(this.labelMRU_Click);
             // 
             // label_open
             // 
@@ -978,20 +1010,20 @@
             this.label_open.Text = "Open   Ctrl-O";
             this.label_open.Click += new System.EventHandler(this.label_open_Click);
             // 
-            // label6
+            // label_central
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(420, 149);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(202, 60);
-            this.label6.TabIndex = 64;
-            this.label6.Text = "Double Click to open file\r\nDrag \'n Drop video files\r\nCTRL-N Open new Window";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label6.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
+            this.label_central.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_central.AutoSize = true;
+            this.label_central.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.label_central.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.818182F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_central.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label_central.Location = new System.Drawing.Point(420, 149);
+            this.label_central.Name = "label_central";
+            this.label_central.Size = new System.Drawing.Size(202, 60);
+            this.label_central.TabIndex = 64;
+            this.label_central.Text = "Double Click to open file\r\nDrag \'n Drop video files\r\nCTRL-N Open new Window";
+            this.label_central.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label_central.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             // 
             // contextMenuStrip3
             // 
@@ -1007,38 +1039,6 @@
             this.deleteEntryToolStripMenuItem.Size = new System.Drawing.Size(153, 24);
             this.deleteEntryToolStripMenuItem.Text = "Delete entry";
             this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
-            // 
-            // buttonR_MoveDown
-            // 
-            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
-            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
-            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
-            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
-            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_MoveDown.TabIndex = 32;
-            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
-            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
-            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
-            // 
-            // buttonR_moveUp
-            // 
-            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
-            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
-            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
-            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_moveUp.Name = "buttonR_moveUp";
-            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_moveUp.TabIndex = 31;
-            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
-            this.buttonR_moveUp.UseVisualStyleBackColor = true;
-            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
             // 
             // plabel_Filename
             // 
@@ -1059,8 +1059,8 @@
             this.BackColor = System.Drawing.Color.MidnightBlue;
             this.ClientSize = new System.Drawing.Size(1074, 364);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.label_central);
+            this.Controls.Add(this.panelMRU);
             this.Controls.Add(this.RedoButton);
             this.Controls.Add(this.UndoButton);
             this.Controls.Add(this.button_check);
@@ -1101,8 +1101,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.contextMenuStrip2.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.panelMRU.ResumeLayout(false);
+            this.panelMRU.PerformLayout();
             this.contextMenuStrip3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1127,7 +1127,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem copyTSMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteTSMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sendToHtttpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cms1Send2Clip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private RepeatingButton buttonR_moveUp;
         private RepeatingButton buttonR_MoveDown;
@@ -1162,23 +1162,23 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panelMRU;
         private System.Windows.Forms.Label label_open;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label_central;
         private System.Windows.Forms.ToolStripMenuItem editF2ToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
         private System.Windows.Forms.ToolStripMenuItem deleteEntryToolStripMenuItem;
         private System.Windows.Forms.Button button_download_start;
         private System.Windows.Forms.Button button_path;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lbl8;
+        private System.Windows.Forms.Label lbl7;
         public System.Windows.Forms.Label label_progress;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label_counter;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
         private System.Windows.Forms.ToolStripMenuItem cmsDeletePathItem;
