@@ -169,7 +169,7 @@
             this.editF2ToolStripMenuItem,
             this.cms1NewWIndow});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(282, 287);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(282, 262);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // kodiToolStripMenuItem
@@ -417,7 +417,6 @@
             this.btn_refind.Name = "btn_refind";
             this.btn_refind.Size = new System.Drawing.Size(25, 27);
             this.btn_refind.TabIndex = 66;
-            this.toolTip1.SetToolTip(this.btn_refind, "check for invalid links\r\n+ Ctrl select links");
             this.btn_refind.UseVisualStyleBackColor = false;
             this.btn_refind.Visible = false;
             this.btn_refind.Click += new System.EventHandler(this.btn_refind_Click);
@@ -752,7 +751,6 @@
             this.btn_clearfind.Name = "btn_clearfind";
             this.btn_clearfind.Size = new System.Drawing.Size(25, 27);
             this.btn_clearfind.TabIndex = 65;
-            this.toolTip1.SetToolTip(this.btn_clearfind, "check for invalid links\r\n+ Ctrl select links");
             this.btn_clearfind.UseVisualStyleBackColor = false;
             this.btn_clearfind.Visible = false;
             this.btn_clearfind.Click += new System.EventHandler(this.btn_clearfind_Click);

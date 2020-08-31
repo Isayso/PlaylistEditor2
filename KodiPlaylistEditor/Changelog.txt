@@ -6,6 +6,7 @@
 - iNet search engine customizable
 - right click menu to delete download path
 - redo/undo better UI
+- AND character for search SPACE
 
 2.2.2
 - fix CTRL-L 
