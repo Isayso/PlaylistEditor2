@@ -1,4 +1,9 @@
-﻿2.2.3
+﻿2.2.4
+- nuget
+- private video detection
+- avoid vlc start after DASH error
+
+2.2.3
 - bug CTRL-L
 - Nuget Update
 - position and size saved
@@ -6,7 +11,7 @@
 - iNet search engine customizable
 - right click menu to delete download path
 - redo/undo better UI
-- AND character for search SPACE
+- AND character for search is SPACE
 
 2.2.2
 - fix CTRL-L 

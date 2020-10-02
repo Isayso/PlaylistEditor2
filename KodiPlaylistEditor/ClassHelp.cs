@@ -28,8 +28,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YoutubeExplode;
-using YoutubeExplode.Videos;
-using YoutubeExplode.Videos.Streams;
+//using YoutubeExplode.Videos;
+//using YoutubeExplode.Videos.Streams;
 
 namespace PlaylistEditor
 {
@@ -164,6 +164,8 @@ namespace PlaylistEditor
             {
                 MessageBox.Show("Error to get YouTube title " + ex.Message, "YouTube error", MessageBoxButtons.OK);
             }
+
+            if (string.IsNullOrEmpty(title)) title = "YouTube";  //for Private videos check for "errorScreen" ?
 
             return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
         }

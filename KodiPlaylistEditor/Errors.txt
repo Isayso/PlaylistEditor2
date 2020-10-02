@@ -4,6 +4,8 @@
 - ffmpeg fallback low res
 OK - newpath cancel performance
 OK progress indicator
-- vlc starts after dash error
+OK vlc starts after dash error -> not fully implemented
 
 - replace link
+
+OK private videos not recon

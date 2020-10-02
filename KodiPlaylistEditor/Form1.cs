@@ -866,8 +866,8 @@ namespace PlaylistEditor
 
                             if (param == "false")
                             {
-                                // return;
-                                param = YTURL + key[1];
+                                 return;  //no fallback to no dash
+                                //param = YTURL + key[1];
                             }
                             if (param == "nodash")
                             {
