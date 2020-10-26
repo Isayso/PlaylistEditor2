@@ -2,6 +2,7 @@
 - nuget
 - private video detection
 - avoid vlc start after DASH error
+- fix youtube changes DASH error
 
 2.2.3
 - bug CTRL-L

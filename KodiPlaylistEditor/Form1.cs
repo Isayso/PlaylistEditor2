@@ -2530,7 +2530,7 @@ namespace PlaylistEditor
         private async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext = 0)
         {
             _youtube = new YoutubeClient();
-            var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
+          //  var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
 
             if (fileext < 2)
             {
@@ -2571,7 +2571,8 @@ namespace PlaylistEditor
                         {
                             case DialogResult.Yes:
                                 // Download and process them into one file
-                                await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
+                               // await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
+                                await _youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder(videoTitle).Build(), progHandler);
                                 break;
 
                             case DialogResult.No:
@@ -2583,7 +2584,8 @@ namespace PlaylistEditor
                     {
                         // Download and process them into one file
 
-                        await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
+                       // await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
+                        await _youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder(videoTitle).Build(), progHandler);
 
                     }
                 }
@@ -2615,7 +2617,8 @@ namespace PlaylistEditor
                         {
                             case DialogResult.Yes:
                                 // Download and process them into one file
-                                await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
+                              //  await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
+                                await _youtube.Videos.DownloadAsync(videoId, videoTitle, progHandler);
                                 break;
 
                             case DialogResult.No:
@@ -2626,7 +2629,8 @@ namespace PlaylistEditor
                     else
                     {
                         // Download and process them into one file
-                        await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
+                       // await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
+                        await _youtube.Videos.DownloadAsync(videoId, videoTitle, progHandler);
 
                     }
 

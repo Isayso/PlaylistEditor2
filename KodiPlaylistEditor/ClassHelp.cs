@@ -291,7 +291,7 @@ namespace PlaylistEditor
             Cursor.Current = Cursors.Default;
 
 
-            if (string.IsNullOrEmpty(ClassYTExplode.videoUrlnew))
+            if (ClassYTExplode.videoUrlnew =="noDash")
                 return "false";
             else
                 return ClassYTExplode.videoUrlnew + " --input-slave=" + ClassYTExplode.audioUrl;
