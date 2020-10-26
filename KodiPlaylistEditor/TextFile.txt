@@ -1,0 +1,8 @@
+﻿Stack
+
+
+
+undo	redo
+1	x	1
+2		2
+3		3

@@ -176,6 +176,7 @@ namespace PlaylistEditor
             {
                 //#if DEBUG
                 MessageBox.Show("Get DASH Arguments failed. " + e.Message, "Get DASH Arguments", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                videoUrlnew = "noDash";
                 //#endif
 
             }

@@ -74,6 +74,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.tBQuery = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnAddpath = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -326,9 +329,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(42, 112);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(116, 20);
+            this.label10.Size = new System.Drawing.Size(148, 20);
             this.label10.TabIndex = 18;
-            this.label10.Text = "download path";
+            this.label10.Text = "edit download path";
             this.toolTip1.SetToolTip(this.label10, "for video files");
             // 
             // comboBox_res
@@ -356,7 +359,7 @@
             this.button_edit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button_edit.FlatAppearance.BorderSize = 0;
             this.button_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_edit.Location = new System.Drawing.Point(357, 136);
+            this.button_edit.Location = new System.Drawing.Point(404, 136);
             this.button_edit.Margin = new System.Windows.Forms.Padding(0);
             this.button_edit.Name = "button_edit";
             this.button_edit.Size = new System.Drawing.Size(40, 37);
@@ -498,6 +501,7 @@
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.DarkBlue;
+            this.tabPage4.Controls.Add(this.btnAddpath);
             this.tabPage4.Controls.Add(this.button_update);
             this.tabPage4.Controls.Add(this.button_edit);
             this.tabPage4.Controls.Add(this.comboBox_download);
@@ -587,6 +591,8 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.DarkBlue;
+            this.tabPage3.Controls.Add(this.tBQuery);
+            this.tabPage3.Controls.Add(this.label11);
             this.tabPage3.Controls.Add(this.comboBox2);
             this.tabPage3.Controls.Add(this.comboBox1);
             this.tabPage3.Controls.Add(this.label8);
@@ -641,6 +647,46 @@
             this.label7.Size = new System.Drawing.Size(113, 20);
             this.label7.TabIndex = 0;
             this.label7.Text = "Colum search";
+            // 
+            // tBQuery
+            // 
+            this.tBQuery.BackColor = System.Drawing.SystemColors.Menu;
+            this.tBQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tBQuery.Location = new System.Drawing.Point(50, 219);
+            this.tBQuery.Name = "tBQuery";
+            this.tBQuery.Size = new System.Drawing.Size(377, 27);
+            this.tBQuery.TabIndex = 17;
+            this.tBQuery.Text = "https://www.google.com/search?q=";
+            this.toolTip1.SetToolTip(this.tBQuery, "search strig for Google or else");
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.SystemColors.Control;
+            this.label11.Location = new System.Drawing.Point(46, 187);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(108, 20);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "Search query";
+            this.toolTip1.SetToolTip(this.label11, "search strig for Google or else");
+            // 
+            // btnAddpath
+            // 
+            this.btnAddpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddpath.BackColor = System.Drawing.Color.MidnightBlue;
+            this.btnAddpath.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddpath.BackgroundImage")));
+            this.btnAddpath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnAddpath.FlatAppearance.BorderSize = 0;
+            this.btnAddpath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddpath.Location = new System.Drawing.Point(358, 136);
+            this.btnAddpath.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAddpath.Name = "btnAddpath";
+            this.btnAddpath.Size = new System.Drawing.Size(38, 37);
+            this.btnAddpath.TabIndex = 70;
+            this.toolTip1.SetToolTip(this.btnAddpath, "new download path");
+            this.btnAddpath.UseVisualStyleBackColor = false;
+            this.btnAddpath.Click += new System.EventHandler(this.btnAddpath_Click);
             // 
             // settings
             // 
@@ -716,5 +762,8 @@
         private System.Windows.Forms.CheckBox checkBox_a2;
         private System.Windows.Forms.CheckBox checkBox_s2;
         private System.Windows.Forms.CheckBox checkBox_c2;
+        private System.Windows.Forms.TextBox tBQuery;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnAddpath;
     }
 }

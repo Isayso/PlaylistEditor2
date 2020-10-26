@@ -51,6 +51,7 @@ namespace PlaylistEditor
             textBox2.Text = Settings.Default.rpi;
             textBox_Port.Text = Settings.Default.port;
             textBox_Username.Text = Settings.Default.username;
+            tBQuery.Text = Settings.Default.SearchQuery;
             //textBox_output.Text = Properties.Settings.Default.output;
 
             //if (!string.IsNullOrEmpty(NativeMethods.GetFullPathFromWindows("youtube-dl.exe")) ||
@@ -148,6 +149,7 @@ namespace PlaylistEditor
             Settings.Default.port = textBox_Port.Text;
             Settings.Default.username = textBox_Username.Text;
             Settings.Default.kodi_hotkey = checkBox_kodi.Checked;
+            Settings.Default.SearchQuery = tBQuery.Text;
             //  Properties.Settings.Default.output = textBox_output.Text;
 
             string passtext = textBox_Password.Text;
@@ -341,6 +343,45 @@ namespace PlaylistEditor
             {
                 panel1.Visible = false;
             }
+        }
+
+        private void btnAddpath_Click(object sender, EventArgs e)
+        {
+            string newFolder;
+
+            using (FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog())
+            {
+                if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    newFolder = folderBrowserDialog1.SelectedPath;
+                }
+                else
+                {
+                    return;
+                }
+
+
+            }
+
+            comboBox_download.Items.Add(newFolder);
+
+            comboBox_download.SelectedIndex = comboBox_download.Items.Count - 1;
+            //Settings.Default.combodown = comboBox_download.SelectedIndex;
+            //Settings.Default.Save();
+
+
+            //DialogResult result = folderBrowserDialog1.ShowDialog();
+            //if (result == DialogResult.OK)
+            //{
+
+            //   // output = betterFolderBrowser1.SelectedPath;
+
+            //}
+            //else if (result == DialogResult.Cancel)
+            //{
+            //    return;
+            //}
+
         }
     }
 }

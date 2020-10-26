@@ -90,10 +90,10 @@
             this.linkLabel1.LinkColor = System.Drawing.SystemColors.ButtonFace;
             this.linkLabel1.Location = new System.Drawing.Point(315, 332);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(110, 20);
+            this.linkLabel1.Size = new System.Drawing.Size(142, 20);
             this.linkLabel1.TabIndex = 25;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "GitHub Isayso";
+            this.linkLabel1.Text = "Check for Updates";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // labelProductName
