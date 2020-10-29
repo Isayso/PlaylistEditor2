@@ -171,18 +171,19 @@
     </Compile>
     <Compile Include="MruList1.cs" />
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="NotificationBox.cs" />
+    <Compile Include="NotificationBoxF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotificationBoxF.Designer.cs">
+      <DependentUpon>NotificationBoxF.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlayEntry.cs" />
     <Compile Include="popup.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="popup.designer.cs">
       <DependentUpon>popup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="popup2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="popup2.Designer.cs">
-      <DependentUpon>popup2.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -208,11 +209,11 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NotificationBoxF.resx">
+      <DependentUpon>NotificationBoxF.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="popup.resx">
       <DependentUpon>popup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="popup2.resx">
-      <DependentUpon>popup2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

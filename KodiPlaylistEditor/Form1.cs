@@ -117,7 +117,7 @@ namespace PlaylistEditor
 
         public static Video VideoInfo;
 
-        private static YoutubeClient _youtube;
+        private static YoutubeClient youtube;
         public double _progress;
 
 
@@ -152,7 +152,7 @@ namespace PlaylistEditor
             {
                 Settings.Default.Upgrade();
                 // Settings.Default.Reset();  //if an unusual shutdown occured, reset settings
-                PopupForm("Last Settings loaded! Please control settings!", "red", 3000);
+                NotificationBox.Show("Last Settings loaded! Please control settings!", 3000, NotificationMsg.ERROR);
 
             }
 
@@ -436,8 +436,7 @@ namespace PlaylistEditor
                                 label_central.SendToBack();
                             }
 
-                            PopupForm("YouTube Link added", "blue", 2000);
-
+                            NotificationBox.Show("YouTube Link added", 2000, NotificationMsg.DONE);
 
                             if (_taglink) button_check.PerformClick(); //grid gets pushed up and changing color
 
@@ -449,8 +448,7 @@ namespace PlaylistEditor
 
                     else
                     {
-                        PopupForm("Wrong input. Use full YouTube link", "red", 2000);
-                        //  MessageBox.Show("Wrong input. Use full YouTube link.");
+                        NotificationBox.Show("Wrong input. Use full YouTube link", 2000, NotificationMsg.ERROR);
                     }
                 }
                 else if ((yt_Link.StartsWith("http") || yt_Link.StartsWith("\\\\") || yt_Link.Contains(@":\"))
@@ -502,7 +500,8 @@ namespace PlaylistEditor
 
                         }
 
-                        PopupForm("html Link added", "blue", 2000);
+                        NotificationBox.Show("Link added", 2000, NotificationMsg.DONE);
+
 
                         if (_taglink) button_check.PerformClick(); //grid gets pushed up and changing color
 
@@ -829,7 +828,8 @@ namespace PlaylistEditor
                 vlcpath = GetVlcPath();
                 if (string.IsNullOrEmpty(vlcpath))
                 {
-                    PopupForm("VLC player not found", "red", 3000);
+                    NotificationBox.Show("VLC player not found", 3000, NotificationMsg.ERROR);
+
                     // _vlcfound = true;
                 }
                 return;
@@ -919,7 +919,8 @@ namespace PlaylistEditor
 
             if (!MyFileExists(filename, 5000))
             {
-                PopupForm("File not found", "red", 1500);
+                NotificationBox.Show("File not found", 1500, NotificationMsg.ERROR);
+
                 return false;
             }
 
@@ -929,8 +930,8 @@ namespace PlaylistEditor
                 "Import Playlist", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialogSave == DialogResult.No)
                 {
-                    // MessageBox.Show("File has IPTV format! Use PlaylistEditorTV. ");
-                    PopupForm(" If File has IPTV format, use PlaylistEditorTV", "red", 3500);
+                    NotificationBox.Show("If File has IPTV format, use PlaylistEditorTV", 3500, NotificationMsg.ERROR);
+
                     return false;
                 }
 
@@ -992,8 +993,8 @@ namespace PlaylistEditor
                     }
                     catch (ArgumentOutOfRangeException ex)
                     {
-                        //  MessageBox.Show("An entry has been omitted due to its incorrect format");
-                        PopupForm("An entry has been omitted due to its incorrect format", "red", 2000);
+                        NotificationBox.Show("An entry has been omitted due to its incorrect format", 2000, NotificationMsg.ERROR);
+
                         continue;
                     }
                 }
@@ -1094,7 +1095,8 @@ namespace PlaylistEditor
                 _savenow = false;
 
 
-                PopupForm("Playlist Saved", "green", 1500);
+                NotificationBox.Show("Playlist Saved", 1500, NotificationMsg.OK);
+
 
             }
             else if (saveFileDialog1.ShowDialog() == DialogResult.OK)  //open file dialog
@@ -1444,7 +1446,8 @@ namespace PlaylistEditor
                 }
                 catch (System.Runtime.InteropServices.ExternalException ex)
                 {
-                    PopupForm("Copy/paste operation failed", "red", 2000);
+                    NotificationBox.Show("Copy/paste operation failed", 2000, NotificationMsg.ERROR);
+
 #if DEBUG
                     MessageBox.Show("Copy/paste operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 #endif
@@ -1476,15 +1479,16 @@ namespace PlaylistEditor
                 }
                 catch (System.Runtime.InteropServices.ExternalException ex)
                 {
-                    //  MessageBox.Show("The Clipboard could not be accessed. Please try again.");
-                    PopupForm("Copy/paste operation failed", "red", 2000);
+                    NotificationBox.Show("Copy/paste operation failed", 2000, NotificationMsg.ERROR);
+
 #if DEBUG
                     MessageBox.Show("Copy/paste operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 #endif
                 }
                 catch (Exception ex)
                 {
-                    PopupForm("Copy/paste operation failed", "red", 2000);
+                    NotificationBox.Show("Copy/paste operation failed", 2000, NotificationMsg.ERROR);
+
 #if DEBUG
                     MessageBox.Show("Copy/paste2 operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 #endif
@@ -1718,7 +1722,8 @@ namespace PlaylistEditor
 
                 Process.Start("explorer.exe", string.Format("/select,\"{0}\"", linkcell));
 
-            else PopupForm("File not found ", "red", 3000);
+            else NotificationBox.Show("File not found ", 3000, NotificationMsg.ERROR);
+
 
             // Process.Start("explorer.exe ", folderPath);
             Cursor.Current = Cursors.Default;
@@ -1798,7 +1803,7 @@ namespace PlaylistEditor
             else
             {
                 //popup no YT Link
-                PopupDelay("No YT Link", "red", 1500);
+                NotificationBox.Show("No YT link", 1500, NotificationMsg.ERROR);
             }
 
         }
@@ -2467,7 +2472,8 @@ namespace PlaylistEditor
                         }
                         else
                         {
-                            PopupForm("Error " + videofilename, "red", 3000);
+                            NotificationBox.Show("Error " + videofilename, 3000, NotificationMsg.ERROR);
+
                         }
                     }
                 }
@@ -2483,7 +2489,7 @@ namespace PlaylistEditor
 
             }
 
-            if (_done) PopupForm("Download finished", "green", 3000);
+            if (_done) NotificationBox.Show("Download finished", 3000, NotificationMsg.OK);
 
         }
 
@@ -2529,7 +2535,7 @@ namespace PlaylistEditor
 
         private async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext = 0)
         {
-            _youtube = new YoutubeClient();
+            youtube = new YoutubeClient();
           //  var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
 
             if (fileext < 2)
@@ -2541,7 +2547,7 @@ namespace PlaylistEditor
 
 
                     // Get stream manifest
-                    var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
+                    var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videoId);
 
                     // Select audio stream
                     //  var audioStreamInfo2 = streamManifest.GetAudio().WithHighestBitrate();
@@ -2559,7 +2565,7 @@ namespace PlaylistEditor
                     // Combine them into a collectionb
                     var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
 
-                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
+                    VideoInfo = await youtube.Videos.GetAsync(videoId);  //video info
                     videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + "." + filetype[fileext];
 
                     var progHandler = new Progress<double>(p => Progress2 = p * 100);
@@ -2572,7 +2578,7 @@ namespace PlaylistEditor
                             case DialogResult.Yes:
                                 // Download and process them into one file
                                // await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
-                                await _youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder(videoTitle).Build(), progHandler);
+                                await youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder(videoTitle).Build(), progHandler);
                                 break;
 
                             case DialogResult.No:
@@ -2585,7 +2591,7 @@ namespace PlaylistEditor
                         // Download and process them into one file
 
                        // await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
-                        await _youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder(videoTitle).Build(), progHandler);
+                        await youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder(videoTitle).Build(), progHandler);
 
                     }
                 }
@@ -2607,7 +2613,7 @@ namespace PlaylistEditor
                 try
                 {
 
-                    VideoInfo = await _youtube.Videos.GetAsync(videoId);  //video info
+                    VideoInfo = await youtube.Videos.GetAsync(videoId);  //video info
                     videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + ".mp3";
                     var progHandler = new Progress<double>(p => Progress2 = p * 100);
 
@@ -2618,7 +2624,7 @@ namespace PlaylistEditor
                             case DialogResult.Yes:
                                 // Download and process them into one file
                               //  await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
-                                await _youtube.Videos.DownloadAsync(videoId, videoTitle, progHandler);
+                                await youtube.Videos.DownloadAsync(videoId, videoTitle, progHandler);
                                 break;
 
                             case DialogResult.No:
@@ -2630,7 +2636,7 @@ namespace PlaylistEditor
                     {
                         // Download and process them into one file
                        // await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
-                        await _youtube.Videos.DownloadAsync(videoId, videoTitle, progHandler);
+                        await youtube.Videos.DownloadAsync(videoId, videoTitle, progHandler);
 
                     }
 

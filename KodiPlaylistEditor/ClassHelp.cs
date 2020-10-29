@@ -330,29 +330,6 @@ namespace PlaylistEditor
             }
         }
 
-        public static async void PopupForm(string label, string color, int delay)
-        {
-            await PopupDelay(label, color, delay);
-        }
-
-   
-
-
-        /// <summary>
-        /// async thread counter to show popup form
-        /// </summary>
-        /// <param name="item"></param>
-        public static async  Task PopupDelay(string label, string color, int delay)
-        {
-            popup2 pop = new popup2();
-            pop.Show();
-            pop.label1.Text = label;
-            pop.color(color);
-            
-            await Task.Delay(delay);
-           
-            pop.Close();            
-        }
 
         /// <summary>
         /// Levenstein compare

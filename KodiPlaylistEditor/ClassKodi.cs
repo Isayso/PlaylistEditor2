@@ -72,9 +72,9 @@ namespace PlaylistEditor
 
                 if (responseText.Contains("OK") /*&& link.Contains("Playlist.Add")*/)
                 {
-                    // Form pop = new popup2();
-                    ClassHelp.PopupForm("Kodi response: OK", "green", 1300);
-                   
+                    NotificationBox.Show("Kodi response: OK", 1300, NotificationMsg.OK);
+
+
 #if DEBUG
                     MessageBox.Show(responseText);
                     Console.WriteLine(responseText);
@@ -83,7 +83,8 @@ namespace PlaylistEditor
                 }
                 else if (responseText.Contains("error") /*&& link.Contains("Playlist.Add")*/)
                 {
-                    ClassHelp.PopupForm("Kodi response: ERROR", "red", 1300);
+                    NotificationBox.Show("Kodi response: ERROR", 1300, NotificationMsg.ERROR);
+
                     return false;
                 }
 
