@@ -866,7 +866,10 @@ namespace PlaylistEditor
 
                             if (param == "false")
                             {
-                                 return;  //no fallback to no dash
+                                NotificationBox.Show("Get HiRes Stream failed." + Environment.NewLine + "Try normal playback!", 4000, NotificationMsg.ERROR);
+                                param = YTURL + key[1];
+
+//return;  //no fallback to no dash
                                 //param = YTURL + key[1];
                             }
                             if (param == "nodash")
@@ -1603,7 +1606,6 @@ namespace PlaylistEditor
             string jLink;
             if (dataGridView1.SelectedRows.Count > 1)
             {
-                //  foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 foreach (DataGridViewRow row in dataGridView1.GetSelectedRows())  //top down
                 {
 
@@ -1634,20 +1636,6 @@ namespace PlaylistEditor
         private void downloadYTFileTSMenuItem_Click(object sender, EventArgs e)
         {
 
-            //if (!_youtube_dl)
-            //{
-            //    _youtube_dl = YT_dl();
-            //    if (!_youtube_dl)
-            //    {
-            //        PopupForm("youtube_dl not found", "red", 3000);
-            //        // _youtube_dl = true;
-            //    }
-            //    return;
-            //}
-
-            //int counter = 0;
-            //dataGridView1.FirstDisplayedScrollingRowIndex = counter; //dataGridView1.Rows(counter).Index;
-            //dataGridView1.CurrentCell = dataGridView1[0, counter];
 
             if (dataGridView1.RowCount == 0) return;
 

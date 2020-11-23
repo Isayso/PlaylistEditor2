@@ -174,10 +174,11 @@ namespace PlaylistEditor
             }
             catch (Exception e)
             {
-                //#if DEBUG
+                #if DEBUG
                 MessageBox.Show("Get DASH Arguments failed. " + e.Message, "Get DASH Arguments", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                #endif
+
                 videoUrlnew = "noDash";
-                //#endif
 
             }
 

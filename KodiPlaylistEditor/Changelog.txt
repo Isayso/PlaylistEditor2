@@ -1,5 +1,6 @@
 ﻿2.2.5
 - code clean up
+- no DASH fallback
 
 2.2.4
 - nuget
