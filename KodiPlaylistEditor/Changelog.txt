@@ -1,6 +1,9 @@
 ﻿2.2.5
+- fix for YT problems
+- new nuget packages
 - code clean up
 - no DASH fallback
+- direct copy of text to clipboard with hotkey
 
 2.2.4
 - nuget

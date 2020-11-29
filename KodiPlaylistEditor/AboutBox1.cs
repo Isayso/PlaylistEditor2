@@ -141,5 +141,11 @@ namespace PlaylistEditor
             //System.Diagnostics.Process.Start("https://github.com/Isayso?tab=repositories");
             System.Diagnostics.Process.Start("https://github.com/Isayso/PlaylistEditor/releases");
         }
+
+        private void donateButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8FF26SM3X8UAN&source=url");
+
+        }
     }
 }

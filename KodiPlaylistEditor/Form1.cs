@@ -310,11 +310,27 @@ namespace PlaylistEditor
                 //    //    MessageBox.Show(Clipboard.GetText());
                 //    //}
                 //}
+                IDataObject yLink = null;
+
+                try
+                {
+                    Thread.Sleep(400);
+                    System.Windows.Forms.SendKeys.SendWait("^c");
+                    Thread.Sleep(400);
+
+                    yLink = Clipboard.GetDataObject();
+
+                }
+                catch
+                {
+                    NotificationBox.Show("Nothing copied, please try again", 3000, NotificationMsg.ERROR);
+                    return;
+                }
 
 
 
 
-                IDataObject yLink = Clipboard.GetDataObject();
+              //  IDataObject yLink = Clipboard.GetDataObject();
 
                 string yt_Link = (String)yLink.GetData(DataFormats.Text);
 
