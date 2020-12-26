@@ -55,7 +55,6 @@ namespace PlaylistEditor
             catch (Exception ex)
             {
                 MessageBox.Show("Get Arguments failed. " + ex.Message, "Get Arguments", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
             }
         }
 
@@ -182,12 +181,12 @@ namespace PlaylistEditor
 
             }
 
-            finally
-            {
-                // Exit busy state
-                //IsBusy = false;
-                //IsProgressIndeterminate = false;
-            }
+            //finally
+            //{
+            //    // Exit busy state
+            //    //IsBusy = false;
+            //    //IsProgressIndeterminate = false;
+            //}
         }
 
         public static async Task PullNoDASH(string videoId, int height = 2)
@@ -225,12 +224,12 @@ namespace PlaylistEditor
 
             }
 
-            finally
-            {
-                // Exit busy state
-                //IsBusy = false;
-                //IsProgressIndeterminate = false;
-            }
+            //finally
+            //{
+            //    // Exit busy state
+            //    //IsBusy = false;
+            //    //IsProgressIndeterminate = false;
+            //}
         }
 
 

@@ -35,6 +35,7 @@ using YoutubeExplode.Converter;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
 using static PlaylistEditor.ClassHelp;
+using static PlaylistEditor.ClassDataset;
 
 //ToDo drag&drop
 //ToDo move block of rows
@@ -101,17 +102,21 @@ namespace PlaylistEditor
 
         public string keyValue = "";  //highlight string
 
-        private const string YTPLUGIN = "plugin://plugin.video.youtube/play/?video_id=";
+        private const string YTPLUGIN = "plugin://plugin.video.youtube/play/?video_id=",
+            VIPLUGIN = "plugin://plugin.video.vimeo/play/?video_id=",
+            DAPLUGIN1 = "plugin://plugin.video.dailymotion_com/?url=",
+            DAPLUGIN2 = "&mode=playVideo"; //;mode=playVideo&quot"; //plugin.video.dailymotion_com/?url=
+
         private const string YTURL = "https://www.youtube.com/watch?v=";
         private const int COLWIDTH = 500;
 
-        public bool _isIt = true;
-        public bool _foundtext = false;
-        public bool _taglocal = false;
-        public bool _taglink = false;
-        public bool _vlcfound = false;
-        public bool _savenow = false;
-        public bool _mark = false;
+        public bool _isIt = true,
+            _foundtext = false,
+            _taglocal = false,
+            _taglink = false,
+            _vlcfound = false,
+            _savenow = false,
+            _mark = false;
 
         public static string videoTitle;
 
@@ -120,24 +125,11 @@ namespace PlaylistEditor
         private static YoutubeClient youtube;
         public double _progress;
 
-
-        public string[] videotypes = new[] {  ".m4v", ".3g2", ".3gp",".nsv",".tp",".ts",".ty",".strm",".pls",".rm",
-                    ".rmvb",".mpd",".m3u",".m3u8",".ifo",".mov",".qt",".divx",".xvid",".bivx",".vob",".nrg",".pva",
-                    ".wmv",".asf",".asx",".ogm",".m2v",".avi",".dat",".mpg",".mpeg",".mp4",".mkv",".mk3d",".avc",
-                    ".vp3",".svq3",".nuv",".viv",".dv",".fli",".flv",".001",".wpl",".vdr",".dvr-ms",".xsp",".mts",
-                    ".m2t",".m2ts",".evo",".ogv",".sdp",".avs",".rec",".url",".pxml",".vc1",".h264",".rcv",".rss",
-                    ".mpls",".webm",".bdmv",".wtv",".trp",".f4v" };
-
-
         string vlcpath = Settings.Default.vlcpath;
         public bool useDash = Settings.Default.useDash;
 
         //  https://www.codeproject.com/articles/811035/drag-and-move-rows-in-datagridview-control
 
-        public SortableBindingList<PlayEntry> GetList()
-        {
-            return entries;
-        }
 
 
         public Form1()
@@ -152,7 +144,7 @@ namespace PlaylistEditor
             {
                 Settings.Default.Upgrade();
                 // Settings.Default.Reset();  //if an unusual shutdown occured, reset settings
-                NotificationBox.Show("Last Settings loaded! Please control settings!", 3000, NotificationMsg.ERROR);
+                NotificationBox.Show(this, "Last Settings loaded! Please control settings!", 3000, NotificationMsg.ERROR, Position.Parent);
 
             }
 
@@ -223,6 +215,7 @@ namespace PlaylistEditor
             var hotlabel = Settings.Default.hotkey;
             var hotlabel2 = Settings.Default.hotkey2;
 
+            //todo check if hotkey avaliable
             //Modifier keys codes: Alt = 1, Ctrl = 2, Shift = 4, Win = 8  must be added
             //   RegisterHotKey(this.Handle, mActionHotKeyID, 1, (int)Keys.Y);  //ALT-Y
             NativeMethods.RegisterHotKey(this.Handle, mActionHotKeyID, spec_key, hotlabel);  //ALT-Y
@@ -286,246 +279,64 @@ namespace PlaylistEditor
                 //get from clipboard
                 //detect wich app has focus, send ctrl-c
 
-                //Process[] local = Process.GetProcessesByName("vivaldi");
-                //if (local.Length > 0)
+                //todo test if clip already
+                string yt_Link = "";
+
+                
+               // IDataObject yLink = null;
+
+                // nice but has loophole that only the focussed window is served
+
+                //try
                 //{
-                //    Process p = local[0];
-                //    IntPtr h = p.MainWindowHandle;
-                //    NativeMethods.SetForegroundWindow(h);
-                //    p.WaitForInputIdle();
-                //    SendKeys.SendWait("^(c)");
-                //    p.WaitForInputIdle();
-                //    if (Clipboard.ContainsText())
-                //    {
-                //        MessageBox.Show(Clipboard.GetText());
-                //    }
+                //    Thread.Sleep(400);
+                //    System.Windows.Forms.SendKeys.SendWait("^c");
+                //    Thread.Sleep(400);
+
+                //    yt_Link = Clipboard.GetText();
+
+
+                //}
+                //catch
+                //{
+                //    NotificationBox.Show(this, "Nothing copied, please try again", 3000, NotificationMsg.ERROR, Position.Parent);
+                //    return;
                 //}
 
-                //if (ActivateApp("Vivaldi"))
-                //{
-                //    //SendKeys.SendWait("^(a)");
-                //    SendKeys.SendWait("^(c)");
-                //    //if (Clipboard.ContainsText())
-                //    //{
-                //    //    MessageBox.Show(Clipboard.GetText());
-                //    //}
-                //}
-                IDataObject yLink = null;
 
-                try
-                {
-                    Thread.Sleep(400);
-                    System.Windows.Forms.SendKeys.SendWait("^c");
-                    Thread.Sleep(400);
-
-                    yLink = Clipboard.GetDataObject();
-
-                }
-                catch
-                {
-                    NotificationBox.Show("Nothing copied, please try again", 3000, NotificationMsg.ERROR);
-                    return;
-                }
+               // yLink = Clipboard.GetDataObject();
 
 
+                //IDataObject yLink = Clipboard.GetDataObject();
 
+                //yt_Link = (String)yLink.GetData(DataFormats.Text);
 
-              //  IDataObject yLink = Clipboard.GetDataObject();
+                yt_Link = Clipboard.GetText();
 
-                string yt_Link = (String)yLink.GetData(DataFormats.Text);
-
-                // if (string.IsNullOrEmpty(yt_Link)) return; //clipboard empty Goodbye
                 if (string.IsNullOrEmpty(yt_Link) || yt_Link.Contains("search_query=")) return; //clipboard empty Goodbye
 
+                ValidVideoType linktype = ValidLinkCheck(yt_Link);
 
-                // possible YT links:
-                //https://www.youtube.com/watch?v=KZ2aFOTf_4Y&list=PLZ1f3amS4y1e4UsI2PgslUM3xssFUHQuG&index=2
-                //https://www.youtube.com/watch?v=KZ2aFOTf_4Y
-                // KZ2aFOTf_4Y
-                //
-                //embedded: 
-                //https://youtu.be/1zrejG-WI3U
-                //https://www.youtube.com/embed/xE146-LsbyQ?wmode=opaque
-                //https://www.youtube.com/embed/gIOvCiy2fKs
-                //https://www.youtube-nocookie.com/embed/AmXgH_zdv6k?feature=oembed
-                //https://www.youtube.com/embed/1zrejG-WI3U?version=3&rel=1&fs=1&autohide=2&showsearch=0&showinfo=1&iv_load_policy=1&wmode=transparent
-                //
-                // channel https://www.youtube.com/channel/UCpSV2QTmd34FfoFmbZ0O7Sw
-                //https://www.youtube.com/watch?v=0yAiPIOugv4
-                // 
-                // search query
-                //https://www.youtube.com/results?search_query=ariana+honda+stage
-
-
-                if (yt_Link.Contains(".youtube.com") || yt_Link.Contains("www.youtube-nocookie.com") || yt_Link.Contains("youtu.be"))
+                switch (linktype)
                 {
-                    if ((yt_Link.Contains("embed") || yt_Link.Contains("youtu.be/")) && !yt_Link.Contains("=youtu.be/"))  //variant embed link
-                    {
-                        string[] key_em = yt_Link.Split('?');
-                        key_em[0] = key_em[0].Split('/').Last();
-                        ytPluginLink = YTPLUGIN + key_em[0];
-                        // yt_Link = "https://www.youtube.com/watch?v=" + key_em[0];
+                    case ValidVideoType.YT:
+                    case ValidVideoType.YList:
+                        ImportYTLink(yt_Link);
+                        break;
 
-                    }
-                    //https://www.youtube.com/watch?time_continue=16&v=UaTYYk3HxOc&feature=emb_logo
-                    else if (yt_Link.Contains("time_continue"))
-                    {
-                        string[] key = yt_Link.Split('=');  //variant normal or YT playlist link
-                        if (key.Length > 1)     //if channel has no '='
-                        {
-                            if (key[2].Contains('&'))
-                                key[2] = key[2].Split('&').First();
+                    case ValidVideoType.Vim:
+                        ImportVimeoLink(yt_Link);
+                        break;
 
-                            //  ytPluginLink = YTPLUGIN + key[1];
-                            ytPluginLink = YTPLUGIN + key[2];
+                    case ValidVideoType.Daily:
+                        ImportDailyLink(yt_Link);
+                        break;
 
-                        }
-                    }
-
-
-
-                    else
-                    {
-                        string[] key = yt_Link.Split('=');  //variant normal or YT playlist link
-                        if (key.Length > 1)     //if channel has no '='
-                        {
-                            if (key[1].Contains('&'))
-                                key[1] = key[1].Split('&').First();
-
-                            ytPluginLink = YTPLUGIN + key[1];
-
-                        }
-                    }
-
-
-                    if (string.IsNullOrEmpty(ytPluginLink))
-                    {
-                        ytPluginLink = "Link N/A";
-                    }
-
-
-                    // Is Data Text?
-
-                    if (yLink.GetDataPresent(DataFormats.Text) && ytPluginLink != "Link N/A")
-                    {
-                        var url = (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
-                        if (url.Contains("music.youtube"))
-                        {
-                            string[] key = yt_Link.Split('=');  //variant normal or YT playlist link
-                            if (key.Length > 1)     //if channel has no '='
-                            {
-                                if (key[1].Contains('&'))
-                                    key[1] = key[1].Split('&').First();
-
-                                url = YTURL + key[1];
-
-                            }
-                        }
-                        // var url = (String)yt_Link.GetData(DataFormats.Text);
-                        // string name = GetTitle(url);
-                        //  string name = GetTitle_html(url);
-                        string name = GetTitle_client(url);  //new client
-                        //  if (string.IsNullOrEmpty(name)) name = GetTitle_new(yUrl_search);
-                        //string name = GetTitle(yUrl);
-#if DEBUG
-                        Console.WriteLine(name);
-#endif
-                        if (!string.IsNullOrEmpty(name))
-                        {
-                            name = name.Replace("#", " ");  //kodi doesn't like #
-                            name = name.Replace(":", " -");  //youtube-dl doesn't like :
-
-                            if (dataGridView1.RowCount > 0)
-                            {
-                                entries.Add(new PlayEntry(Name: name, Link: ytPluginLink));
-                                dataGridView1.Rows[entries.Count - 1].Selected = true;
-                                dataGridView1.FirstDisplayedScrollingRowIndex = entries.Count - 1;
-
-                            }
-                            else
-                            {
-                                dataGridView1.DataSource = entries; //writes grid
-                                data.Add("Name");
-                                data.Add("Link");
-                                entries.Add(new PlayEntry(Name: name, Link: ytPluginLink));
-
-                                label_central.SendToBack();
-                            }
-
-                            NotificationBox.Show("YouTube Link added", 2000, NotificationMsg.DONE);
-
-                            if (_taglink) button_check.PerformClick(); //grid gets pushed up and changing color
-
-                            // DataGridView1_CellValidated(null, null); if(undoStack.Count>1) ShowReUnDo(0);
-
-                            toSave(true);
-                        }
-                    }
-
-                    else
-                    {
-                        NotificationBox.Show("Wrong input. Use full YouTube link", 2000, NotificationMsg.ERROR);
-                    }
+                    case ValidVideoType.Html:
+                        ImportHTMLLink(yt_Link);
+                        break;
                 }
-                else if ((yt_Link.StartsWith("http") || yt_Link.StartsWith("\\\\") || yt_Link.Contains(@":\"))
-                    && videotypes.Any(yt_Link.EndsWith))  //option http
-                {
-                    var url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
-                    string name = ""; // url.Split('/').Last();
 
-                    //string name = GetTitle_html(url);
-                    if (url.StartsWith("\\\\"))
-                    {
-                        name = url.Split('\\').Last();
-                        ytPluginLink = "nfs:" + url.Replace("\\", "/").Trim();
-                    }
-                    else if (url.Contains(@":\"))
-                    {
-                        name = url.Split('\\').Last();
-                        ytPluginLink = url;
-                    }
-                    else
-                    {
-                        name = url.Split('/').Last();
-                        ytPluginLink = url;
-                    }
-
-#if DEBUG
-                    Console.WriteLine(name);
-#endif
-                    if (!string.IsNullOrEmpty(name))
-                    {
-                        name = name.Replace("#", " ");  //kodi doesn't like #
-                        name = name.Replace(":", " -");  //youtube-dl doesn't like :
-
-                        if (dataGridView1.RowCount > 0)
-                        {
-                            entries.Add(new PlayEntry(Name: name, Link: ytPluginLink));
-                            dataGridView1.Rows[entries.Count - 1].Selected = true;
-                            dataGridView1.FirstDisplayedScrollingRowIndex = entries.Count - 1;
-                            //  DataGridView1_CellValidated(null, null);
-
-                        }
-                        else
-                        {
-                            dataGridView1.DataSource = entries; //writes grid
-                            data.Add("Name");
-                            data.Add("Link");
-                            entries.Add(new PlayEntry(Name: name, Link: ytPluginLink));
-                            // DataGridView1_CellValidated(null, null);
-
-                        }
-
-                        NotificationBox.Show("Link added", 2000, NotificationMsg.DONE);
-
-
-                        if (_taglink) button_check.PerformClick(); //grid gets pushed up and changing color
-
-                        //DataGridView1_CellValidated(null, null); if (undoStack.Count > 1) ShowReUnDo(0);
-
-                        toSave(true);
-                    }
-                }
 
 
             }
@@ -534,6 +345,8 @@ namespace PlaylistEditor
             if (m.Msg == 0x0312 && m.WParam.ToInt32() == mActionHotKeyID2)
             {
                 IDataObject kLink = Clipboard.GetDataObject();
+
+                ClassDataset vid = new ClassDataset();  //valid video types
 
                 string kodi_Link = (String)kLink.GetData(DataFormats.Text);
 
@@ -561,7 +374,7 @@ namespace PlaylistEditor
                     }
 
                 }
-                else if (kodi_Link.StartsWith("http") && videotypes.Any(kodi_Link.EndsWith))
+                else if (kodi_Link.StartsWith("http") && vid.VideoTypes.Any(kodi_Link.EndsWith))
                 {
                     ytPluginLink = kodi_Link;
                 }
@@ -569,13 +382,229 @@ namespace PlaylistEditor
 
                 string jLink = "{ \"jsonrpc\":\"2.0\",\"method\":\"Player.Open\",\"params\":{ \"item\":{ \"file\":\"" + ytPluginLink + "\"} },\"id\":0}";
 
-                ClassKodi.Run(jLink);  //don't know exactly what I wan't to do with the bool
+                _ = ClassKodi.Run(jLink);  //don't know exactly what I wan't to do with the bool
 
 
             }
 
             base.WndProc(ref m);
         }
+
+        private void ImportDailyLink(string yt_Link)
+        {
+
+            string url = yt_Link;
+            string name = ""; 
+
+            string[] key_em = yt_Link.Split('/');
+            ytPluginLink = DAPLUGIN1 + key_em[key_em.Length - 1] + DAPLUGIN2;
+                name = GetTitle_html(url);
+                if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
+
+#if DEBUG
+            Console.WriteLine(name);
+#endif
+            AddLink2Grid(name, ytPluginLink);
+        }
+
+        private void ImportVimeoLink(string yt_Link)
+        {
+
+            string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
+            string name = ""; // url.Split('/').Last();
+
+            string[] key_em = yt_Link.Split('/');
+            ytPluginLink = VIPLUGIN + key_em[key_em.Length-1];
+
+                name = GetTitle_vimeo(url);
+                if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
+
+#if DEBUG
+            Console.WriteLine(name);
+#endif
+            AddLink2Grid(name, ytPluginLink);
+
+        }
+
+        /// <summary>
+        /// imports html and local links
+        /// </summary>
+        /// <param name="yt_Link"></param>
+        private void ImportHTMLLink(string yt_Link)
+        {
+            string url = yt_Link;
+            string name = ""; 
+
+            if (url.StartsWith("\\\\"))
+            {
+                name = url.Split('\\').Last();
+                ytPluginLink = "nfs:" + url.Replace("\\", "/").Trim();
+            }
+            else if (url.Contains(@":\"))
+            {
+                name = url.Split('\\').Last();
+                ytPluginLink = url;
+            }
+            else  //html
+            {
+                name = GetTitle_html(url);
+                if (string.IsNullOrEmpty(name))  name = url.Split('/').Last();
+                ytPluginLink = url;
+            }
+
+#if DEBUG
+            Console.WriteLine(name);
+#endif
+            AddLink2Grid(name, ytPluginLink);
+
+        }
+
+        private void ImportYTLink(string yt_Link)
+        {
+            // possible YT links:
+            //https://www.youtube.com/watch?v=KZ2aFOTf_4Y&list=PLZ1f3amS4y1e4UsI2PgslUM3xssFUHQuG&index=2
+            //https://www.youtube.com/watch?v=KZ2aFOTf_4Y
+            // KZ2aFOTf_4Y
+            //
+            //embedded: 
+            //https://youtu.be/1zrejG-WI3U
+            //https://www.youtube.com/embed/xE146-LsbyQ?wmode=opaque
+            //https://www.youtube.com/embed/gIOvCiy2fKs
+            //https://www.youtube-nocookie.com/embed/AmXgH_zdv6k?feature=oembed
+            //https://www.youtube.com/embed/1zrejG-WI3U?version=3&rel=1&fs=1&autohide=2&showsearch=0&showinfo=1&iv_load_policy=1&wmode=transparent
+            //
+            // channel https://www.youtube.com/channel/UCpSV2QTmd34FfoFmbZ0O7Sw
+            //https://www.youtube.com/watch?v=0yAiPIOugv4
+            // 
+            // search query
+            //https://www.youtube.com/results?search_query=ariana+honda+stage
+
+            string url = "";
+            if (yt_Link.Contains(".youtube.com") || yt_Link.Contains("www.youtube-nocookie.com") || yt_Link.Contains("youtu.be"))
+            {
+                if ((yt_Link.Contains("embed") || yt_Link.Contains("youtu.be/")) && !yt_Link.Contains("=youtu.be/"))  //variant embed link
+                {
+                    string[] key_em = yt_Link.Split('?');
+                    key_em[0] = key_em[0].Split('/').Last();
+                    ytPluginLink = YTPLUGIN + key_em[0];
+                    // yt_Link = "https://www.youtube.com/watch?v=" + key_em[0];
+                    url = YTURL + key_em[0];
+                }
+ 
+                //https://www.youtube.com/watch?time_continue=16&v=UaTYYk3HxOc&feature=emb_logo
+                else if (yt_Link.Contains("time_continue"))
+                {
+                    string[] key = yt_Link.Split('=');  //variant normal or YT playlist link
+                    if (key.Length > 1)     //if channel has no '='
+                    {
+                        if (key[2].Contains('&'))
+                            key[2] = key[2].Split('&').First();
+
+                        //  ytPluginLink = YTPLUGIN + key[1];
+                        ytPluginLink = YTPLUGIN + key[2];
+                        url = YTURL + key[2];
+
+                    }
+                }
+
+                else if (yt_Link.Contains("music.youtube"))
+                {
+                    string[] key = yt_Link.Split('=');  //variant normal or YT playlist link
+                    if (key.Length > 1)     //if channel has no '='
+                    {
+                        if (key[1].Contains('&'))
+                            key[1] = key[1].Split('&').First();
+
+                        ytPluginLink = YTPLUGIN + key[1];
+                        url = YTURL + key[1];
+
+                    }
+                }
+ 
+                else
+                {
+                    string[] key = yt_Link.Split('=');  //variant normal or YT playlist link
+                    if (key.Length > 1)     //if channel has no '='
+                    {
+                        if (key[1].Contains('&'))
+                            key[1] = key[1].Split('&').First();
+
+                        ytPluginLink = YTPLUGIN + key[1];
+                        url = YTURL + key[1];
+
+
+                    }
+                }
+ 
+                
+                if (string.IsNullOrEmpty(ytPluginLink))
+                {
+                    ytPluginLink = "Link N/A";
+                }
+
+
+                // Is Data Text?
+
+                // if (yLink.GetDataPresent(DataFormats.Text) && ytPluginLink != "Link N/A")
+                if (!string.IsNullOrEmpty(yt_Link) && ytPluginLink != "Link N/A")
+                {
+                    string name = GetTitle_client(url);  //new client
+
+#if DEBUG
+                    Console.WriteLine(name);
+#endif
+                    AddLink2Grid(name, ytPluginLink);
+                }
+                else
+                {
+                    NotificationBox.Show("Wrong input. Use full YouTube link", 2000, NotificationMsg.ERROR);
+                }
+            }
+
+        }
+
+
+        private void AddLink2Grid (string name, string ytPluginLink)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                name = name.Replace("#", " ");  //kodi doesn't like #
+                name = name.Replace(":", " -");  //youtube-dl doesn't like :
+
+                if (dataGridView1.RowCount > 0)
+                {
+                    entries.Add(new PlayEntry(Name: name, Link: ytPluginLink));
+                    dataGridView1.Rows[entries.Count - 1].Selected = true;
+                    dataGridView1.FirstDisplayedScrollingRowIndex = entries.Count - 1;
+                    //  DataGridView1_CellValidated(null, null);
+
+                }
+                else
+                {
+                    dataGridView1.DataSource = entries; //writes grid
+                    data.Add("Name");
+                    data.Add("Link");
+                    entries.Add(new PlayEntry(Name: name, Link: ytPluginLink));
+                    // DataGridView1_CellValidated(null, null);
+
+                }
+
+                NotificationBox.Show("Link saved", 2000, NotificationMsg.DONE);
+
+                if (_taglink) button_check.PerformClick(); //grid gets pushed up and changing color
+
+                //DataGridView1_CellValidated(null, null); if (undoStack.Count > 1) ShowReUnDo(0);
+
+                toSave(true);
+            }
+
+        }
+
+
+
+
+
+
 
 
 
@@ -711,7 +740,7 @@ namespace PlaylistEditor
             Cursor.Current = Cursors.WaitCursor;
 
             var openpath = Settings.Default.openpath;
-            if (!string.IsNullOrEmpty(openpath) && !MyDirectoryExists(openpath, 4000))
+            if (!string.IsNullOrEmpty(openpath) && !DirectoryExists(openpath, 4000))
                 openpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\";
 
 
@@ -844,7 +873,7 @@ namespace PlaylistEditor
                 vlcpath = GetVlcPath();
                 if (string.IsNullOrEmpty(vlcpath))
                 {
-                    NotificationBox.Show("VLC player not found", 3000, NotificationMsg.ERROR);
+                    NotificationBox.Show(this, "VLC player not found", 3000, NotificationMsg.ERROR, Position.Parent);
 
                     // _vlcfound = true;
                 }
@@ -882,10 +911,10 @@ namespace PlaylistEditor
 
                             if (param == "false")
                             {
-                                NotificationBox.Show("Get HiRes Stream failed." + Environment.NewLine + "Try normal playback!", 4000, NotificationMsg.ERROR);
+                                NotificationBox.Show(this, "Get HiRes Stream failed." + Environment.NewLine + "Try normal playback!", 4000, NotificationMsg.ERROR, Position.Parent);
                                 param = YTURL + key[1];
 
-//return;  //no fallback to no dash
+                                //return;  //no fallback to no dash
                                 //param = YTURL + key[1];
                             }
                             if (param == "nodash")
@@ -938,7 +967,7 @@ namespace PlaylistEditor
 
             if (!MyFileExists(filename, 5000))
             {
-                NotificationBox.Show("File not found", 1500, NotificationMsg.ERROR);
+                NotificationBox.Show(this, "File not found", 1500, NotificationMsg.ERROR, Position.Parent);
 
                 return false;
             }
@@ -949,7 +978,7 @@ namespace PlaylistEditor
                 "Import Playlist", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialogSave == DialogResult.No)
                 {
-                    NotificationBox.Show("If File has IPTV format, use PlaylistEditorTV", 3500, NotificationMsg.ERROR);
+                    NotificationBox.Show(this, "If File has IPTV format, use PlaylistEditorTV", 3500, NotificationMsg.ERROR, Position.Parent);
 
                     return false;
                 }
@@ -1012,7 +1041,7 @@ namespace PlaylistEditor
                     }
                     catch (ArgumentOutOfRangeException ex)
                     {
-                        NotificationBox.Show("An entry has been omitted due to its incorrect format", 2000, NotificationMsg.ERROR);
+                        NotificationBox.Show(this, "An entry has been omitted due to its incorrect format", 2000, NotificationMsg.ERROR, Position.Parent);
 
                         continue;
                     }
@@ -1046,10 +1075,6 @@ namespace PlaylistEditor
 
         private void button_delLine_Click(object sender, EventArgs e)
         {
-            // dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Selected = true;
-            //
-            //   dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Selected = true;
-
 
             if (dataGridView1.SelectedRows.Count > 0)
             {
@@ -1062,51 +1087,44 @@ namespace PlaylistEditor
             }
 
             if (_taglocal) button_tag.PerformClick();
-            //  dataGridView1.Refresh();  //to save on undo stack
-            // DataGridView1_CellValidated(null, null);
         }
 
         private void button_save_Click(object sender, EventArgs e)
         {
-            // if (_taglocal) button_tag.PerformClick();
 
             Cursor.Current = Cursors.WaitCursor;
 
             saveFileDialog1.FileName = plabel_Filename.Text;
 
             if ((ModifierKeys == Keys.Shift || _savenow) && !string.IsNullOrEmpty(plabel_Filename.Text)
-                && MyDirectoryExists(Path.GetDirectoryName(plabel_Filename.Text), 4000))
+                && DirectoryExists(Path.GetDirectoryName(plabel_Filename.Text), 4000))
             {
                 saveFileDialog1.FileName = plabel_Filename.Text;
-                // ((Control)sender).Hide();
 
-                //check if path is avaliable to avoid network timeout
-                ////var savepath = Path.GetDirectoryName(plabel_Filename.Text);
-                //if (!string.IsNullOrEmpty(plabel_Filename.Text)
-                //    && !MyDirectoryExists(Path.GetDirectoryName(plabel_Filename.Text), 4000))
-                //{
-                //    string docpath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                //    saveFileDialog1.FileName = docpath + "\\" + Path.GetFileName(plabel_Filename.Text);
-                //}
-
-
-                using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName, false /*, Encoding.UTF8*/))   //false: file ovewrite
+                try
                 {
-                    // if (isUnixFile) file.NewLine = "\n";  //unix style LF
-                    file.NewLine = "\n";  //win  LF 
-                    file.WriteLine("#EXTCPlayListM3U::M3U");
-
-                    for (int i = 0; i < entries.Count; i++)
+                    using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName, false /*, Encoding.UTF8*/))   //false: file ovewrite
                     {
-                        if (string.IsNullOrEmpty(entries[i].Name) && string.IsNullOrEmpty(entries[i].Link)) continue;
-                        // # remove, "," remove
-                        entries[i].Name = entries[i].Name ?? string.Empty;  //replace NULL with empty
-                        entries[i].Link = entries[i].Link ?? string.Empty;
+                        // if (isUnixFile) file.NewLine = "\n";  //unix style LF
+                        file.NewLine = "\n";  //win  LF 
+                        file.WriteLine("#EXTCPlayListM3U::M3U");
 
-                        entries[i].Name = entries[i].Name.Replace("#", " ").Replace(",", " ").Replace(":", " -");
-                        file.WriteLine("#EXTINF:0," + entries[i].Name);
-                        file.WriteLine(entries[i].Link);
+                        for (int i = 0; i < entries.Count; i++)
+                        {
+                            if (string.IsNullOrEmpty(entries[i].Name) && string.IsNullOrEmpty(entries[i].Link)) continue;
+                            // # remove, "," remove
+                            entries[i].Name = entries[i].Name ?? string.Empty;  //replace NULL with empty
+                            entries[i].Link = entries[i].Link ?? string.Empty;
+
+                            entries[i].Name = entries[i].Name.Replace("#", " ").Replace(",", " ").Replace(":", " -");
+                            file.WriteLine("#EXTINF:0," + entries[i].Name);
+                            file.WriteLine(entries[i].Link);
+                        }
                     }
+                }
+                catch
+                {
+                    NotificationBox.Show(this, "Write Error", 2000, NotificationMsg.ERROR, Position.Parent);
                 }
                 // undoStack.Clear(); redoStack.Clear(); toSave(false); ShowReUnDo(0);//reset stacks
                 toSave(false, true);
@@ -1114,28 +1132,37 @@ namespace PlaylistEditor
                 _savenow = false;
 
 
-                NotificationBox.Show("Playlist Saved", 1500, NotificationMsg.OK);
+                NotificationBox.Show(this, "Playlist Saved", 1500, NotificationMsg.OK, Position.Parent);
 
 
             }
+
             else if (saveFileDialog1.ShowDialog() == DialogResult.OK)  //open file dialog
             {
 
                 plabel_Filename.Text = saveFileDialog1.FileName;
-
-                using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName, false /*, Encoding.UTF8*/))   //false: file ovewrite
+                try
                 {
-                    // if (isUnixFile) file.NewLine = "\n";  //unix style LF
-                    file.NewLine = "\n";
-                    file.WriteLine("#EXTCPlayListM3U::M3U");
-
-                    for (int i = 0; i < entries.Count; i++)
+                    using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName, false /*, Encoding.UTF8*/))   //false: file ovewrite
                     {
-                        entries[i].Name = entries[i].Name.Replace("#", " ").Replace(",", " ").Replace(":", " -");
-                        file.WriteLine("#EXTINF:0," + entries[i].Name);  //ToDo # remove?
-                        file.WriteLine(entries[i].Link);
+                        // if (isUnixFile) file.NewLine = "\n";  //unix style LF
+                        file.NewLine = "\n";
+                        file.WriteLine("#EXTCPlayListM3U::M3U");
+
+                        for (int i = 0; i < entries.Count; i++)
+                        {
+                            entries[i].Name = entries[i].Name.Replace("#", " ").Replace(",", " ").Replace(":", " -");
+                            file.WriteLine("#EXTINF:0," + entries[i].Name);  //ToDo # remove?
+                            file.WriteLine(entries[i].Link);
+                        }
                     }
+
                 }
+                catch
+                {
+                    NotificationBox.Show(this, "Write Error", 2000, NotificationMsg.ERROR, Position.Parent);
+                }
+
                 // undoStack.Clear(); redoStack.Clear(); toSave(false); ShowReUnDo(0);//reset stacks
                 toSave(false, true);
 
@@ -1465,7 +1492,7 @@ namespace PlaylistEditor
                 }
                 catch (System.Runtime.InteropServices.ExternalException ex)
                 {
-                    NotificationBox.Show("Copy/paste operation failed", 2000, NotificationMsg.ERROR);
+                    NotificationBox.Show(this, "Copy/paste operation failed", 2000, NotificationMsg.ERROR, Position.Parent);
 
 #if DEBUG
                     MessageBox.Show("Copy/paste operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1498,7 +1525,7 @@ namespace PlaylistEditor
                 }
                 catch (System.Runtime.InteropServices.ExternalException ex)
                 {
-                    NotificationBox.Show("Copy/paste operation failed", 2000, NotificationMsg.ERROR);
+                    NotificationBox.Show(this, "Copy/paste operation failed", 2000, NotificationMsg.ERROR, Position.Parent);
 
 #if DEBUG
                     MessageBox.Show("Copy/paste operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1506,7 +1533,7 @@ namespace PlaylistEditor
                 }
                 catch (Exception ex)
                 {
-                    NotificationBox.Show("Copy/paste operation failed", 2000, NotificationMsg.ERROR);
+                    NotificationBox.Show(this, "Copy/paste operation failed", 2000, NotificationMsg.ERROR, Position.Parent);
 
 #if DEBUG
                     MessageBox.Show("Copy/paste2 operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1726,7 +1753,7 @@ namespace PlaylistEditor
 
                 Process.Start("explorer.exe", string.Format("/select,\"{0}\"", linkcell));
 
-            else NotificationBox.Show("File not found ", 3000, NotificationMsg.ERROR);
+            else NotificationBox.Show(this, "File not found ", 3000, NotificationMsg.ERROR, Position.Parent);
 
 
             // Process.Start("explorer.exe ", folderPath);
@@ -1807,7 +1834,7 @@ namespace PlaylistEditor
             else
             {
                 //popup no YT Link
-                NotificationBox.Show("No YT link", 1500, NotificationMsg.ERROR);
+                NotificationBox.Show(this,"No YT link", 1500, NotificationMsg.ERROR, Position.Parent);
             }
 
         }
@@ -1965,11 +1992,11 @@ namespace PlaylistEditor
                         break;
 
                     case Keys.P:    //play on kodi
-                        playTSMenuItem.PerformClick();
+                        cm1KodiPlay.PerformClick();
                         break;
 
-                    case Keys.Q:    //queu on Kodi  
-                        queueTSMenuItem.PerformClick();
+                    case Keys.Q:    //queu on Kodi 
+                        cm1KodiQueue.PerformClick();
                         break;
 
                     case Keys.S:
@@ -2156,11 +2183,15 @@ namespace PlaylistEditor
             if (ModifierKeys == Keys.Control)
             {
                 //  if (ModifierKeys == Keys.Shift) queueTSMenuItem.PerformClick();
-                playTSMenuItem.PerformClick();
+                // playTSMenuItem.PerformClick();
+                cm1KodiPlay.PerformClick();
+                //playTSMenuItem_Click(null, null);
             }
             else if (ModifierKeys == (Keys.Control | Keys.Shift))
             {
-                queueTSMenuItem.PerformClick();
+                //  queueTSMenuItem.PerformClick();
+                cm1KodiQueue.PerformClick();
+               // queueTSMenuItem_Click(null, null);
             }
             else
             {
@@ -2394,7 +2425,7 @@ namespace PlaylistEditor
                                 var errorfilename = videofilename;
                                 //don't move part files
 
-                                if (MyDirectoryExists(movepath, 4000))
+                                if (DirectoryExists(movepath, 4000))
                                 {
                                     waitmove.Show();
                                     waitmove.Refresh();
@@ -2476,7 +2507,7 @@ namespace PlaylistEditor
                         }
                         else
                         {
-                            NotificationBox.Show("Error " + videofilename, 3000, NotificationMsg.ERROR);
+                            NotificationBox.Show(this,"Error " + videofilename, 3000, NotificationMsg.ERROR,Position.Parent);
 
                         }
                     }
@@ -2493,7 +2524,7 @@ namespace PlaylistEditor
 
             }
 
-            if (_done) NotificationBox.Show("Download finished", 3000, NotificationMsg.OK);
+            if (_done) NotificationBox.Show(this, "Download finished", 3000, NotificationMsg.OK, Position.Parent);
 
         }
 
@@ -2540,7 +2571,7 @@ namespace PlaylistEditor
         private async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext = 0)
         {
             youtube = new YoutubeClient();
-          //  var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
+            //  var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
 
             if (fileext < 2)
             {
@@ -2581,7 +2612,7 @@ namespace PlaylistEditor
                         {
                             case DialogResult.Yes:
                                 // Download and process them into one file
-                               // await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
+                                // await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
                                 await youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder(videoTitle).Build(), progHandler);
                                 break;
 
@@ -2594,7 +2625,7 @@ namespace PlaylistEditor
                     {
                         // Download and process them into one file
 
-                       // await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
+                        // await converter.DownloadAndProcessMediaStreamsAsync(streamInfos, videoTitle, filetype[fileext], progHandler);
                         await youtube.Videos.DownloadAsync(streamInfos, new ConversionRequestBuilder(videoTitle).Build(), progHandler);
 
                     }
@@ -2627,7 +2658,7 @@ namespace PlaylistEditor
                         {
                             case DialogResult.Yes:
                                 // Download and process them into one file
-                              //  await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
+                                //  await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
                                 await youtube.Videos.DownloadAsync(videoId, videoTitle, progHandler);
                                 break;
 
@@ -2639,7 +2670,7 @@ namespace PlaylistEditor
                     else
                     {
                         // Download and process them into one file
-                       // await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
+                        // await converter.DownloadVideoAsync(videoId, videoTitle, progHandler);
                         await youtube.Videos.DownloadAsync(videoId, videoTitle, progHandler);
 
                     }
@@ -2723,16 +2754,6 @@ namespace PlaylistEditor
                 Settings.Default.Save();
             }
         }
-
-        /// <summary>
-        /// start download YT file
-        /// </summary>
-        //private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        //{
-        //    Process.Start("https://github.com/ytdl-org/youtube-dl/blob/master/README.md#format-selection");
-        //}
-
-
 
 
         private void ComboBox_Click(object sender, EventArgs e)
@@ -2875,7 +2896,7 @@ namespace PlaylistEditor
                     string[] key = playcell.Split('=');  //variant normal or YT playlist link
                     if (key.Length > 1)
                     {
-                        if (GetTitle_html(YTURL + key[1]) == "YouTube")
+                        if (GetTitle_YThtml(YTURL + key[1]) == "YouTube")
                         //  if (GetTitle_client(YTURL + key[1]) == "N/A")
                         {
                             for (int i = 0; i < 2; i++)
@@ -2982,9 +3003,6 @@ namespace PlaylistEditor
                     .Select(r => r.Cells.Cast<DataGridViewCell>()
                     .Select(c => c.Value).ToArray()).ToArray());
 
-                //  if (undoStack.Count > 1) toSave(true);
-                // if (undoStack.Count > 1) ShowReUnDo(1); 
-
             }
             //UndoButton.Visible = undoStack.Count > 1;
             //RedoButton.Enabled = redoStack.Count > 1;
@@ -3033,7 +3051,6 @@ namespace PlaylistEditor
                 //UndoButton.Enabled = undoStack.Count > 0;
                 //RedoButton.Enabled = redoStack.Count > 0;
                 ShowReUnDo(0);
-                //if (!isModified) toSave(true);
 
             }
 
@@ -3167,56 +3184,6 @@ namespace PlaylistEditor
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            //if (e.RowIndex >= 0 & e.ColumnIndex >= 0 /*& IsSelected*/)
-            //{
-            //    e.Handled = true;
-            //    e.PaintBackground(e.CellBounds, true);
-
-            //    string sw = textBox_find.Text;
-
-            //    if (!string.IsNullOrEmpty(sw))
-            //    {
-            //        string val = (string)e.FormattedValue;
-            //        int sindx = val.ToLower().IndexOf(sw.ToLower());
-            //        if (sindx >= 0)
-            //        {
-            //            Rectangle hl_rect = new Rectangle();
-            //            hl_rect.Y = e.CellBounds.Y + 2;
-            //            hl_rect.Height = e.CellBounds.Height - 5;
-
-            //            string sBefore = val.Substring(0, sindx);
-            //            string sWord = val.Substring(sindx, sw.Length);
-            //            Size s1 = TextRenderer.MeasureText(e.Graphics, sBefore, e.CellStyle.Font, e.CellBounds.Size);
-            //            Size s2 = TextRenderer.MeasureText(e.Graphics, sWord, e.CellStyle.Font, e.CellBounds.Size);
-
-            //            if (s1.Width > 5)
-            //            {
-            //                hl_rect.X = e.CellBounds.X + s1.Width - 5;
-            //                hl_rect.Width = s2.Width - 6;
-            //            }
-            //            else
-            //            {
-            //                hl_rect.X = e.CellBounds.X + 2;
-            //                hl_rect.Width = s2.Width - 6;
-            //            }
-
-            //            SolidBrush hl_brush;
-            //            if (((e.State & DataGridViewElementStates.Selected) != DataGridViewElementStates.None))
-            //            {
-            //                hl_brush = new SolidBrush(Color.DarkGoldenrod);
-            //            }
-            //            else
-            //            {
-            //                hl_brush = new SolidBrush(Color.Yellow);
-            //            }
-
-            //            e.Graphics.FillRectangle(hl_brush, hl_rect);
-
-            //            hl_brush.Dispose();
-            //        }
-            //    }
-            //    e.PaintContent(e.CellBounds);
-            //}
 
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0 /*& IsSelected*/)
             {
@@ -3485,6 +3452,8 @@ namespace PlaylistEditor
             Settings.Default.nostart = false;
             Settings.Default.Save();
 
+            button_vlc.ContextMenuStrip = cmLabelVlc;
+
         }
 
         private void cms1NewWIndow_Click(object sender, EventArgs e)
@@ -3496,6 +3465,61 @@ namespace PlaylistEditor
             Process.Start(info);
 
         }
+
+        private void cmLabelVlc_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            int cmIndex = Settings.Default.maxres;
+
+            switch (cmIndex)
+            {
+                case 4:
+                    cmLbl480.Checked = true;
+                    cmLbl720.Checked = false;
+                    cmLbl1080.Checked = false;
+                    break;
+
+                case 3:
+                    cmLbl480.Checked = false;
+                    cmLbl720.Checked = true;
+                    cmLbl1080.Checked = false;
+                    break;
+
+                case 2:
+                    cmLbl480.Checked = false;
+                    cmLbl720.Checked = false;
+                    cmLbl1080.Checked = true;
+                    break;
+            }
+
+        }
+
+        private void cmLbl_click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem obj = sender as ToolStripMenuItem;
+            obj.Checked = true;
+
+            if (obj.Name == "cmLbl480")
+            {
+                cmLbl720.Checked = false;
+                cmLbl1080.Checked = false;
+                Settings.Default.maxres = 4;
+            }
+            if (obj.Name == "cmLbl720")
+            {
+                cmLbl480.Checked = false;
+                cmLbl1080.Checked = false;
+                Settings.Default.maxres = 3;
+            }
+            if (obj.Name == "cmLbl1080")
+            {
+                cmLbl720.Checked = false;
+                cmLbl480.Checked = false;
+                Settings.Default.maxres = 2;
+            }
+
+            Settings.Default.Save();
+        }
+
 
         private void ShowFindBox(char? letter)   //?: nullable
         {
@@ -3528,21 +3552,8 @@ namespace PlaylistEditor
 
         }
 
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {
 
-        }
 
-        private void textBox_find_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
-        {
-            // if (e.Handled) return;
-
-        }
 
         private void btn_clearfind_Click(object sender, EventArgs e)
         {

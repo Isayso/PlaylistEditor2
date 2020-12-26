@@ -28,6 +28,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YoutubeExplode;
+using static PlaylistEditor.ClassDataset;
 //using YoutubeExplode.Videos;
 //using YoutubeExplode.Videos.Streams;
 
@@ -35,20 +36,62 @@ namespace PlaylistEditor
 {
     static class ClassHelp
     {
-      //  private static bool _isBusy;
-       // private static Video _video;
-     //   private static IReadOnlyList<MuxedStreamInfo> _muxedStreamInfos;
-     //   private static IReadOnlyList<AudioOnlyStreamInfo> _audioOnlyStreamInfos;
-      //  private static IReadOnlyList<VideoOnlyStreamInfo> _videoOnlyStreamInfos;
-     //   private static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos;
+
+        //  private static bool _isBusy;
+        // private static Video _video;
+        //   private static IReadOnlyList<MuxedStreamInfo> _muxedStreamInfos;
+        //   private static IReadOnlyList<AudioOnlyStreamInfo> _audioOnlyStreamInfos;
+        //  private static IReadOnlyList<VideoOnlyStreamInfo> _videoOnlyStreamInfos;
+        //   private static IReadOnlyList<VideoOnlyStreamInfo> VideoOnlyStreamInfos;
         // private static IReadOnlyList<ClosedCaptionTrackInfo>? _closedCaptionTrackInfos;
-      //  private static string videoUrlnew;
-       // private static string videoTitle;
+        //  private static string videoUrlnew;
+        // private static string videoTitle;
         //private static string audioUrl;
         //private static Video VideoInfo;
 
-     //   private static YoutubeClient _youtube;
+        //   private static YoutubeClient _youtube;
 
+        public static ValidVideoType ValidLinkCheck(string i_Link)
+        {
+            ClassDataset vid = new ClassDataset();  //valid video types
+
+            if (i_Link.Contains(".youtube.com")
+                || i_Link.Contains("www.youtube-nocookie.com")
+                || i_Link.Contains("youtu.be")
+                || i_Link.Contains("music.youtube"))
+            {
+                if (i_Link.Contains("list=") || i_Link.Contains("channel"))
+                    return ValidVideoType.YList;
+                else return ValidVideoType.YT;
+            }
+            else if (i_Link.Contains(".bitchute.com/video"))
+            {
+                return ValidVideoType.BitC;
+            }
+            else if (i_Link.Contains(".dailymotion.com/video"))
+            {
+                return ValidVideoType.Daily;
+            }
+            else if (i_Link.Contains("rumble.com") && !i_Link.Contains("embed"))  //for rumble 
+            {
+                return ValidVideoType.Rmbl;
+            }
+            else if (i_Link.Contains("vimeo.com"))  //for vimeo 
+            {
+                return ValidVideoType.Vim;
+            }
+            if ((i_Link.StartsWith("http") || i_Link.StartsWith("\\\\") || i_Link.Contains(@":\"))
+                      && vid.VideoTypes.Any(i_Link.EndsWith))  //option http  MUST BE LAST
+            {
+                return ValidVideoType.Html;
+            }
+            else
+            {
+                NotificationBox.Show("No detected Video Link", 2000, NotificationMsg.ERROR);
+
+                return ValidVideoType.Invalid;
+            }
+        }
 
 
         /// <summary>
@@ -137,7 +180,7 @@ namespace PlaylistEditor
         /// </summary>
         /// <param name="url">youtube link url</param>
         /// <returns>title of youtube video</returns>
-        public static string GetTitle_html(string url)
+        public static string GetTitle_YThtml(string url)
         {
             // https://stackoverflow.com/questions/329307/how-to-get-website-title-from-c-sharp
 
@@ -168,6 +211,80 @@ namespace PlaylistEditor
             if (string.IsNullOrEmpty(title)) title = "YouTube";  //for Private videos check for "errorScreen" ?
 
             return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
+        }
+
+        public static string GetTitle_html(string url)
+        {
+            // https://stackoverflow.com/questions/329307/how-to-get-website-title-from-c-sharp
+            //  YT \"title\":\
+
+            string title = "";
+
+            try
+            {
+                WebClient x = new WebClient();
+                x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
+                    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+                string source = x.DownloadString(url);
+
+                title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",
+                   RegexOptions.IgnoreCase).Groups["Title"].Value;
+
+                byte[] bytes = System.Text.Encoding.Default.GetBytes(title);
+                title = System.Text.Encoding.UTF8.GetString(bytes);
+
+                title = WebUtility.HtmlDecode(title);
+
+            }
+            catch (Exception ex)
+            {
+                NotificationBox.Show("Error getting Title", 1000, NotificationMsg.ERROR);
+                //MessageBox.Show("Error to get title " + ex.Message, "Get Title error", MessageBoxButtons.OK);
+                return "";
+            }
+
+            return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
+        }
+
+
+        public static string GetTitle_vimeo(string url)
+        {
+            // https://stackoverflow.com/questions/329307/how-to-get-website-title-from-c-sharp
+            //  YT \"title\":\
+
+            string title = "";
+
+            try
+            {
+                WebClient x = new WebClient();
+                x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
+                    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+                string source = x.DownloadString(url);
+
+                Regex regex2 = new Regex("title\":\"([^\"]*)");
+                var s = regex2.Match(source);
+                title = s.Groups[1].ToString();  //   ":"https://rumble.com/embed/v8z4hb/","
+
+                //title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",
+                //   RegexOptions.IgnoreCase).Groups["Title"].Value;
+
+                byte[] bytes = System.Text.Encoding.Default.GetBytes(title);
+                title = System.Text.Encoding.UTF8.GetString(bytes);
+
+                title = WebUtility.HtmlDecode(title);
+
+            }
+            catch (Exception ex)
+            {
+                NotificationBox.Show("Error getting Title", 1000, NotificationMsg.ERROR);
+                //MessageBox.Show("Error to get title " + ex.Message, "Get Title error", MessageBoxButtons.OK);
+                return "";
+            }
+
+            return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
+
+
+
         }
 
 
@@ -310,7 +427,7 @@ namespace PlaylistEditor
             ProcessStartInfo ps = new ProcessStartInfo();
             ps.FileName = vlcpath + "\\" + "vlc.exe";
             ps.ErrorDialog = false;
-            ps.Arguments = vlcArg + " --no-video-title-show "   ;  //test
+            ps.Arguments = vlcArg + " --no-video-title-show "   ;  
             ps.Arguments += " --no-qt-error-dialogs";
 
 
@@ -484,7 +601,7 @@ namespace PlaylistEditor
         /// <param name="openpath">path</param>
         /// <param name="timeout">timeout in ms</param>
         /// <returns>true/false</returns>
-        public static bool MyDirectoryExists(string openpath, int timeout)
+        public static bool DirectoryExists(string openpath, int timeout)
         {
             var task = new Task<bool>(() => { var info = new DirectoryInfo(openpath); return info.Exists; });
             task.Start();
@@ -498,37 +615,38 @@ namespace PlaylistEditor
         /// </summary>
         /// <param name="folder"></param>
         /// <returns></returns>
-        public delegate bool DirectoryExistsDelegate(string folder);
+      //  public delegate bool DirectoryExistsDelegate(string folder);
+ 
         /// <summary>
         /// checks for network dir with timeout
         /// </summary>
         /// <param name="path"></param>
         /// <param name="millisecondsTimeout"></param>
         /// <returns></returns>
-        public static bool DirectoryExistsTimeout(string path, int millisecondsTimeout)
-        {
-            try
-            {
-                DirectoryExistsDelegate callback = new DirectoryExistsDelegate(Directory.Exists);
-                IAsyncResult result = callback.BeginInvoke(path, null, null);
+        //public static bool DirectoryExistsTimeout(string path, int millisecondsTimeout)
+        //{
+        //    try
+        //    {
+        //        DirectoryExistsDelegate callback = new DirectoryExistsDelegate(Directory.Exists);
+        //        IAsyncResult result = callback.BeginInvoke(path, null, null);
 
-                if (result.AsyncWaitHandle.WaitOne(millisecondsTimeout, false))
-                {
-                    return callback.EndInvoke(result);
-                }
-                else
-                {
-                    callback.EndInvoke(result);  // Needed to terminate thread?
+        //        if (result.AsyncWaitHandle.WaitOne(millisecondsTimeout, false))
+        //        {
+        //            return callback.EndInvoke(result);
+        //        }
+        //        else
+        //        {
+        //            callback.EndInvoke(result);  // Needed to terminate thread?
 
-                    return false;
-                }
-            }
+        //            return false;
+        //        }
+        //    }
 
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
 
         /// <summary>
         /// method to get first 1k of stream data to check if stream alive
@@ -562,7 +680,7 @@ namespace PlaylistEditor
         public static bool IsDriveReady(string serverName)
         {
             //https://stackoverflow.com/questions/1232953/speed-up-file-exists-for-non-existing-network-shares
-            // ***  SET YOUR TIMEOUT HERE  ***     
+
             int timeout = 5;    // 5 seconds 
 
             try
@@ -579,10 +697,8 @@ namespace PlaylistEditor
             }
             catch (Exception)
             {
-
+                return false;
             }
-
-            return false;
 
         }
 

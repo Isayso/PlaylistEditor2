@@ -9,3 +9,7 @@ OK vlc starts after dash error -> not fully implemented
 - replace link
 
 OK private videos not recon
+
+check if window is browser to copy from before hotkey
+
+UNDO stack error again !!!!

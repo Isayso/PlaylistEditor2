@@ -281,11 +281,6 @@ namespace PlaylistEditor
             Settings.Default.colDupli = comboBox2.SelectedIndex;
         }
 
-        private void textBox_Password_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
 
         private void button_edit_Click(object sender, EventArgs e)
         {

@@ -60,6 +60,9 @@
             this.checkBox_a2 = new System.Windows.Forms.CheckBox();
             this.checkBox_s2 = new System.Windows.Forms.CheckBox();
             this.checkBox_c2 = new System.Windows.Forms.CheckBox();
+            this.tBQuery = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnAddpath = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -74,9 +77,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.tBQuery = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.btnAddpath = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -306,7 +306,6 @@
             this.textBox_Password.Size = new System.Drawing.Size(167, 27);
             this.textBox_Password.TabIndex = 24;
             this.toolTip1.SetToolTip(this.textBox_Password, "IP of nfs connected drive");
-            this.textBox_Password.TextChanged += new System.EventHandler(this.textBox_Password_TextChanged);
             // 
             // checkBox3
             // 
@@ -460,6 +459,46 @@
             this.checkBox_c2.Text = "CTRL";
             this.toolTip1.SetToolTip(this.checkBox_c2, "Restart to take effect");
             this.checkBox_c2.UseVisualStyleBackColor = true;
+            // 
+            // tBQuery
+            // 
+            this.tBQuery.BackColor = System.Drawing.SystemColors.Menu;
+            this.tBQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tBQuery.Location = new System.Drawing.Point(50, 219);
+            this.tBQuery.Name = "tBQuery";
+            this.tBQuery.Size = new System.Drawing.Size(377, 27);
+            this.tBQuery.TabIndex = 17;
+            this.tBQuery.Text = "https://www.google.com/search?q=";
+            this.toolTip1.SetToolTip(this.tBQuery, "search strig for Google or else");
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.SystemColors.Control;
+            this.label11.Location = new System.Drawing.Point(46, 187);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(108, 20);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "Search query";
+            this.toolTip1.SetToolTip(this.label11, "search strig for Google or else");
+            // 
+            // btnAddpath
+            // 
+            this.btnAddpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddpath.BackColor = System.Drawing.Color.MidnightBlue;
+            this.btnAddpath.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddpath.BackgroundImage")));
+            this.btnAddpath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnAddpath.FlatAppearance.BorderSize = 0;
+            this.btnAddpath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddpath.Location = new System.Drawing.Point(358, 136);
+            this.btnAddpath.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAddpath.Name = "btnAddpath";
+            this.btnAddpath.Size = new System.Drawing.Size(38, 37);
+            this.btnAddpath.TabIndex = 70;
+            this.toolTip1.SetToolTip(this.btnAddpath, "new download path");
+            this.btnAddpath.UseVisualStyleBackColor = false;
+            this.btnAddpath.Click += new System.EventHandler(this.btnAddpath_Click);
             // 
             // tabControl1
             // 
@@ -647,46 +686,6 @@
             this.label7.Size = new System.Drawing.Size(113, 20);
             this.label7.TabIndex = 0;
             this.label7.Text = "Colum search";
-            // 
-            // tBQuery
-            // 
-            this.tBQuery.BackColor = System.Drawing.SystemColors.Menu;
-            this.tBQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tBQuery.Location = new System.Drawing.Point(50, 219);
-            this.tBQuery.Name = "tBQuery";
-            this.tBQuery.Size = new System.Drawing.Size(377, 27);
-            this.tBQuery.TabIndex = 17;
-            this.tBQuery.Text = "https://www.google.com/search?q=";
-            this.toolTip1.SetToolTip(this.tBQuery, "search strig for Google or else");
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.SystemColors.Control;
-            this.label11.Location = new System.Drawing.Point(46, 187);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(108, 20);
-            this.label11.TabIndex = 16;
-            this.label11.Text = "Search query";
-            this.toolTip1.SetToolTip(this.label11, "search strig for Google or else");
-            // 
-            // btnAddpath
-            // 
-            this.btnAddpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddpath.BackColor = System.Drawing.Color.MidnightBlue;
-            this.btnAddpath.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddpath.BackgroundImage")));
-            this.btnAddpath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnAddpath.FlatAppearance.BorderSize = 0;
-            this.btnAddpath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddpath.Location = new System.Drawing.Point(358, 136);
-            this.btnAddpath.Margin = new System.Windows.Forms.Padding(0);
-            this.btnAddpath.Name = "btnAddpath";
-            this.btnAddpath.Size = new System.Drawing.Size(38, 37);
-            this.btnAddpath.TabIndex = 70;
-            this.toolTip1.SetToolTip(this.btnAddpath, "new download path");
-            this.btnAddpath.UseVisualStyleBackColor = false;
-            this.btnAddpath.Click += new System.EventHandler(this.btnAddpath_Click);
             // 
             // settings
             // 

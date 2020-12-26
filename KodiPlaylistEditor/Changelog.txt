@@ -1,4 +1,10 @@
-﻿2.2.5
+﻿2.2.6
+- support for Vimeo and Dailymotion
+- better music.youtube support
+- fix rare get video name error
+
+
+2.2.5
 - fix for YT problems
 - new nuget packages
 - code clean up

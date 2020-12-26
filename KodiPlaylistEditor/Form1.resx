@@ -120,6 +120,31 @@
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>408, 19</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cm1KodiPlay.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAASxJREFUSEvNlFFOAkEQRBeJiij6YUw4gFfwABov4DGMH/qniRzRO61vhhpSszTK
+        CEZfUslMd3X1wibb/Rv6vp/evn30STBTeT94uC05V3s3ovCivSyJgl1wKms7DB9FoS64l72dLReMZG+H
+        4XEUWuThnG/QRNcYDCdpUNd0Hw1Di1JPtuo9QfxOaEyKSaWMDxdtCrd+vYTCsRtUzng96bvwIpjKtm5U
+        OeN1D+f86L1Ism63wMMT3J99JpKs2XwWNoDeAh3oWuEzQ8GFbEsozEpTpTXwPGl4rFK4BOrwAo28RNcK
+        eu+DkHAJxOFfwdCrh1jY6q/jfIfav0sMvUThRb6kGYavo1AXPMjeTnq6KNQFl7L/DAI2flFhLttuEHT4
+        a+EFAle/BK5U/mu67hOsBWN34HxEwwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="cm1KodiQueue.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAZdJREFUSEvNlLtKA0EYhfei5qLRQBDyAPZWVlbipU5hmdZCLLTwiiKxsEjlI+g7
+        +AJpRAsFC19HJmcm55d/NpPNLgbxg8Pu/JdzshvY6N9gjKlvXb4bK9BgeTZocxWyzPbvCJmLZhISMtYC
+        ixwtD5YXQqZaYIfj5SkYEHO8PFhOQ6YibY77DajKYxgM1Owij/YcZ01Ftscx738C4f8EjaoMseTQy6JJ
+        5qrvh6BQ0QMsO3Tdapq5CNQ5Nj7IskPXtTnuD3UvJI4WC9DmFpyP9U5IHHXDS8EGQO8GSnj0sLNPmwcG
+        C+6qPcAKx0ag0JAmS2Ng5ojLKUtRKAD45gIaLoRHD/SuxYAmLgTDPR0AwuZ5YOlCjHfPXs1tpz96NXF8
+        B/OBDTCt1qep1e4Z2OHqdGB+IuZWe6cv5nm9415Ljh65ng/M17S51fb5m7naf3BP4J6i3f6i6eA7Tcs9
+        AQKSbEBWptnsM6D30e1WuFochEz8ooI2f7EEJFAsV1pMB0bzIXPX8wPyv6Z5wPDnScAqyx4ImOPtXxFF
+        QylXh/CkMq2jAAAAAElFTkSuQmCC
+</value>
+  </data>
   <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -132,7 +157,6 @@
   <metadata name="contextMenuStrip4.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1136, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="button_path.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
@@ -177,6 +201,9 @@
         QmCC
 </value>
   </data>
+  <metadata name="cmLabelVlc.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1311, 17</value>
+  </metadata>
   <data name="button_revert.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6

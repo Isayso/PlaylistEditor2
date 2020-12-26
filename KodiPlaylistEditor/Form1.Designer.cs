@@ -33,9 +33,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.kodiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.playTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.queueTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLinkLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.copyTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +55,6 @@
             this.cmsDeletePathItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox_video = new System.Windows.Forms.ComboBox();
             this.comboBox_audio = new System.Windows.Forms.ComboBox();
-            this.btn_refind = new System.Windows.Forms.Button();
             this.button_download_start = new System.Windows.Forms.Button();
             this.button_path = new System.Windows.Forms.Button();
             this.button_cancel = new System.Windows.Forms.Button();
@@ -66,6 +62,10 @@
             this.UndoButton = new System.Windows.Forms.Button();
             this.button_check = new System.Windows.Forms.Button();
             this.button_vlc = new System.Windows.Forms.Button();
+            this.cmLabelVlc = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmLbl480 = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmLbl720 = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmLbl1080 = new System.Windows.Forms.ToolStripMenuItem();
             this.button_revert = new System.Windows.Forms.Button();
             this.button_tag = new System.Windows.Forms.Button();
             this.button_download = new System.Windows.Forms.Button();
@@ -78,9 +78,8 @@
             this.button_delLine = new System.Windows.Forms.Button();
             this.button_save = new System.Windows.Forms.Button();
             this.button_open = new System.Windows.Forms.Button();
+            this.btn_refind = new System.Windows.Forms.Button();
             this.btn_clearfind = new System.Windows.Forms.Button();
-            this.buttonR_MoveDown = new RepeatingButton();
-            this.buttonR_moveUp = new RepeatingButton();
             this.textBox_find = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -104,10 +103,15 @@
             this.label_central = new System.Windows.Forms.Label();
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cm1KodiPlay = new System.Windows.Forms.ToolStripMenuItem();
+            this.cm1KodiQueue = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonR_MoveDown = new RepeatingButton();
+            this.buttonR_moveUp = new RepeatingButton();
             this.plabel_Filename = new PathLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip4.SuspendLayout();
+            this.cmLabelVlc.SuspendLayout();
             this.panel1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.panelMRU.SuspendLayout();
@@ -149,13 +153,13 @@
             this.dataGridView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
             this.dataGridView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragEnter);
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
-            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.kodiToolStripMenuItem,
+            this.cm1KodiPlay,
+            this.cm1KodiQueue,
             this.openLinkLocationToolStripMenuItem,
             this.toolStripSeparator1,
             this.copyTSMenuItem,
@@ -169,52 +173,27 @@
             this.editF2ToolStripMenuItem,
             this.cms1NewWIndow});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(282, 262);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(284, 286);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
-            // 
-            // kodiToolStripMenuItem
-            // 
-            this.kodiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.playTSMenuItem,
-            this.queueTSMenuItem});
-            this.kodiToolStripMenuItem.Name = "kodiToolStripMenuItem";
-            this.kodiToolStripMenuItem.Size = new System.Drawing.Size(281, 24);
-            this.kodiToolStripMenuItem.Text = "Kodi";
-            // 
-            // playTSMenuItem
-            // 
-            this.playTSMenuItem.Name = "playTSMenuItem";
-            this.playTSMenuItem.ShortcutKeyDisplayString = "Ctrl+P";
-            this.playTSMenuItem.Size = new System.Drawing.Size(179, 24);
-            this.playTSMenuItem.Text = "Play";
-            this.playTSMenuItem.Click += new System.EventHandler(this.playTSMenuItem_Click);
-            // 
-            // queueTSMenuItem
-            // 
-            this.queueTSMenuItem.Name = "queueTSMenuItem";
-            this.queueTSMenuItem.ShortcutKeyDisplayString = "Ctrl+Q";
-            this.queueTSMenuItem.Size = new System.Drawing.Size(179, 24);
-            this.queueTSMenuItem.Text = "Queue";
-            this.queueTSMenuItem.Click += new System.EventHandler(this.queueTSMenuItem_Click);
             // 
             // openLinkLocationToolStripMenuItem
             // 
             this.openLinkLocationToolStripMenuItem.Name = "openLinkLocationToolStripMenuItem";
             this.openLinkLocationToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+L";
-            this.openLinkLocationToolStripMenuItem.Size = new System.Drawing.Size(281, 24);
+            this.openLinkLocationToolStripMenuItem.Size = new System.Drawing.Size(283, 24);
             this.openLinkLocationToolStripMenuItem.Text = "Open video location";
             this.openLinkLocationToolStripMenuItem.Click += new System.EventHandler(this.openLinkLocationTSMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(278, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(280, 6);
             // 
             // copyTSMenuItem
             // 
             this.copyTSMenuItem.Name = "copyTSMenuItem";
             this.copyTSMenuItem.ShortcutKeyDisplayString = "Ctrl+C";
-            this.copyTSMenuItem.Size = new System.Drawing.Size(281, 24);
+            this.copyTSMenuItem.Size = new System.Drawing.Size(283, 24);
             this.copyTSMenuItem.Text = "Copy row";
             this.copyTSMenuItem.Click += new System.EventHandler(this.copyTSMenuItem_Click);
             // 
@@ -222,7 +201,7 @@
             // 
             this.pasteTSMenuItem.Name = "pasteTSMenuItem";
             this.pasteTSMenuItem.ShortcutKeyDisplayString = "Ctrl+V";
-            this.pasteTSMenuItem.Size = new System.Drawing.Size(281, 24);
+            this.pasteTSMenuItem.Size = new System.Drawing.Size(283, 24);
             this.pasteTSMenuItem.Text = "Insert row (add)";
             this.pasteTSMenuItem.Click += new System.EventHandler(this.pasteTSMenuItem_Click);
             // 
@@ -230,20 +209,20 @@
             // 
             this.cutTSMenuItem.Name = "cutTSMenuItem";
             this.cutTSMenuItem.ShortcutKeyDisplayString = "Ctrl+X";
-            this.cutTSMenuItem.Size = new System.Drawing.Size(281, 24);
+            this.cutTSMenuItem.Size = new System.Drawing.Size(283, 24);
             this.cutTSMenuItem.Text = "Cut row";
             this.cutTSMenuItem.Click += new System.EventHandler(this.cutTSMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(278, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(280, 6);
             // 
             // cms1Send2Clip
             // 
             this.cms1Send2Clip.Name = "cms1Send2Clip";
             this.cms1Send2Clip.ShortcutKeyDisplayString = "Alt+C";
-            this.cms1Send2Clip.Size = new System.Drawing.Size(281, 24);
+            this.cms1Send2Clip.Size = new System.Drawing.Size(283, 24);
             this.cms1Send2Clip.Text = "Send YT Link to Clipboard";
             this.cms1Send2Clip.Click += new System.EventHandler(this.sendToHtttpTSMenuItem_Click);
             // 
@@ -251,19 +230,19 @@
             // 
             this.searchGoogletoolStriptem.Name = "searchGoogletoolStriptem";
             this.searchGoogletoolStriptem.ShortcutKeyDisplayString = "Ctrl+G";
-            this.searchGoogletoolStriptem.Size = new System.Drawing.Size(281, 24);
+            this.searchGoogletoolStriptem.Size = new System.Drawing.Size(283, 24);
             this.searchGoogletoolStriptem.Text = "Search Name with iNet";
             this.searchGoogletoolStriptem.Click += new System.EventHandler(this.SearchGoogletoolStriptem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(278, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(280, 6);
             // 
             // downloadYTFileToolStripMenuItem
             // 
             this.downloadYTFileToolStripMenuItem.Name = "downloadYTFileToolStripMenuItem";
-            this.downloadYTFileToolStripMenuItem.Size = new System.Drawing.Size(281, 24);
+            this.downloadYTFileToolStripMenuItem.Size = new System.Drawing.Size(283, 24);
             this.downloadYTFileToolStripMenuItem.Text = "Download YT video";
             this.downloadYTFileToolStripMenuItem.Click += new System.EventHandler(this.downloadYTFileTSMenuItem_Click);
             // 
@@ -271,7 +250,7 @@
             // 
             this.editF2ToolStripMenuItem.Name = "editF2ToolStripMenuItem";
             this.editF2ToolStripMenuItem.ShortcutKeyDisplayString = "F2";
-            this.editF2ToolStripMenuItem.Size = new System.Drawing.Size(281, 24);
+            this.editF2ToolStripMenuItem.Size = new System.Drawing.Size(283, 24);
             this.editF2ToolStripMenuItem.Text = "Rename";
             this.editF2ToolStripMenuItem.Click += new System.EventHandler(this.editF2ToolStripMenuItem_Click);
             // 
@@ -279,7 +258,7 @@
             // 
             this.cms1NewWIndow.Name = "cms1NewWIndow";
             this.cms1NewWIndow.ShortcutKeyDisplayString = "Ctrl+N";
-            this.cms1NewWIndow.Size = new System.Drawing.Size(281, 24);
+            this.cms1NewWIndow.Size = new System.Drawing.Size(283, 24);
             this.cms1NewWIndow.Text = "New Window";
             this.cms1NewWIndow.Click += new System.EventHandler(this.cms1NewWIndow_Click);
             // 
@@ -301,12 +280,12 @@
             this.checkBox_unix.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_unix.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox_unix.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_unix.Location = new System.Drawing.Point(788, 3);
+            this.checkBox_unix.Location = new System.Drawing.Point(783, 3);
             this.checkBox_unix.Name = "checkBox_unix";
-            this.checkBox_unix.Size = new System.Drawing.Size(59, 24);
+            this.checkBox_unix.Size = new System.Drawing.Size(66, 24);
             this.checkBox_unix.TabIndex = 30;
-            this.checkBox_unix.Text = "Unix";
-            this.toolTip1.SetToolTip(this.checkBox_unix, "playlist for unix systems");
+            this.checkBox_unix.Text = "Linux";
+            this.toolTip1.SetToolTip(this.checkBox_unix, "playlist for Linux Kodi systems");
             this.checkBox_unix.UseVisualStyleBackColor = true;
             // 
             // comboBox1
@@ -403,23 +382,6 @@
             this.comboBox_audio.TabIndex = 54;
             this.toolTip1.SetToolTip(this.comboBox_audio, "audio format");
             this.comboBox_audio.Click += new System.EventHandler(this.ComboBox_Click);
-            // 
-            // btn_refind
-            // 
-            this.btn_refind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_refind.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btn_refind.BackgroundImage = global::PlaylistEditor.Properties.Resources.autorenew_black_24dp;
-            this.btn_refind.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_refind.FlatAppearance.BorderSize = 0;
-            this.btn_refind.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_refind.Location = new System.Drawing.Point(1001, 68);
-            this.btn_refind.Margin = new System.Windows.Forms.Padding(0);
-            this.btn_refind.Name = "btn_refind";
-            this.btn_refind.Size = new System.Drawing.Size(25, 27);
-            this.btn_refind.TabIndex = 66;
-            this.btn_refind.UseVisualStyleBackColor = false;
-            this.btn_refind.Visible = false;
-            this.btn_refind.Click += new System.EventHandler(this.btn_refind_Click);
             // 
             // button_download_start
             // 
@@ -527,6 +489,7 @@
             this.button_vlc.BackColor = System.Drawing.Color.MidnightBlue;
             this.button_vlc.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_right_drop_circle_outline;
             this.button_vlc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_vlc.ContextMenuStrip = this.cmLabelVlc;
             this.button_vlc.FlatAppearance.BorderSize = 0;
             this.button_vlc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_vlc.Location = new System.Drawing.Point(684, 10);
@@ -537,6 +500,41 @@
             this.toolTip1.SetToolTip(this.button_vlc, "play with vlc\r\ndouble click cell");
             this.button_vlc.UseVisualStyleBackColor = true;
             this.button_vlc.Click += new System.EventHandler(this.button_vlc_Click);
+            // 
+            // cmLabelVlc
+            // 
+            this.cmLabelVlc.ImageScalingSize = new System.Drawing.Size(18, 18);
+            this.cmLabelVlc.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmLbl480,
+            this.cmLbl720,
+            this.cmLbl1080});
+            this.cmLabelVlc.Name = "cmLabelVlc";
+            this.cmLabelVlc.Size = new System.Drawing.Size(111, 76);
+            this.cmLabelVlc.Opening += new System.ComponentModel.CancelEventHandler(this.cmLabelVlc_Opening);
+            // 
+            // cmLbl480
+            // 
+            this.cmLbl480.CheckOnClick = true;
+            this.cmLbl480.Name = "cmLbl480";
+            this.cmLbl480.Size = new System.Drawing.Size(110, 24);
+            this.cmLbl480.Text = "480";
+            this.cmLbl480.Click += new System.EventHandler(this.cmLbl_click);
+            // 
+            // cmLbl720
+            // 
+            this.cmLbl720.CheckOnClick = true;
+            this.cmLbl720.Name = "cmLbl720";
+            this.cmLbl720.Size = new System.Drawing.Size(110, 24);
+            this.cmLbl720.Text = "720";
+            this.cmLbl720.Click += new System.EventHandler(this.cmLbl_click);
+            // 
+            // cmLbl1080
+            // 
+            this.cmLbl1080.CheckOnClick = true;
+            this.cmLbl1080.Name = "cmLbl1080";
+            this.cmLbl1080.Size = new System.Drawing.Size(110, 24);
+            this.cmLbl1080.Text = "1080";
+            this.cmLbl1080.Click += new System.EventHandler(this.cmLbl_click);
             // 
             // button_revert
             // 
@@ -738,6 +736,23 @@
             this.button_open.UseVisualStyleBackColor = true;
             this.button_open.Click += new System.EventHandler(this.button_open_Click);
             // 
+            // btn_refind
+            // 
+            this.btn_refind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_refind.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btn_refind.BackgroundImage = global::PlaylistEditor.Properties.Resources.autorenew_black_24dp;
+            this.btn_refind.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_refind.FlatAppearance.BorderSize = 0;
+            this.btn_refind.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_refind.Location = new System.Drawing.Point(1001, 68);
+            this.btn_refind.Margin = new System.Windows.Forms.Padding(0);
+            this.btn_refind.Name = "btn_refind";
+            this.btn_refind.Size = new System.Drawing.Size(25, 27);
+            this.btn_refind.TabIndex = 66;
+            this.btn_refind.UseVisualStyleBackColor = false;
+            this.btn_refind.Visible = false;
+            this.btn_refind.Click += new System.EventHandler(this.btn_refind_Click);
+            // 
             // btn_clearfind
             // 
             this.btn_clearfind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -754,38 +769,6 @@
             this.btn_clearfind.UseVisualStyleBackColor = false;
             this.btn_clearfind.Visible = false;
             this.btn_clearfind.Click += new System.EventHandler(this.btn_clearfind_Click);
-            // 
-            // buttonR_MoveDown
-            // 
-            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
-            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
-            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
-            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
-            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_MoveDown.TabIndex = 32;
-            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
-            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
-            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
-            // 
-            // buttonR_moveUp
-            // 
-            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
-            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
-            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
-            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_moveUp.Name = "buttonR_moveUp";
-            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_moveUp.TabIndex = 31;
-            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
-            this.buttonR_moveUp.UseVisualStyleBackColor = true;
-            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
             // 
             // textBox_find
             // 
@@ -1038,6 +1021,56 @@
             this.deleteEntryToolStripMenuItem.Text = "Delete entry";
             this.deleteEntryToolStripMenuItem.Click += new System.EventHandler(this.deleteEntryToolStripMenuItem_Click);
             // 
+            // cm1KodiPlay
+            // 
+            this.cm1KodiPlay.Image = ((System.Drawing.Image)(resources.GetObject("cm1KodiPlay.Image")));
+            this.cm1KodiPlay.Name = "cm1KodiPlay";
+            this.cm1KodiPlay.ShortcutKeyDisplayString = "Ctrl+P";
+            this.cm1KodiPlay.Size = new System.Drawing.Size(283, 24);
+            this.cm1KodiPlay.Text = "Kodi play";
+            this.cm1KodiPlay.Click += new System.EventHandler(this.playTSMenuItem_Click);
+            // 
+            // cm1KodiQueue
+            // 
+            this.cm1KodiQueue.Image = ((System.Drawing.Image)(resources.GetObject("cm1KodiQueue.Image")));
+            this.cm1KodiQueue.Name = "cm1KodiQueue";
+            this.cm1KodiQueue.ShortcutKeyDisplayString = "Ctrl+Q";
+            this.cm1KodiQueue.Size = new System.Drawing.Size(283, 24);
+            this.cm1KodiQueue.Text = "Kodi queue";
+            this.cm1KodiQueue.Click += new System.EventHandler(this.queueTSMenuItem_Click);
+            // 
+            // buttonR_MoveDown
+            // 
+            this.buttonR_MoveDown.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_down_bold_1_;
+            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
+            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
+            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
+            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_MoveDown.TabIndex = 32;
+            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
+            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
+            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
+            // 
+            // buttonR_moveUp
+            // 
+            this.buttonR_moveUp.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_up_bold_1_;
+            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
+            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
+            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_moveUp.Name = "buttonR_moveUp";
+            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_moveUp.TabIndex = 31;
+            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
+            this.buttonR_moveUp.UseVisualStyleBackColor = true;
+            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
+            // 
             // plabel_Filename
             // 
             this.plabel_Filename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1092,10 +1125,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStrip4.ResumeLayout(false);
+            this.cmLabelVlc.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.contextMenuStrip2.ResumeLayout(false);
@@ -1133,9 +1166,6 @@
         private System.Windows.Forms.TextBox textBox_find;
         private System.Windows.Forms.Button button_dup;
         private System.Windows.Forms.Button button_tag;
-        private System.Windows.Forms.ToolStripMenuItem kodiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem playTSMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem queueTSMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutTSMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Button button_revert;
@@ -1183,6 +1213,12 @@
         private System.Windows.Forms.ToolStripMenuItem cms1NewWIndow;
         private System.Windows.Forms.Button btn_clearfind;
         private System.Windows.Forms.Button btn_refind;
+        private System.Windows.Forms.ContextMenuStrip cmLabelVlc;
+        private System.Windows.Forms.ToolStripMenuItem cmLbl480;
+        private System.Windows.Forms.ToolStripMenuItem cmLbl720;
+        private System.Windows.Forms.ToolStripMenuItem cmLbl1080;
+        private System.Windows.Forms.ToolStripMenuItem cm1KodiPlay;
+        private System.Windows.Forms.ToolStripMenuItem cm1KodiQueue;
     }
 }
 

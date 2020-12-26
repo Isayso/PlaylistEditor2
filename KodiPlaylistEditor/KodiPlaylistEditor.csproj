@@ -71,8 +71,8 @@
     <Reference Include="AngleSharp, Version=0.14.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.14.0\lib\net461\AngleSharp.dll</HintPath>
     </Reference>
-    <Reference Include="CliWrap, Version=3.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CliWrap.3.2.3\lib\net461\CliWrap.dll</HintPath>
+    <Reference Include="CliWrap, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CliWrap.3.2.4\lib\net461\CliWrap.dll</HintPath>
     </Reference>
     <Reference Include="Costura, Version=4.1.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.4.1.0\lib\net40\Costura.dll</HintPath>
@@ -143,6 +143,7 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ClassDataset.cs" />
     <Compile Include="ClassDownload.cs" />
     <Compile Include="ClassHelp.cs" />
     <Compile Include="ClassKodi.cs" />
