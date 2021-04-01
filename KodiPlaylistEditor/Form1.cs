@@ -83,6 +83,8 @@ namespace PlaylistEditor
         const int mActionHotKeyID = 1;  //var for key hook listener
         const int mActionHotKeyID2 = 2;
 
+        bool kodi_hotkey = Settings.Default.kodi_hotkey;
+
         public List<String> mruItems = new List<String>();  //string to display in UI
         public List<Label> labels = new List<Label>();  //labels for mruItems
 
@@ -104,9 +106,10 @@ namespace PlaylistEditor
 
         private const string YTPLUGIN = "plugin://plugin.video.youtube/play/?video_id=",
             VIPLUGIN = "plugin://plugin.video.vimeo/play/?video_id=",
-            DAPLUGIN1 = "plugin://plugin.video.dailymotion_com/?url=",
-            DAPLUGIN2 = "&mode=playVideo"; //;mode=playVideo&quot"; //plugin.video.dailymotion_com/?url=
-
+            RBLPLUGIN = "plugin://plugin.video.rumble.matrix/?url=https://rumble.com/",
+            DMPLUGIN1 = "plugin://plugin.video.dailymotion_com/?url=",
+            DMPLUGIN2 = "&mode=playVideo"; //;mode=playVideo&quot"; //plugin.video.dailymotion_com/?url=
+        
         private const string YTURL = "https://www.youtube.com/watch?v=";
         private const int COLWIDTH = 500;
 
@@ -215,12 +218,13 @@ namespace PlaylistEditor
             var hotlabel = Settings.Default.hotkey;
             var hotlabel2 = Settings.Default.hotkey2;
 
+
             //todo check if hotkey avaliable
             //Modifier keys codes: Alt = 1, Ctrl = 2, Shift = 4, Win = 8  must be added
             //   RegisterHotKey(this.Handle, mActionHotKeyID, 1, (int)Keys.Y);  //ALT-Y
             NativeMethods.RegisterHotKey(this.Handle, mActionHotKeyID, spec_key, hotlabel);  //ALT-Y
 
-            if (Settings.Default.kodi_hotkey)
+            if (kodi_hotkey)
                 NativeMethods.RegisterHotKey(this.Handle, mActionHotKeyID2, spec_key2, hotlabel2);  //WIN-Y
 
 
@@ -276,42 +280,47 @@ namespace PlaylistEditor
             {
                 // key pressed matches our listener
                 // copy to clipboard -> crtl-y -> youtube url -> parse titel from url -> cut strings -> add line -> add entries
-                //get from clipboard
-                //detect wich app has focus, send ctrl-c
 
-                //todo test if clip already
                 string yt_Link = "";
 
-                
-               // IDataObject yLink = null;
 
-                // nice but has loophole that only the focussed window is served
+                // IDataObject yLink = null;
 
-                //try
-                //{
-                //    Thread.Sleep(400);
-                //    System.Windows.Forms.SendKeys.SendWait("^c");
-                //    Thread.Sleep(400);
+                // nice but has loophole that only the focussed window is served so optional in settings
+                if (Settings.Default.autocopy)
+                {
+                    try
+                    {
+                        Thread.Sleep(400);
+                        System.Windows.Forms.SendKeys.SendWait("^c");
+                        Thread.Sleep(400);
 
-                //    yt_Link = Clipboard.GetText();
-
-
-                //}
-                //catch
-                //{
-                //    NotificationBox.Show(this, "Nothing copied, please try again", 3000, NotificationMsg.ERROR, Position.Parent);
-                //    return;
-                //}
+                        yt_Link = Clipboard.GetText();
 
 
-               // yLink = Clipboard.GetDataObject();
+                    }
+                    catch
+                    {
+                        NotificationBox.Show(this, "Nothing copied, please try again", 3000, NotificationMsg.ERROR, Position.Parent);
+                        return;
+                    }
+
+                }
+                else
+                {
+                    yt_Link = Clipboard.GetText();
+
+                }
+
+
+
+                // yLink = Clipboard.GetDataObject();
 
 
                 //IDataObject yLink = Clipboard.GetDataObject();
 
                 //yt_Link = (String)yLink.GetData(DataFormats.Text);
 
-                yt_Link = Clipboard.GetText();
 
                 if (string.IsNullOrEmpty(yt_Link) || yt_Link.Contains("search_query=")) return; //clipboard empty Goodbye
 
@@ -328,6 +337,10 @@ namespace PlaylistEditor
                         ImportVimeoLink(yt_Link);
                         break;
 
+                    case ValidVideoType.Rmbl:
+                        ImportRumbleLink(yt_Link);
+                        break;
+
                     case ValidVideoType.Daily:
                         ImportDailyLink(yt_Link);
                         break;
@@ -341,50 +354,53 @@ namespace PlaylistEditor
 
             }
 
-            // kodi hotkey
-            if (m.Msg == 0x0312 && m.WParam.ToInt32() == mActionHotKeyID2)
+            if (kodi_hotkey)
             {
-                IDataObject kLink = Clipboard.GetDataObject();
-
-                ClassDataset vid = new ClassDataset();  //valid video types
-
-                string kodi_Link = (String)kLink.GetData(DataFormats.Text);
-
-                if (kodi_Link.Contains(".youtube.com") || kodi_Link.Contains("www.youtube-nocookie.com") || kodi_Link.Contains("youtu.be"))
+                // kodi hotkey
+                if (m.Msg == 0x0312 && m.WParam.ToInt32() == mActionHotKeyID2)
                 {
-                    if (kodi_Link.Contains("embed") || kodi_Link.Contains("youtu.be"))  //variant embed link
-                    {
-                        string[] key_em = kodi_Link.Split('?');
-                        key_em[0] = key_em[0].Split('/').Last();
-                        ytPluginLink = YTPLUGIN + key_em[0];
-                        // yt_Link = "https://www.youtube.com/watch?v=" + key_em[0];
+                    IDataObject kLink = Clipboard.GetDataObject();
 
-                    }
-                    else
+                    ClassDataset vid = new ClassDataset();  //valid video types
+
+                    string kodi_Link = (String)kLink.GetData(DataFormats.Text);
+
+                    if (kodi_Link.Contains(".youtube.com") || kodi_Link.Contains("www.youtube-nocookie.com") || kodi_Link.Contains("youtu.be"))
                     {
-                        string[] key = kodi_Link.Split('=');  //variant normal or YT playlist link
-                        if (key.Length > 1)     //if channel has no '='
+                        if (kodi_Link.Contains("embed") || kodi_Link.Contains("youtu.be"))  //variant embed link
                         {
-                            if (key[1].Contains('&'))
-                                key[1] = key[1].Split('&').First();
-
-                            ytPluginLink = YTPLUGIN + key[1];
+                            string[] key_em = kodi_Link.Split('?');
+                            key_em[0] = key_em[0].Split('/').Last();
+                            ytPluginLink = YTPLUGIN + key_em[0];
+                            // yt_Link = "https://www.youtube.com/watch?v=" + key_em[0];
 
                         }
+                        else
+                        {
+                            string[] key = kodi_Link.Split('=');  //variant normal or YT playlist link
+                            if (key.Length > 1)     //if channel has no '='
+                            {
+                                if (key[1].Contains('&'))
+                                    key[1] = key[1].Split('&').First();
+
+                                ytPluginLink = YTPLUGIN + key[1];
+
+                            }
+                        }
+
+                    }
+                    else if (kodi_Link.StartsWith("http") && vid.VideoTypes.Any(kodi_Link.EndsWith))
+                    {
+                        ytPluginLink = kodi_Link;
                     }
 
+
+                    string jLink = "{ \"jsonrpc\":\"2.0\",\"method\":\"Player.Open\",\"params\":{ \"item\":{ \"file\":\"" + ytPluginLink + "\"} },\"id\":0}";
+
+                    _ = ClassKodi.Run(jLink);  //don't know exactly what I wan't to do with the bool
+
+
                 }
-                else if (kodi_Link.StartsWith("http") && vid.VideoTypes.Any(kodi_Link.EndsWith))
-                {
-                    ytPluginLink = kodi_Link;
-                }
-
-
-                string jLink = "{ \"jsonrpc\":\"2.0\",\"method\":\"Player.Open\",\"params\":{ \"item\":{ \"file\":\"" + ytPluginLink + "\"} },\"id\":0}";
-
-                _ = ClassKodi.Run(jLink);  //don't know exactly what I wan't to do with the bool
-
-
             }
 
             base.WndProc(ref m);
@@ -397,7 +413,7 @@ namespace PlaylistEditor
             string name = ""; 
 
             string[] key_em = yt_Link.Split('/');
-            ytPluginLink = DAPLUGIN1 + key_em[key_em.Length - 1] + DAPLUGIN2;
+            ytPluginLink = DMPLUGIN1 + key_em[key_em.Length - 1] + DMPLUGIN2;
                 name = GetTitle_html(url);
                 if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
 
@@ -409,7 +425,7 @@ namespace PlaylistEditor
 
         private void ImportVimeoLink(string yt_Link)
         {
-
+            //https://player.vimeo.com/video/510059443
             string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
             string name = ""; // url.Split('/').Last();
 
@@ -425,6 +441,27 @@ namespace PlaylistEditor
             AddLink2Grid(name, ytPluginLink);
 
         }
+
+
+        private void ImportRumbleLink(string yt_Link)
+        {
+            //https://rumble.com/vf5wzp-episode-833-the-house-that-fauci-built-the-ccp-the-who-and-the-nih-in-wuhan.html
+            string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
+            string name = ""; // url.Split('/').Last();
+
+            string[] key_em = yt_Link.Split('/');
+            ytPluginLink = RBLPLUGIN + key_em[key_em.Length - 1] + "&mode=4&play=2";
+
+            name = GetTitle_rumble(url);
+            if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
+
+#if DEBUG
+            Console.WriteLine(name);
+#endif
+            AddLink2Grid(name, ytPluginLink);
+
+        }
+
 
         /// <summary>
         /// imports html and local links
@@ -564,7 +601,7 @@ namespace PlaylistEditor
         }
 
 
-        private void AddLink2Grid (string name, string ytPluginLink)
+        private void AddLink2Grid(string name, string ytPluginLink)
         {
             if (!string.IsNullOrEmpty(name))
             {
@@ -594,6 +631,7 @@ namespace PlaylistEditor
                 if (_taglink) button_check.PerformClick(); //grid gets pushed up and changing color
 
                 //DataGridView1_CellValidated(null, null); if (undoStack.Count > 1) ShowReUnDo(0);
+                label_central.SendToBack();
 
                 toSave(true);
             }
@@ -2260,11 +2298,13 @@ namespace PlaylistEditor
 
             if (hasChanged)
             {
-                button_save.BackgroundImage = Resources.content_save_modified;
+                button_save.Image = Resources.content_save_modified;
+              //  button_save.BackgroundImage = Resources.content_save_modified;
                 DataGridView1_CellValidated(null, null);
             }
             if (!hasChanged)
-                button_save.BackgroundImage = Resources.content_save_1_;
+                button_save.Image = Resources.content_save_1_;
+               // button_save.BackgroundImage = Resources.content_save_1_;
 
         }
 

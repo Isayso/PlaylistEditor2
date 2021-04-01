@@ -1,7 +1,14 @@
-﻿2.2.6
+﻿2.2.7
+- colors for high contrast
+- Nuget update
+- new user agent
+- Rumble support
+
+2.2.6
 - support for Vimeo and Dailymotion
 - better music.youtube support
 - fix rare get video name error
+- send Ctrl-C is now optional as Autocopy
 
 
 2.2.5

@@ -77,6 +77,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.chbAutoCopy = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -113,7 +114,7 @@
             // 
             this.checkBox_w.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_w.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_w.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_w.ForeColor = System.Drawing.Color.White;
             this.checkBox_w.Location = new System.Drawing.Point(276, 67);
             this.checkBox_w.Name = "checkBox_w";
             this.checkBox_w.Size = new System.Drawing.Size(60, 24);
@@ -140,7 +141,7 @@
             // 
             this.checkBox_a.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_a.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_a.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_a.ForeColor = System.Drawing.Color.White;
             this.checkBox_a.Location = new System.Drawing.Point(211, 67);
             this.checkBox_a.Name = "checkBox_a";
             this.checkBox_a.Size = new System.Drawing.Size(59, 24);
@@ -153,7 +154,7 @@
             // 
             this.checkBox_s.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_s.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_s.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_s.ForeColor = System.Drawing.Color.White;
             this.checkBox_s.Location = new System.Drawing.Point(129, 67);
             this.checkBox_s.Name = "checkBox_s";
             this.checkBox_s.Size = new System.Drawing.Size(76, 24);
@@ -168,7 +169,7 @@
             this.checkBox_c.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_c.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_c.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_c.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_c.ForeColor = System.Drawing.Color.White;
             this.checkBox_c.Location = new System.Drawing.Point(42, 67);
             this.checkBox_c.Name = "checkBox_c";
             this.checkBox_c.Size = new System.Drawing.Size(72, 24);
@@ -192,7 +193,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.Control;
+            this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(65, 65);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(62, 20);
@@ -206,7 +207,7 @@
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox2.ForeColor = System.Drawing.Color.White;
             this.checkBox2.Location = new System.Drawing.Point(17, 17);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(112, 24);
@@ -230,7 +231,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(24, 244);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(122, 20);
@@ -242,7 +243,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.Control;
+            this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(65, 103);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 20);
@@ -254,7 +255,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.Control;
+            this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(65, 136);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 20);
@@ -266,7 +267,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.Control;
+            this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(65, 175);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(83, 20);
@@ -313,7 +314,7 @@
             this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox3.ForeColor = System.Drawing.Color.White;
             this.checkBox3.Location = new System.Drawing.Point(17, 17);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(160, 24);
@@ -371,7 +372,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.Control;
+            this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(44, 23);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(331, 20);
@@ -383,8 +384,8 @@
             // 
             this.checkBox_kodi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_kodi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_kodi.ForeColor = System.Drawing.SystemColors.Control;
-            this.checkBox_kodi.Location = new System.Drawing.Point(42, 143);
+            this.checkBox_kodi.ForeColor = System.Drawing.Color.White;
+            this.checkBox_kodi.Location = new System.Drawing.Point(42, 181);
             this.checkBox_kodi.Name = "checkBox_kodi";
             this.checkBox_kodi.Size = new System.Drawing.Size(366, 24);
             this.checkBox_kodi.TabIndex = 24;
@@ -399,7 +400,7 @@
             this.checkBox_w2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_w2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_w2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_w2.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_w2.ForeColor = System.Drawing.Color.White;
             this.checkBox_w2.Location = new System.Drawing.Point(245, 19);
             this.checkBox_w2.Name = "checkBox_w2";
             this.checkBox_w2.Size = new System.Drawing.Size(60, 24);
@@ -425,7 +426,7 @@
             // 
             this.checkBox_a2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_a2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_a2.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_a2.ForeColor = System.Drawing.Color.White;
             this.checkBox_a2.Location = new System.Drawing.Point(180, 19);
             this.checkBox_a2.Name = "checkBox_a2";
             this.checkBox_a2.Size = new System.Drawing.Size(59, 24);
@@ -438,7 +439,7 @@
             // 
             this.checkBox_s2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_s2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_s2.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_s2.ForeColor = System.Drawing.Color.White;
             this.checkBox_s2.Location = new System.Drawing.Point(98, 19);
             this.checkBox_s2.Name = "checkBox_s2";
             this.checkBox_s2.Size = new System.Drawing.Size(76, 24);
@@ -451,7 +452,7 @@
             // 
             this.checkBox_c2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox_c2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_c2.ForeColor = System.Drawing.SystemColors.Control;
+            this.checkBox_c2.ForeColor = System.Drawing.Color.White;
             this.checkBox_c2.Location = new System.Drawing.Point(11, 19);
             this.checkBox_c2.Name = "checkBox_c2";
             this.checkBox_c2.Size = new System.Drawing.Size(72, 24);
@@ -475,7 +476,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.SystemColors.Control;
+            this.label11.ForeColor = System.Drawing.Color.White;
             this.label11.Location = new System.Drawing.Point(46, 187);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(108, 20);
@@ -529,7 +530,7 @@
             this.tabPage2.Controls.Add(this.checkBox2);
             this.tabPage2.Controls.Add(this.textBox1);
             this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.ForeColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.ForeColor = System.Drawing.Color.White;
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -548,7 +549,7 @@
             this.tabPage4.Controls.Add(this.checkBox3);
             this.tabPage4.Controls.Add(this.comboBox_res);
             this.tabPage4.Controls.Add(this.label9);
-            this.tabPage4.ForeColor = System.Drawing.SystemColors.Control;
+            this.tabPage4.ForeColor = System.Drawing.Color.White;
             this.tabPage4.Location = new System.Drawing.Point(4, 29);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(458, 323);
@@ -558,7 +559,7 @@
             // button_update
             // 
             this.button_update.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_update.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button_update.ForeColor = System.Drawing.Color.White;
             this.button_update.Location = new System.Drawing.Point(188, 248);
             this.button_update.Name = "button_update";
             this.button_update.Size = new System.Drawing.Size(179, 37);
@@ -597,6 +598,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.DarkBlue;
+            this.tabPage1.Controls.Add(this.chbAutoCopy);
             this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.checkBox_kodi);
             this.tabPage1.Controls.Add(this.checkBox_w);
@@ -605,7 +607,7 @@
             this.tabPage1.Controls.Add(this.checkBox_a);
             this.tabPage1.Controls.Add(this.checkBox_s);
             this.tabPage1.Controls.Add(this.checkBox_c);
-            this.tabPage1.ForeColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.ForeColor = System.Drawing.Color.White;
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
@@ -621,7 +623,7 @@
             this.panel1.Controls.Add(this.checkBox_a2);
             this.panel1.Controls.Add(this.checkBox_s2);
             this.panel1.Controls.Add(this.checkBox_c2);
-            this.panel1.Location = new System.Drawing.Point(31, 173);
+            this.panel1.Location = new System.Drawing.Point(31, 211);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(366, 63);
             this.panel1.TabIndex = 25;
@@ -636,7 +638,7 @@
             this.tabPage3.Controls.Add(this.comboBox1);
             this.tabPage3.Controls.Add(this.label8);
             this.tabPage3.Controls.Add(this.label7);
-            this.tabPage3.ForeColor = System.Drawing.SystemColors.Control;
+            this.tabPage3.ForeColor = System.Drawing.Color.White;
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(458, 323);
@@ -686,6 +688,20 @@
             this.label7.Size = new System.Drawing.Size(113, 20);
             this.label7.TabIndex = 0;
             this.label7.Text = "Colum search";
+            // 
+            // chbAutoCopy
+            // 
+            this.chbAutoCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chbAutoCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbAutoCopy.ForeColor = System.Drawing.Color.White;
+            this.chbAutoCopy.Location = new System.Drawing.Point(42, 109);
+            this.chbAutoCopy.Name = "chbAutoCopy";
+            this.chbAutoCopy.Size = new System.Drawing.Size(366, 24);
+            this.chbAutoCopy.TabIndex = 26;
+            this.chbAutoCopy.Text = "Automatic copy";
+            this.toolTip1.SetToolTip(this.chbAutoCopy, "sends Ctrl-c to active window");
+            this.chbAutoCopy.UseVisualStyleBackColor = true;
+            this.chbAutoCopy.CheckedChanged += new System.EventHandler(this.chbAutoCopy_CheckedChanged);
             // 
             // settings
             // 
@@ -764,5 +780,6 @@
         private System.Windows.Forms.TextBox tBQuery;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnAddpath;
+        private System.Windows.Forms.CheckBox chbAutoCopy;
     }
 }

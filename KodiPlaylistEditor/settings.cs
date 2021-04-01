@@ -52,6 +52,7 @@ namespace PlaylistEditor
             textBox_Port.Text = Settings.Default.port;
             textBox_Username.Text = Settings.Default.username;
             tBQuery.Text = Settings.Default.SearchQuery;
+            chbAutoCopy.Checked = Settings.Default.autocopy;
             //textBox_output.Text = Properties.Settings.Default.output;
 
             //if (!string.IsNullOrEmpty(NativeMethods.GetFullPathFromWindows("youtube-dl.exe")) ||
@@ -150,6 +151,7 @@ namespace PlaylistEditor
             Settings.Default.username = textBox_Username.Text;
             Settings.Default.kodi_hotkey = checkBox_kodi.Checked;
             Settings.Default.SearchQuery = tBQuery.Text;
+            Settings.Default.autocopy = chbAutoCopy.Checked;
             //  Properties.Settings.Default.output = textBox_output.Text;
 
             string passtext = textBox_Password.Text;
@@ -376,6 +378,11 @@ namespace PlaylistEditor
             //{
             //    return;
             //}
+
+        }
+
+        private void chbAutoCopy_CheckedChanged(object sender, EventArgs e)
+        {
 
         }
     }

@@ -114,5 +114,8 @@
     <Setting Name="SearchQuery" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://www.google.com/search?q=</Value>
     </Setting>
+    <Setting Name="autocopy" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

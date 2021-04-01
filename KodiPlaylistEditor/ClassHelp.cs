@@ -190,8 +190,10 @@ namespace PlaylistEditor
             try
             {
                 WebClient x = new WebClient();
-                x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
-                    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+                x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+
+             //   x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
+               //     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
                 string source = x.DownloadString(url);
                 
                 title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",
@@ -223,8 +225,10 @@ namespace PlaylistEditor
             try
             {
                 WebClient x = new WebClient();
-                x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
-                    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+                x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+
+        //        x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
+          //          "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
                 string source = x.DownloadString(url);
 
                 title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",
@@ -257,11 +261,58 @@ namespace PlaylistEditor
             try
             {
                 WebClient x = new WebClient();
-                x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
-                    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+                x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+
+             //   x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
+             //       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
                 string source = x.DownloadString(url);
 
                 Regex regex2 = new Regex("title\":\"([^\"]*)");
+                var s = regex2.Match(source);
+                title = s.Groups[1].ToString();  //   ":"https://rumble.com/embed/v8z4hb/","
+
+                //title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",
+                //   RegexOptions.IgnoreCase).Groups["Title"].Value;
+
+                byte[] bytes = System.Text.Encoding.Default.GetBytes(title);
+                title = System.Text.Encoding.UTF8.GetString(bytes);
+
+                title = WebUtility.HtmlDecode(title);
+
+            }
+            catch (Exception ex)
+            {
+                NotificationBox.Show("Error getting Title", 1000, NotificationMsg.ERROR);
+                //MessageBox.Show("Error to get title " + ex.Message, "Get Title error", MessageBoxButtons.OK);
+                return "";
+            }
+
+            return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
+
+
+
+        }
+
+
+        public static string GetTitle_rumble(string url)
+        {
+            // https://stackoverflow.com/questions/329307/how-to-get-website-title-from-c-sharp
+            //  YT \"title\":\
+
+            string title = "";
+
+            try
+            {
+                WebClient x = new WebClient();
+                x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+
+                //   x.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) " +
+                //       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+                string source = x.DownloadString(url);
+
+                Regex regex2 = new Regex("<title>(.*?)</title>");
+
+              //  Regex regex2 = new Regex("title\":\"([^\"]*)");
                 var s = regex2.Match(source);
                 title = s.Groups[1].ToString();  //   ":"https://rumble.com/embed/v8z4hb/","
 
@@ -659,7 +710,7 @@ namespace PlaylistEditor
             {
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(uri);
                 req.Timeout = 5000; //set the timeout
-                req.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36";
+                req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36";
 
                 HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
 
