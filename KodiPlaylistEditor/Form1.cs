@@ -106,8 +106,10 @@ namespace PlaylistEditor
 
         private const string YTPLUGIN = "plugin://plugin.video.youtube/play/?video_id=",
             VIPLUGIN = "plugin://plugin.video.vimeo/play/?video_id=",
+            LBRYPLUGIN = "plugin://plugin.video.lbry/play/",
             RBLPLUGIN = "plugin://plugin.video.rumble.matrix/?url=https://rumble.com/",
             DMPLUGIN1 = "plugin://plugin.video.dailymotion_com/?url=",
+            BCPLUGIN = "plugin://plugin.video.bitchute/play_now/",
             DMPLUGIN2 = "&mode=playVideo"; //;mode=playVideo&quot"; //plugin.video.dailymotion_com/?url=
         
         private const string YTURL = "https://www.youtube.com/watch?v=";
@@ -341,8 +343,16 @@ namespace PlaylistEditor
                         ImportRumbleLink(yt_Link);
                         break;
 
+                    case ValidVideoType.Lbry:
+                        ImportLbryLink(yt_Link);
+                        break;
+
                     case ValidVideoType.Daily:
                         ImportDailyLink(yt_Link);
+                        break;
+
+                    case ValidVideoType.BitC:
+                        ImportBCLink(yt_Link);
                         break;
 
                     case ValidVideoType.Html:
@@ -423,6 +433,7 @@ namespace PlaylistEditor
             AddLink2Grid(name, ytPluginLink);
         }
 
+
         private void ImportVimeoLink(string yt_Link)
         {
             //https://player.vimeo.com/video/510059443
@@ -442,6 +453,24 @@ namespace PlaylistEditor
 
         }
 
+        private void ImportLbryLink(string yt_Link)
+        {
+            //https://odysee.com/@A_TODO_ROCK:5/Rammstein---Du-Hast-(Official-Video):d
+            string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
+            string name = ""; // url.Split('/').Last();
+
+           // string[] key_em = yt_Link.Split('/');
+            ytPluginLink = LBRYPLUGIN + yt_Link.Split('/').Last();
+
+             name = GetTitle_rumble(url);
+            if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
+
+#if DEBUG
+            Console.WriteLine(name);
+#endif
+            AddLink2Grid(name, ytPluginLink);
+
+        }
 
         private void ImportRumbleLink(string yt_Link)
         {
@@ -462,6 +491,31 @@ namespace PlaylistEditor
 
         }
 
+        private void ImportBCLink(string yt_Link)
+        {
+            //https://rumble.com/vf5wzp-episode-833-the-house-that-fauci-built-the-ccp-the-who-and-the-nih-in-wuhan.html
+            string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
+            string name = ""; // url.Split('/').Last();
+
+            url = url.Trim('/').Replace("https://", "");
+            string[] key = url.Split('/');
+            key[0] = key[1] + "/" + key[2]; //.Split('/').Last();
+
+            ytPluginLink = BCPLUGIN + key[0].Replace("video/", "");
+
+
+            //string[] key_em = yt_Link.Split('/');
+            //ytPluginLink = RBLPLUGIN + key_em[key_em.Length - 1] + "&mode=4&play=2";
+
+            name = GetTitle_html(yt_Link);
+            if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
+
+#if DEBUG
+            Console.WriteLine(name);
+#endif
+            AddLink2Grid(name, ytPluginLink);
+
+        }
 
         /// <summary>
         /// imports html and local links
@@ -2421,12 +2475,6 @@ namespace PlaylistEditor
             bool _done = false;
             // string videofilename = "";
 
-            WaitWindow waitmove = new WaitWindow();
-            waitmove.Owner = this;
-            var x = Location.X - 40 + (Width - waitmove.Width) / 2;
-            var y = Location.Y + (Height - waitmove.Height) / 2;
-            waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
-            waitmove.StartPosition = FormStartPosition.Manual;
 
             int i = 1;
             //string fpsValue = textBox1.Text.Trim();
@@ -2467,6 +2515,13 @@ namespace PlaylistEditor
 
                                 if (DirectoryExists(movepath, 4000))
                                 {
+                                    WaitWindow waitmove = new WaitWindow();
+                                    waitmove.Owner = this;
+                                    var x = Location.X - 40 + (Width - waitmove.Width) / 2;
+                                    var y = Location.Y + (Height - waitmove.Height) / 2;
+                                    waitmove.Location = new Point(Math.Max(x, 0), Math.Max(y, 0));
+                                    waitmove.StartPosition = FormStartPosition.Manual;
+
                                     waitmove.Show();
                                     waitmove.Refresh();
                                     videofilename = FileMove(videofilename, movepath);
@@ -2568,6 +2623,23 @@ namespace PlaylistEditor
 
         }
 
+        public double Progress
+        {
+            get { return _progress; }
+            set
+            {
+                if (value != _progress)
+                {
+                    _progress = value;
+
+                    //   if (System.Diagnostics.Debugger.IsAttached) Console.WriteLine(_progress.ToString());
+
+                    progressBar1.Value = (int)_progress;
+
+                }
+            }
+        }
+
 
         public double Progress2
         {
@@ -2584,11 +2656,11 @@ namespace PlaylistEditor
         }
 
 
-        private string DownloadYTLinkEx(string videolink, string NewPath, out string videofilename)
+        public string DownloadYTLinkEx(string videolink, string NewPath, out string videofilename)
         {
             Cursor.Current = Cursors.WaitCursor;
             // ClassYTExplode tt = new ClassYTExplode();
-            Form1 frm1 = new Form1();
+           // Form1 frm1 = new Form1();
 
             int maxres = Settings.Default.maxres;  //-> SetVideoQuality
             int cvideo = Settings.Default.combovideo; //-> SetFileContainer .mp4 | .webm
@@ -2596,7 +2668,10 @@ namespace PlaylistEditor
             if (!ClassDownload.CheckForFfmpeg() && maxres >= 720) return videofilename = "error";
 
 
-            Task.Run(async () => { await DownloadStream(videolink, NewPath, maxres, cvideo); }).Wait();  //-> videoUrlnew   audioUrl 
+            Task.Run(async () => 
+            { 
+                await DownloadStream(videolink, NewPath, maxres, cvideo);
+            }).Wait();  //-> videoUrlnew   audioUrl 
 
             Cursor.Current = Cursors.Default;
 
@@ -2608,16 +2683,19 @@ namespace PlaylistEditor
 
         }
 
-        private async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext = 0)
+        public async Task DownloadStream(string videoId, string NewPath, int height = 2, int fileext = 0)
         {
             youtube = new YoutubeClient();
             //  var converter = new YoutubeConverter(_youtube); // re-using the same client instance for efficiency, not required
+            var progHandler = new Progress<double>(p => Progress = p * 100);
+            string[] filetype = { "mp4", "webm" };
+
 
             if (fileext < 2)
             {
                 try
                 {
-                    string[] filetype = { "mp4", "webm" };
+                    //string[] filetype = { "mp4", "webm" };
                     //   Progress = 0;
 
 
@@ -2643,7 +2721,7 @@ namespace PlaylistEditor
                     VideoInfo = await youtube.Videos.GetAsync(videoId);  //video info
                     videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + "." + filetype[fileext];
 
-                    var progHandler = new Progress<double>(p => Progress2 = p * 100);
+                   // var progHandler = new Progress<double>(p => Progress2 = p * 100);
 
 
                     if (MyFileExists(videoTitle, 3000))
@@ -2690,7 +2768,7 @@ namespace PlaylistEditor
 
                     VideoInfo = await youtube.Videos.GetAsync(videoId);  //video info
                     videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + ".mp3";
-                    var progHandler = new Progress<double>(p => Progress2 = p * 100);
+                   // var progHandler = new Progress<double>(p => Progress2 = p * 100);
 
                     if (MyFileExists(videoTitle, 3000))
                     {

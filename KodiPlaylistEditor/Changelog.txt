@@ -3,6 +3,8 @@
 - Nuget update
 - new user agent
 - Rumble support
+- Bitchute support
+- LBry/Odyssee support
 
 2.2.6
 - support for Vimeo and Dailymotion

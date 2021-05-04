@@ -72,7 +72,7 @@ namespace PlaylistEditor
             {
                 return ValidVideoType.Daily;
             }
-            else if (i_Link.Contains("rumble.com") && !i_Link.Contains("embed"))  //for rumble 
+            else if (i_Link.Contains("rumble.com") /*&& !i_Link.Contains("embed")*/)  //for rumble 
             {
                 return ValidVideoType.Rmbl;
             }
@@ -80,6 +80,11 @@ namespace PlaylistEditor
             {
                 return ValidVideoType.Vim;
             }
+            else if (i_Link.Contains("lbry.tv") || i_Link.Contains("odysee.com"))
+            {
+                return ValidVideoType.Lbry;
+            }
+
             if ((i_Link.StartsWith("http") || i_Link.StartsWith("\\\\") || i_Link.Contains(@":\"))
                       && vid.VideoTypes.Any(i_Link.EndsWith))  //option http  MUST BE LAST
             {
