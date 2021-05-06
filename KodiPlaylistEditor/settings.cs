@@ -46,13 +46,24 @@ namespace PlaylistEditor
         public settings()
         {
             InitializeComponent();
-          
+
+            //tabControl1.TabPages.Remove(tabPage5);  //tabControl1.TabPages.Insert(index, tabPage5);
+
             textBox1.Text = Settings.Default.server;
             textBox2.Text = Settings.Default.rpi;
             textBox_Port.Text = Settings.Default.port;
             textBox_Username.Text = Settings.Default.username;
             tBQuery.Text = Settings.Default.SearchQuery;
             chbAutoCopy.Checked = Settings.Default.autocopy;
+
+            //plugin strings
+            textBox3.Text = Settings.Default.YTPLUGIN;
+            textBox7.Text = Settings.Default.VIPLUGIN;
+            textBox5.Text = Settings.Default.LBRYPLUGIN;
+            textBox4.Text = Settings.Default.RBLPLUGIN;
+            textBox8.Text = Settings.Default.DMPLUGIN1;
+            textBox6.Text = Settings.Default.BCPLUGIN;
+
             //textBox_output.Text = Properties.Settings.Default.output;
 
             //if (!string.IsNullOrEmpty(NativeMethods.GetFullPathFromWindows("youtube-dl.exe")) ||
@@ -142,6 +153,15 @@ namespace PlaylistEditor
             getHotkeyInt();
 
             Settings.Default.server = textBox1.Text;
+
+            //plugin strings
+            Settings.Default.YTPLUGIN = textBox3.Text;
+            Settings.Default.VIPLUGIN = textBox7.Text;
+            Settings.Default.LBRYPLUGIN = textBox5.Text;
+            Settings.Default.RBLPLUGIN = textBox4.Text;
+            Settings.Default.DMPLUGIN1 = textBox8.Text;
+            Settings.Default.BCPLUGIN = textBox6.Text;
+
 
             //  Properties.Settings.Default.verbose = checkBox_verb.Checked;
             Settings.Default.replaceDrive = checkBox2.Checked;
@@ -382,6 +402,11 @@ namespace PlaylistEditor
         }
 
         private void chbAutoCopy_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
         {
 
         }

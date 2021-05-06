@@ -104,12 +104,22 @@ namespace PlaylistEditor
 
         public string keyValue = "";  //highlight string
 
-        private const string YTPLUGIN = "plugin://plugin.video.youtube/play/?video_id=",
-            VIPLUGIN = "plugin://plugin.video.vimeo/play/?video_id=",
-            LBRYPLUGIN = "plugin://plugin.video.lbry/play/",
-            RBLPLUGIN = "plugin://plugin.video.rumble.matrix/?url=https://rumble.com/",
-            DMPLUGIN1 = "plugin://plugin.video.dailymotion_com/?url=",
-            BCPLUGIN = "plugin://plugin.video.bitchute/play_now/",
+        public const string PLUG = "plugin://";
+
+        //private const string YTPLUGIN = "plugin://plugin.video.youtube/play/?video_id=",
+        //    VIPLUGIN = "plugin://plugin.video.vimeo/play/?video_id=",
+        //    LBRYPLUGIN = "plugin://plugin.video.lbry/play/",
+        //    RBLPLUGIN = "plugin://plugin.video.rumble.matrix/?url=https://rumble.com/",
+        //    DMPLUGIN1 = "plugin://plugin.video.dailymotion_com/?url=",
+        //    BCPLUGIN = "plugin://plugin.video.bitchute/play_now/",
+        //    DMPLUGIN2 = "&mode=playVideo"; //;mode=playVideo&quot"; //plugin.video.dailymotion_com/?url=
+
+        private readonly string YTPLUGIN = PLUG + Settings.Default.YTPLUGIN,
+            VIPLUGIN = PLUG + Settings.Default.VIPLUGIN,
+            LBRYPLUGIN = PLUG + Settings.Default.LBRYPLUGIN,
+            RBLPLUGIN = PLUG + Settings.Default.RBLPLUGIN,
+            DMPLUGIN1 = PLUG + Settings.Default.DMPLUGIN1,
+            BCPLUGIN = PLUG + Settings.Default.BCPLUGIN,
             DMPLUGIN2 = "&mode=playVideo"; //;mode=playVideo&quot"; //plugin.video.dailymotion_com/?url=
         
         private const string YTURL = "https://www.youtube.com/watch?v=";
@@ -419,13 +429,11 @@ namespace PlaylistEditor
         private void ImportDailyLink(string yt_Link)
         {
 
-            string url = yt_Link;
-            string name = ""; 
-
             string[] key_em = yt_Link.Split('/');
             ytPluginLink = DMPLUGIN1 + key_em[key_em.Length - 1] + DMPLUGIN2;
-                name = GetTitle_html(url);
-                if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
+
+            string name = GetTitle_html(yt_Link);
+            if (string.IsNullOrEmpty(name)) name = yt_Link.Split('/').Last();
 
 #if DEBUG
             Console.WriteLine(name);
@@ -437,14 +445,14 @@ namespace PlaylistEditor
         private void ImportVimeoLink(string yt_Link)
         {
             //https://player.vimeo.com/video/510059443
-            string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
-            string name = ""; // url.Split('/').Last();
+            //string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
+            //string name = ""; // url.Split('/').Last();
 
             string[] key_em = yt_Link.Split('/');
-            ytPluginLink = VIPLUGIN + key_em[key_em.Length-1];
+            ytPluginLink = VIPLUGIN + key_em[key_em.Length - 1];
 
-                name = GetTitle_vimeo(url);
-                if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
+            string name = GetTitle_vimeo(yt_Link);
+            if (string.IsNullOrEmpty(name)) name = yt_Link.Split('/').Last();
 
 #if DEBUG
             Console.WriteLine(name);
@@ -455,15 +463,28 @@ namespace PlaylistEditor
 
         private void ImportLbryLink(string yt_Link)
         {
+            //if (yt_Link.Contains("embed"))
+            //{
+            //    NotificationBox.Show("Embed Links not supported. Please go to Odysee page.", 4000, NotificationMsg.ERROR);
+            //    return;
+            //}
+
             //https://odysee.com/@A_TODO_ROCK:5/Rammstein---Du-Hast-(Official-Video):d
-            string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
-            string name = ""; // url.Split('/').Last();
+            //https://odysee.com/$/embed/Odysee-Exclusive---Covid-19-Asymptomatic-Transmission-Small-Video-/ed70dcaab657e03154a9a89743273131b8419871?&autoplay=1&auto_play=true
+            //string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
+            //string name = ""; // url.Split('/').Last();
 
-           // string[] key_em = yt_Link.Split('/');
-            ytPluginLink = LBRYPLUGIN + yt_Link.Split('/').Last();
+            if (yt_Link.Contains("embed"))
+            {
+               //yt_Link = yt_Link.Replace("https://odysee.com/$/embed/", "");
+                string[] key_en = yt_Link.Split('/');
+                ytPluginLink = LBRYPLUGIN + key_en[5];
+            }
+            else
+                ytPluginLink = LBRYPLUGIN + yt_Link.Split('/').Last();
 
-             name = GetTitle_rumble(url);
-            if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
+            string name = GetTitle_rumble(yt_Link);
+            if (string.IsNullOrEmpty(name)) name = yt_Link.Split('/').Last();
 
 #if DEBUG
             Console.WriteLine(name);
@@ -475,14 +496,14 @@ namespace PlaylistEditor
         private void ImportRumbleLink(string yt_Link)
         {
             //https://rumble.com/vf5wzp-episode-833-the-house-that-fauci-built-the-ccp-the-who-and-the-nih-in-wuhan.html
-            string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
-            string name = ""; // url.Split('/').Last();
+           // string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
+            //string name = ""; // url.Split('/').Last();
 
             string[] key_em = yt_Link.Split('/');
             ytPluginLink = RBLPLUGIN + key_em[key_em.Length - 1] + "&mode=4&play=2";
 
-            name = GetTitle_rumble(url);
-            if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
+            string name = GetTitle_rumble(yt_Link);
+            if (string.IsNullOrEmpty(name)) name = yt_Link.Split('/').Last();
 
 #if DEBUG
             Console.WriteLine(name);
@@ -495,7 +516,7 @@ namespace PlaylistEditor
         {
             //https://rumble.com/vf5wzp-episode-833-the-house-that-fauci-built-the-ccp-the-who-and-the-nih-in-wuhan.html
             string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
-            string name = ""; // url.Split('/').Last();
+           // string name = ""; // url.Split('/').Last();
 
             url = url.Trim('/').Replace("https://", "");
             string[] key = url.Split('/');
@@ -507,7 +528,7 @@ namespace PlaylistEditor
             //string[] key_em = yt_Link.Split('/');
             //ytPluginLink = RBLPLUGIN + key_em[key_em.Length - 1] + "&mode=4&play=2";
 
-            name = GetTitle_html(yt_Link);
+            string name = GetTitle_html(yt_Link);
             if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
 
 #if DEBUG

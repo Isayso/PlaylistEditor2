@@ -449,5 +449,77 @@ namespace PlaylistEditor.Properties {
                 this["autocopy"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("plugin.video.youtube/play/?video_id=")]
+        public string YTPLUGIN {
+            get {
+                return ((string)(this["YTPLUGIN"]));
+            }
+            set {
+                this["YTPLUGIN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("plugin.video.vimeo/play/?video_id=")]
+        public string VIPLUGIN {
+            get {
+                return ((string)(this["VIPLUGIN"]));
+            }
+            set {
+                this["VIPLUGIN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("plugin.video.lbry/play/")]
+        public string LBRYPLUGIN {
+            get {
+                return ((string)(this["LBRYPLUGIN"]));
+            }
+            set {
+                this["LBRYPLUGIN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("plugin.video.rumble.matrix/?url=https://rumble.com/")]
+        public string RBLPLUGIN {
+            get {
+                return ((string)(this["RBLPLUGIN"]));
+            }
+            set {
+                this["RBLPLUGIN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("plugin.video.dailymotion_com/?url=")]
+        public string DMPLUGIN1 {
+            get {
+                return ((string)(this["DMPLUGIN1"]));
+            }
+            set {
+                this["DMPLUGIN1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("plugin.video.bitchute/play_now/")]
+        public string BCPLUGIN {
+            get {
+                return ((string)(this["BCPLUGIN"]));
+            }
+            set {
+                this["BCPLUGIN"] = value;
+            }
+        }
     }
 }

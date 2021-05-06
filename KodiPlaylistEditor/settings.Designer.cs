@@ -63,6 +63,14 @@
             this.tBQuery = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.btnAddpath = new System.Windows.Forms.Button();
+            this.chbAutoCopy = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -76,14 +84,21 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.chbAutoCopy = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // button_ok
@@ -359,7 +374,7 @@
             this.button_edit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button_edit.FlatAppearance.BorderSize = 0;
             this.button_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_edit.Location = new System.Drawing.Point(404, 136);
+            this.button_edit.Location = new System.Drawing.Point(468, 136);
             this.button_edit.Margin = new System.Windows.Forms.Padding(0);
             this.button_edit.Name = "button_edit";
             this.button_edit.Size = new System.Drawing.Size(40, 37);
@@ -371,13 +386,13 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(44, 23);
+            this.label2.Location = new System.Drawing.Point(33, 23);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(331, 20);
+            this.label2.Size = new System.Drawing.Size(385, 20);
             this.label2.TabIndex = 15;
-            this.label2.Text = "Get video link Hotkey (restart after change)";
+            this.label2.Text = "Get video link Hotkeys (restart after change)";
             this.toolTip1.SetToolTip(this.label2, "adds link from clipboard to editor");
             // 
             // checkBox_kodi
@@ -492,7 +507,7 @@
             this.btnAddpath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnAddpath.FlatAppearance.BorderSize = 0;
             this.btnAddpath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddpath.Location = new System.Drawing.Point(358, 136);
+            this.btnAddpath.Location = new System.Drawing.Point(422, 136);
             this.btnAddpath.Margin = new System.Windows.Forms.Padding(0);
             this.btnAddpath.Name = "btnAddpath";
             this.btnAddpath.Size = new System.Drawing.Size(38, 37);
@@ -501,19 +516,113 @@
             this.btnAddpath.UseVisualStyleBackColor = false;
             this.btnAddpath.Click += new System.EventHandler(this.btnAddpath_Click);
             // 
+            // chbAutoCopy
+            // 
+            this.chbAutoCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chbAutoCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbAutoCopy.ForeColor = System.Drawing.Color.White;
+            this.chbAutoCopy.Location = new System.Drawing.Point(42, 109);
+            this.chbAutoCopy.Name = "chbAutoCopy";
+            this.chbAutoCopy.Size = new System.Drawing.Size(366, 24);
+            this.chbAutoCopy.TabIndex = 26;
+            this.chbAutoCopy.Text = "Automatic copy";
+            this.toolTip1.SetToolTip(this.chbAutoCopy, "sends Ctrl-c to active window");
+            this.chbAutoCopy.UseVisualStyleBackColor = true;
+            this.chbAutoCopy.CheckedChanged += new System.EventHandler(this.chbAutoCopy_CheckedChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(37, 22);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(433, 20);
+            this.label12.TabIndex = 16;
+            this.label12.Text = "Plugin strings for supported Addons (need restart)";
+            this.toolTip1.SetToolTip(this.label12, "adds link from clipboard to editor");
+            // 
+            // textBox3
+            // 
+            this.textBox3.BackColor = System.Drawing.SystemColors.Menu;
+            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.Location = new System.Drawing.Point(115, 64);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(377, 27);
+            this.textBox3.TabIndex = 18;
+            this.textBox3.Text = "plugin.video.youtube/play/?video_id=";
+            this.toolTip1.SetToolTip(this.textBox3, "search strig for Google or else");
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // textBox4
+            // 
+            this.textBox4.BackColor = System.Drawing.SystemColors.Menu;
+            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox4.Location = new System.Drawing.Point(115, 97);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(377, 27);
+            this.textBox4.TabIndex = 20;
+            this.textBox4.Text = "plugin.video.rumble.matrix/?url=https://rumble.com/";
+            this.toolTip1.SetToolTip(this.textBox4, "search strig for Google or else");
+            // 
+            // textBox5
+            // 
+            this.textBox5.BackColor = System.Drawing.SystemColors.Menu;
+            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox5.Location = new System.Drawing.Point(115, 130);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(377, 27);
+            this.textBox5.TabIndex = 22;
+            this.textBox5.Text = "plugin.video.lbry/play/";
+            this.toolTip1.SetToolTip(this.textBox5, "search strig for Google or else");
+            // 
+            // textBox6
+            // 
+            this.textBox6.BackColor = System.Drawing.SystemColors.Menu;
+            this.textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox6.Location = new System.Drawing.Point(115, 163);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(377, 27);
+            this.textBox6.TabIndex = 24;
+            this.textBox6.Text = "plugin.video.bitchute/play_now/";
+            this.toolTip1.SetToolTip(this.textBox6, "search strig for Google or else");
+            // 
+            // textBox7
+            // 
+            this.textBox7.BackColor = System.Drawing.SystemColors.Menu;
+            this.textBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox7.Location = new System.Drawing.Point(115, 196);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(377, 27);
+            this.textBox7.TabIndex = 26;
+            this.textBox7.Text = "plugin.video.vimeo/play/?video_id=";
+            this.toolTip1.SetToolTip(this.textBox7, "search strig for Google or else");
+            // 
+            // textBox8
+            // 
+            this.textBox8.BackColor = System.Drawing.SystemColors.Menu;
+            this.textBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox8.Location = new System.Drawing.Point(115, 229);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(377, 27);
+            this.textBox8.TabIndex = 28;
+            this.textBox8.Text = "plugin.video.dailymotion_com/?url=";
+            this.toolTip1.SetToolTip(this.textBox8, "search strig for Google or else");
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 13);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(466, 356);
+            this.tabControl1.Size = new System.Drawing.Size(530, 356);
             this.tabControl1.TabIndex = 14;
             // 
             // tabPage2
@@ -534,7 +643,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(458, 323);
+            this.tabPage2.Size = new System.Drawing.Size(522, 323);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Kodi";
             // 
@@ -552,7 +661,7 @@
             this.tabPage4.ForeColor = System.Drawing.Color.White;
             this.tabPage4.Location = new System.Drawing.Point(4, 29);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(458, 323);
+            this.tabPage4.Size = new System.Drawing.Size(522, 323);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "video";
             // 
@@ -579,7 +688,7 @@
             this.comboBox_download.ItemHeight = 20;
             this.comboBox_download.Items.AddRange(new object[] {
             "new path"});
-            this.comboBox_download.Location = new System.Drawing.Point(37, 141);
+            this.comboBox_download.Location = new System.Drawing.Point(101, 141);
             this.comboBox_download.Margin = new System.Windows.Forms.Padding(0);
             this.comboBox_download.Name = "comboBox_download";
             this.comboBox_download.Size = new System.Drawing.Size(304, 28);
@@ -612,7 +721,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(458, 323);
+            this.tabPage1.Size = new System.Drawing.Size(522, 323);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "HotKeys";
             // 
@@ -641,7 +750,7 @@
             this.tabPage3.ForeColor = System.Drawing.Color.White;
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(458, 323);
+            this.tabPage3.Size = new System.Drawing.Size(522, 323);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "search";
             // 
@@ -689,26 +798,101 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Colum search";
             // 
-            // chbAutoCopy
+            // tabPage5
             // 
-            this.chbAutoCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chbAutoCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbAutoCopy.ForeColor = System.Drawing.Color.White;
-            this.chbAutoCopy.Location = new System.Drawing.Point(42, 109);
-            this.chbAutoCopy.Name = "chbAutoCopy";
-            this.chbAutoCopy.Size = new System.Drawing.Size(366, 24);
-            this.chbAutoCopy.TabIndex = 26;
-            this.chbAutoCopy.Text = "Automatic copy";
-            this.toolTip1.SetToolTip(this.chbAutoCopy, "sends Ctrl-c to active window");
-            this.chbAutoCopy.UseVisualStyleBackColor = true;
-            this.chbAutoCopy.CheckedChanged += new System.EventHandler(this.chbAutoCopy_CheckedChanged);
+            this.tabPage5.BackColor = System.Drawing.Color.DarkBlue;
+            this.tabPage5.Controls.Add(this.label18);
+            this.tabPage5.Controls.Add(this.textBox8);
+            this.tabPage5.Controls.Add(this.label17);
+            this.tabPage5.Controls.Add(this.textBox7);
+            this.tabPage5.Controls.Add(this.label16);
+            this.tabPage5.Controls.Add(this.textBox6);
+            this.tabPage5.Controls.Add(this.label15);
+            this.tabPage5.Controls.Add(this.textBox5);
+            this.tabPage5.Controls.Add(this.label14);
+            this.tabPage5.Controls.Add(this.textBox4);
+            this.tabPage5.Controls.Add(this.label13);
+            this.tabPage5.Controls.Add(this.textBox3);
+            this.tabPage5.Controls.Add(this.label12);
+            this.tabPage5.Location = new System.Drawing.Point(4, 29);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(522, 323);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Addons";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.White;
+            this.label18.Location = new System.Drawing.Point(11, 232);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(97, 20);
+            this.label18.TabIndex = 29;
+            this.label18.Text = "Dailymotion";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.White;
+            this.label17.Location = new System.Drawing.Point(11, 199);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(56, 20);
+            this.label17.TabIndex = 27;
+            this.label17.Text = "Vimeo";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.White;
+            this.label16.Location = new System.Drawing.Point(11, 166);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(71, 20);
+            this.label16.TabIndex = 25;
+            this.label16.Text = "Bitchute";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(11, 133);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(75, 20);
+            this.label15.TabIndex = 23;
+            this.label15.Text = "Odyssee";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.White;
+            this.label14.Location = new System.Drawing.Point(11, 100);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(66, 20);
+            this.label14.TabIndex = 21;
+            this.label14.Text = "Rumble";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.12727F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(11, 67);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(69, 20);
+            this.label13.TabIndex = 19;
+            this.label13.Text = "Youtube";
             // 
             // settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MidnightBlue;
-            this.ClientSize = new System.Drawing.Size(467, 449);
+            this.ClientSize = new System.Drawing.Size(530, 449);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.button_ok);
@@ -728,6 +912,8 @@
             this.panel1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -781,5 +967,19 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnAddpath;
         private System.Windows.Forms.CheckBox chbAutoCopy;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox textBox8;
     }
 }

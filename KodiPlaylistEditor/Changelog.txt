@@ -1,10 +1,12 @@
-﻿2.2.7
+﻿2.2.8
+- Bitchute support
+- LBry/Odysee support
+
+2.2.7
 - colors for high contrast
 - Nuget update
 - new user agent
 - Rumble support
-- Bitchute support
-- LBry/Odyssee support
 
 2.2.6
 - support for Vimeo and Dailymotion

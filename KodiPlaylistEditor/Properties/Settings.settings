@@ -117,5 +117,23 @@
     <Setting Name="autocopy" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="YTPLUGIN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">plugin.video.youtube/play/?video_id=</Value>
+    </Setting>
+    <Setting Name="VIPLUGIN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">plugin.video.vimeo/play/?video_id=</Value>
+    </Setting>
+    <Setting Name="LBRYPLUGIN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">plugin.video.lbry/play/</Value>
+    </Setting>
+    <Setting Name="RBLPLUGIN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">plugin.video.rumble.matrix/?url=https://rumble.com/</Value>
+    </Setting>
+    <Setting Name="DMPLUGIN1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">plugin.video.dailymotion_com/?url=</Value>
+    </Setting>
+    <Setting Name="BCPLUGIN" Type="System.String" Scope="User">
+      <Value Profile="(Default)">plugin.video.bitchute/play_now/</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
