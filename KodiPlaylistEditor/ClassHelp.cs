@@ -60,6 +60,9 @@ namespace PlaylistEditor
                 || i_Link.Contains("youtu.be")
                 || i_Link.Contains("music.youtube"))
             {
+                if (i_Link.Contains("music.youtube"))
+                    return ValidVideoType.YMusic;
+
                 if (i_Link.Contains("list=") || i_Link.Contains("channel"))
                     return ValidVideoType.YList;
                 else return ValidVideoType.YT;

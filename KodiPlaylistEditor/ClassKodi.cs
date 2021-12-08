@@ -34,7 +34,11 @@ namespace PlaylistEditor
     {
         private static readonly HttpClient _Client = new HttpClient();
        
-      
+      /// <summary>
+      /// send json link to kodi
+      /// </summary>
+      /// <param name="link">json string</param>
+      /// <returns></returns>
         public static async Task<bool> Run(string link)
         {
             string kodiIP = Settings.Default.rpi;

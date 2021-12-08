@@ -1,6 +1,15 @@
-﻿2.2.8
+﻿2.3.0
+- bug Youtube
+
+2.2.9
+- Youtube changes
+- Nuget packages update
+- new icon
+
+2.2.8
 - Bitchute support
 - LBry/Odysee support
+- Addon plugin strings changeable
 
 2.2.7
 - colors for high contrast

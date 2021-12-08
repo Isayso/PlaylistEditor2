@@ -8,7 +8,7 @@ namespace PlaylistEditor
 {
     class ClassDataset
     {
-        public enum ValidVideoType { Invalid, YT, YList, BitC, Html, Rmbl, Vim, Daily, Lbry }
+        public enum ValidVideoType { Invalid, YT, YList, YMusic, BitC, Html, Rmbl, Vim, Daily, Lbry }
 
         public string[] _videotypes;
         public string[] VideoTypes

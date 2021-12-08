@@ -25,6 +25,8 @@ using System.Windows.Forms;
 using YoutubeExplode;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
+using YoutubeExplode.Extensions;
+
 
 namespace PlaylistEditor
 {
@@ -58,34 +60,35 @@ namespace PlaylistEditor
             }
         }
 
-        public static VideoQuality SetVideoQuality(int height = 2)
+        public static int SetVideoQuality(int height = 2)
         {
-            VideoQuality quality = VideoQuality.High1080;
+            // VideoQuality quality = VideoQuality.High1080;
+            int quality = 1080;
 
             switch (height)
             {
                 case 0:
-                    quality = VideoQuality.High2160;
+                    quality = 2160;
                     break;
 
                 case 1:
-                    quality = VideoQuality.High1440;
+                    quality = 1440;
                     break;
 
                 case 2:
-                    quality = VideoQuality.High1080;
+                    quality = 1080;
                     break;
 
                 case 3:
-                    quality = VideoQuality.High720;
+                    quality = 720;
                     break;
 
                 case 4:
-                    quality = VideoQuality.Medium480;
+                    quality = 480;
                     break;
 
                 case 5:
-                    quality = VideoQuality.Medium360;
+                    quality = 360;
                     break;
 
             }
@@ -93,6 +96,42 @@ namespace PlaylistEditor
             return quality;
 
         }
+
+        //public static VideoQuality SetVideoQuality1(int height = 2)
+        //{
+        //    VideoQuality quality = VideoQuality.High1080;
+
+        //    switch (height)
+        //    {
+        //        case 0:
+        //            quality = VideoQuality.High2160;
+        //            break;
+
+        //        case 1:
+        //            quality = VideoQuality.High1440;
+        //            break;
+
+        //        case 2:
+        //            quality = VideoQuality.High1080;
+        //            break;
+
+        //        case 3:
+        //            quality = VideoQuality.High720;
+        //            break;
+
+        //        case 4:
+        //            quality = VideoQuality.Medium480;
+        //            break;
+
+        //        case 5:
+        //            quality = VideoQuality.Medium360;
+        //            break;
+
+        //    }
+
+        //    return quality;
+
+        //}
 
         public static Container SetFileContainer(int fileext)
         {
@@ -122,51 +161,24 @@ namespace PlaylistEditor
 
             try
             {
-                // Enter busy state
-                //IsBusy = true;
-                //IsProgressIndeterminate = true;
-
-
-                // Reset data
-                //Video = null;
-                //Channel = null;
-                //MuxedStreamInfos = null;
-                //AudioOnlyStreamInfos = null;
-                //VideoOnlyStreamInfos = null;
-                //ClosedCaptionTrackInfos = null;
-
-                //  List<string> VideoOnlyStreamInfos =
-
-                // Normalize video id
-                //var videoId = new VideoId(Query!);
-
                 // Get data
-                var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
-                //  var trackManifest = await _youtube.Videos.ClosedCaptions.GetManifestAsync(videoId);
+               // var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
+                var streamManifest = await _youtube.Videos.Streams.GetManifestAndFixStreamUrlsAsync(videoId);
 
-                //   var   Video = await _youtube.Videos.GetAsync(videoId);  //video info
 
-                //Channel = await _youtube.Channels.GetByVideoAsync(videoId);
-                //MuxedStreamInfos = streamManifest.GetMuxed().ToArray();
-                //AudioOnlyStreamInfos = streamManifest.GetAudioOnly().ToArray();
-                VideoOnlyStreamInfos = streamManifest.GetVideoOnly().ToArray();
-                //ClosedCaptionTrackInfos = trackManifest.Tracks;
-                //var streamInfo = streamManifest
-                //                 .GetVideoOnly()
-                //                 .Where(s => s.Container == Container.Mp4)
-                //                 .WithHighestVideoQuality();
-                var testinfo = streamManifest.GetVideoOnly()
-                    //  .Where(s => s.VideoQuality <= VideoQuality.High1080)
-                    .Where(s => s.VideoQuality <= SetVideoQuality(height))
-                    .Where(t => t.Container == Container.Mp4)
-                    .Select(h => h.Url).ToList();
+                VideoOnlyStreamInfos = streamManifest.GetVideoOnlyStreams().ToArray();
 
-                videoUrlnew = testinfo[0];
+                var VideoDASHinfo = streamManifest.GetVideoOnlyStreams()
+                      .Where(o => o.VideoQuality.MaxHeight <= SetVideoQuality(height))
+                      .Where(t => t.Container == Container.Mp4)
+                      .Select(h => h.Url).ToList();
 
-                //      var streamInfoA = streamManifest.GetAudioOnly().WithHighestBitrate();
-                var streamInfoA = streamManifest.GetAudio()
-                            .Where(s => s.Container == Container.Mp4)
-                            .WithHighestBitrate();
+                videoUrlnew = VideoDASHinfo[0];
+
+                var streamInfoA = streamManifest.GetAudioOnlyStreams()
+                      .Where(s => s.Container == Container.Mp4)
+                      .GetWithHighestBitrate();
+
 
                 audioUrl = streamInfoA.Url;
 
@@ -189,48 +201,48 @@ namespace PlaylistEditor
             //}
         }
 
-        public static async Task PullNoDASH(string videoId, int height = 2)
-        {
-            _youtube = new YoutubeClient();
+        //public static async Task PullNoDASH(string videoId, int height = 2)
+        //{
+        //    _youtube = new YoutubeClient();
 
-            try
-            {
+        //    try
+        //    {
 
-                // Get data
-                var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
-                //  MuxedStreamInfos = streamManifest.GetMuxed().ToArray();
-                MuxedStreamInfos = streamManifest.GetMuxed()
-                    .Where(s => s.VideoQuality <= SetVideoQuality(height))
-                    .ToArray();
-                //AudioOnlyStreamInfos = streamManifest.GetAudioOnly().ToArray();
-                // VideoOnlyStreamInfos = streamManifest.GetVideoOnly().ToArray();
-                //ClosedCaptionTrackInfos = trackManifest.Tracks;
-                //var streamInfo = streamManifest
-                //                 .GetVideoOnly()
-                //                 .Where(s => s.Container == Container.Mp4)
-                //                 .WithHighestVideoQuality();
+        //        // Get data
+        //        var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
+        //        //  MuxedStreamInfos = streamManifest.GetMuxed().ToArray();
+        //        MuxedStreamInfos = streamManifest.GetMuxed()
+        //            .Where(s => s.VideoQuality <= SetVideoQuality(height))
+        //            .ToArray();
+        //        //AudioOnlyStreamInfos = streamManifest.GetAudioOnly().ToArray();
+        //        // VideoOnlyStreamInfos = streamManifest.GetVideoOnly().ToArray();
+        //        //ClosedCaptionTrackInfos = trackManifest.Tracks;
+        //        //var streamInfo = streamManifest
+        //        //                 .GetVideoOnly()
+        //        //                 .Where(s => s.Container == Container.Mp4)
+        //        //                 .WithHighestVideoQuality();
 
 
-                var streamInfoA = streamManifest.GetAudioOnly().WithHighestBitrate();
+        //        var streamInfoA = streamManifest.GetAudioOnly().WithHighestBitrate();
 
-                audioUrl = streamInfoA.Url;
+        //        audioUrl = streamInfoA.Url;
 
-            }
-            catch (Exception e)
-            {
-                //#if DEBUG
-                MessageBox.Show("Get DASH Arguments failed. " + e.Message, "Get DASH Arguments", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //#endif
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        //#if DEBUG
+        //        MessageBox.Show("Get DASH Arguments failed. " + e.Message, "Get DASH Arguments", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        //#endif
 
-            }
+        //    }
 
-            //finally
-            //{
-            //    // Exit busy state
-            //    //IsBusy = false;
-            //    //IsProgressIndeterminate = false;
-            //}
-        }
+        //    //finally
+        //    //{
+        //    //    // Exit busy state
+        //    //    //IsBusy = false;
+        //    //    //IsProgressIndeterminate = false;
+        //    //}
+        //}
 
 
 

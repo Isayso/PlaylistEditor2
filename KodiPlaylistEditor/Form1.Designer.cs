@@ -33,6 +33,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cm1KodiPlay = new System.Windows.Forms.ToolStripMenuItem();
+            this.cm1KodiQueue = new System.Windows.Forms.ToolStripMenuItem();
             this.openLinkLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.copyTSMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,10 +57,31 @@
             this.cmsDeletePathItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox_video = new System.Windows.Forms.ComboBox();
             this.comboBox_audio = new System.Windows.Forms.ComboBox();
+            this.button_download_start = new System.Windows.Forms.Button();
+            this.button_path = new System.Windows.Forms.Button();
+            this.button_cancel = new System.Windows.Forms.Button();
+            this.RedoButton = new System.Windows.Forms.Button();
+            this.UndoButton = new System.Windows.Forms.Button();
+            this.button_check = new System.Windows.Forms.Button();
+            this.button_vlc = new System.Windows.Forms.Button();
             this.cmLabelVlc = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmLbl480 = new System.Windows.Forms.ToolStripMenuItem();
             this.cmLbl720 = new System.Windows.Forms.ToolStripMenuItem();
             this.cmLbl1080 = new System.Windows.Forms.ToolStripMenuItem();
+            this.button_revert = new System.Windows.Forms.Button();
+            this.button_tag = new System.Windows.Forms.Button();
+            this.button_download = new System.Windows.Forms.Button();
+            this.button_dup = new System.Windows.Forms.Button();
+            this.button_search = new System.Windows.Forms.Button();
+            this.buttonR_MoveDown = new RepeatingButton();
+            this.buttonR_moveUp = new RepeatingButton();
+            this.button_del_all = new System.Windows.Forms.Button();
+            this.button_settings = new System.Windows.Forms.Button();
+            this.button_add = new System.Windows.Forms.Button();
+            this.button_Info = new System.Windows.Forms.Button();
+            this.button_delLine = new System.Windows.Forms.Button();
+            this.button_save = new System.Windows.Forms.Button();
+            this.button_open = new System.Windows.Forms.Button();
             this.textBox_find = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -83,29 +106,6 @@
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.plabel_Filename = new PathLabel();
-            this.button_download_start = new System.Windows.Forms.Button();
-            this.button_path = new System.Windows.Forms.Button();
-            this.button_cancel = new System.Windows.Forms.Button();
-            this.RedoButton = new System.Windows.Forms.Button();
-            this.UndoButton = new System.Windows.Forms.Button();
-            this.button_check = new System.Windows.Forms.Button();
-            this.button_vlc = new System.Windows.Forms.Button();
-            this.button_revert = new System.Windows.Forms.Button();
-            this.button_tag = new System.Windows.Forms.Button();
-            this.button_download = new System.Windows.Forms.Button();
-            this.button_dup = new System.Windows.Forms.Button();
-            this.button_search = new System.Windows.Forms.Button();
-            this.buttonR_MoveDown = new RepeatingButton();
-            this.buttonR_moveUp = new RepeatingButton();
-            this.button_del_all = new System.Windows.Forms.Button();
-            this.button_settings = new System.Windows.Forms.Button();
-            this.button_add = new System.Windows.Forms.Button();
-            this.button_Info = new System.Windows.Forms.Button();
-            this.button_delLine = new System.Windows.Forms.Button();
-            this.button_save = new System.Windows.Forms.Button();
-            this.button_open = new System.Windows.Forms.Button();
-            this.cm1KodiPlay = new System.Windows.Forms.ToolStripMenuItem();
-            this.cm1KodiQueue = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_refind = new System.Windows.Forms.Button();
             this.btn_clearfind = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -175,6 +175,24 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(284, 286);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // cm1KodiPlay
+            // 
+            this.cm1KodiPlay.Image = ((System.Drawing.Image)(resources.GetObject("cm1KodiPlay.Image")));
+            this.cm1KodiPlay.Name = "cm1KodiPlay";
+            this.cm1KodiPlay.ShortcutKeyDisplayString = "Ctrl+P";
+            this.cm1KodiPlay.Size = new System.Drawing.Size(283, 24);
+            this.cm1KodiPlay.Text = "Kodi play";
+            this.cm1KodiPlay.Click += new System.EventHandler(this.playTSMenuItem_Click);
+            // 
+            // cm1KodiQueue
+            // 
+            this.cm1KodiQueue.Image = ((System.Drawing.Image)(resources.GetObject("cm1KodiQueue.Image")));
+            this.cm1KodiQueue.Name = "cm1KodiQueue";
+            this.cm1KodiQueue.ShortcutKeyDisplayString = "Ctrl+Q";
+            this.cm1KodiQueue.Size = new System.Drawing.Size(283, 24);
+            this.cm1KodiQueue.Text = "Kodi queue";
+            this.cm1KodiQueue.Click += new System.EventHandler(this.queueTSMenuItem_Click);
             // 
             // openLinkLocationToolStripMenuItem
             // 
@@ -383,6 +401,124 @@
             this.toolTip1.SetToolTip(this.comboBox_audio, "audio format");
             this.comboBox_audio.Click += new System.EventHandler(this.ComboBox_Click);
             // 
+            // button_download_start
+            // 
+            this.button_download_start.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_download_start.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_download_start.BackgroundImage = global::PlaylistEditor.Properties.Resources.download_outline_green;
+            this.button_download_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_download_start.FlatAppearance.BorderSize = 0;
+            this.button_download_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_download_start.Location = new System.Drawing.Point(223, 119);
+            this.button_download_start.Margin = new System.Windows.Forms.Padding(0);
+            this.button_download_start.Name = "button_download_start";
+            this.button_download_start.Size = new System.Drawing.Size(107, 46);
+            this.button_download_start.TabIndex = 65;
+            this.toolTip1.SetToolTip(this.button_download_start, "download YT video\r\n");
+            this.button_download_start.UseVisualStyleBackColor = true;
+            this.button_download_start.Click += new System.EventHandler(this.button_download_start_Click);
+            // 
+            // button_path
+            // 
+            this.button_path.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_path.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_path.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_path.BackgroundImage")));
+            this.button_path.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_path.FlatAppearance.BorderSize = 0;
+            this.button_path.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_path.Location = new System.Drawing.Point(356, 7);
+            this.button_path.Margin = new System.Windows.Forms.Padding(0);
+            this.button_path.Name = "button_path";
+            this.button_path.Size = new System.Drawing.Size(38, 37);
+            this.button_path.TabIndex = 69;
+            this.toolTip1.SetToolTip(this.button_path, "new download path\r\ndelete path with right click");
+            this.button_path.UseVisualStyleBackColor = false;
+            this.button_path.Click += new System.EventHandler(this.button_path_Click);
+            // 
+            // button_cancel
+            // 
+            this.button_cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_cancel.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_cancel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_cancel.BackgroundImage")));
+            this.button_cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_cancel.FlatAppearance.BorderSize = 0;
+            this.button_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_cancel.Location = new System.Drawing.Point(97, 119);
+            this.button_cancel.Margin = new System.Windows.Forms.Padding(0);
+            this.button_cancel.Name = "button_cancel";
+            this.button_cancel.Size = new System.Drawing.Size(114, 46);
+            this.button_cancel.TabIndex = 59;
+            this.toolTip1.SetToolTip(this.button_cancel, "cancel");
+            this.button_cancel.UseVisualStyleBackColor = true;
+            this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
+            // 
+            // RedoButton
+            // 
+            this.RedoButton.BackColor = System.Drawing.Color.MidnightBlue;
+            this.RedoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.RedoButton.FlatAppearance.BorderSize = 0;
+            this.RedoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RedoButton.Image = global::PlaylistEditor.Properties.Resources.redo_r;
+            this.RedoButton.Location = new System.Drawing.Point(108, 32);
+            this.RedoButton.Margin = new System.Windows.Forms.Padding(0);
+            this.RedoButton.Name = "RedoButton";
+            this.RedoButton.Size = new System.Drawing.Size(33, 19);
+            this.RedoButton.TabIndex = 62;
+            this.toolTip1.SetToolTip(this.RedoButton, "redo");
+            this.RedoButton.UseVisualStyleBackColor = true;
+            this.RedoButton.Click += new System.EventHandler(this.RedoButton_Click);
+            // 
+            // UndoButton
+            // 
+            this.UndoButton.BackColor = System.Drawing.Color.MidnightBlue;
+            this.UndoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.UndoButton.FlatAppearance.BorderSize = 0;
+            this.UndoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UndoButton.Image = global::PlaylistEditor.Properties.Resources.undo_r;
+            this.UndoButton.Location = new System.Drawing.Point(108, 4);
+            this.UndoButton.Margin = new System.Windows.Forms.Padding(0);
+            this.UndoButton.Name = "UndoButton";
+            this.UndoButton.Size = new System.Drawing.Size(33, 19);
+            this.UndoButton.TabIndex = 61;
+            this.toolTip1.SetToolTip(this.UndoButton, "undo");
+            this.UndoButton.UseVisualStyleBackColor = true;
+            this.UndoButton.Click += new System.EventHandler(this.UndoButton_Click);
+            // 
+            // button_check
+            // 
+            this.button_check.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_check.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_check.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_check.FlatAppearance.BorderSize = 0;
+            this.button_check.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_check.Image = global::PlaylistEditor.Properties.Resources.playlist_check_r;
+            this.button_check.Location = new System.Drawing.Point(896, 16);
+            this.button_check.Margin = new System.Windows.Forms.Padding(0);
+            this.button_check.Name = "button_check";
+            this.button_check.Size = new System.Drawing.Size(25, 36);
+            this.button_check.TabIndex = 60;
+            this.toolTip1.SetToolTip(this.button_check, "check for invalid links\r\n+ Ctrl select links");
+            this.button_check.UseVisualStyleBackColor = true;
+            this.button_check.Click += new System.EventHandler(this.button_check_Click);
+            // 
+            // button_vlc
+            // 
+            this.button_vlc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_vlc.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_vlc.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_right_drop_circle_outline;
+            this.button_vlc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_vlc.ContextMenuStrip = this.cmLabelVlc;
+            this.button_vlc.FlatAppearance.BorderSize = 0;
+            this.button_vlc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_vlc.Location = new System.Drawing.Point(684, 10);
+            this.button_vlc.Margin = new System.Windows.Forms.Padding(0);
+            this.button_vlc.Name = "button_vlc";
+            this.button_vlc.Size = new System.Drawing.Size(40, 37);
+            this.button_vlc.TabIndex = 38;
+            this.toolTip1.SetToolTip(this.button_vlc, "play with vlc\r\ndouble click cell");
+            this.button_vlc.UseVisualStyleBackColor = true;
+            this.button_vlc.Click += new System.EventHandler(this.button_vlc_Click);
+            // 
             // cmLabelVlc
             // 
             this.cmLabelVlc.ImageScalingSize = new System.Drawing.Size(18, 18);
@@ -417,6 +553,238 @@
             this.cmLbl1080.Size = new System.Drawing.Size(110, 24);
             this.cmLbl1080.Text = "1080";
             this.cmLbl1080.Click += new System.EventHandler(this.cmLbl_click);
+            // 
+            // button_revert
+            // 
+            this.button_revert.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_revert.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_revert.FlatAppearance.BorderSize = 0;
+            this.button_revert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_revert.Image = global::PlaylistEditor.Properties.Resources.reload_r;
+            this.button_revert.Location = new System.Drawing.Point(336, 9);
+            this.button_revert.Margin = new System.Windows.Forms.Padding(0);
+            this.button_revert.Name = "button_revert";
+            this.button_revert.Size = new System.Drawing.Size(25, 37);
+            this.button_revert.TabIndex = 37;
+            this.toolTip1.SetToolTip(this.button_revert, "reload file");
+            this.button_revert.UseVisualStyleBackColor = true;
+            this.button_revert.Visible = false;
+            this.button_revert.Click += new System.EventHandler(this.button_revert_Click);
+            // 
+            // button_tag
+            // 
+            this.button_tag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_tag.BackgroundImage = global::PlaylistEditor.Properties.Resources.search_web;
+            this.button_tag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_tag.FlatAppearance.BorderSize = 0;
+            this.button_tag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_tag.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button_tag.Location = new System.Drawing.Point(853, 16);
+            this.button_tag.Margin = new System.Windows.Forms.Padding(0);
+            this.button_tag.Name = "button_tag";
+            this.button_tag.Size = new System.Drawing.Size(38, 34);
+            this.button_tag.TabIndex = 36;
+            this.toolTip1.SetToolTip(this.button_tag, "select plugin links");
+            this.button_tag.UseVisualStyleBackColor = true;
+            this.button_tag.Click += new System.EventHandler(this.button_tag_Click);
+            // 
+            // button_download
+            // 
+            this.button_download.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_download.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_download.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_download.BackgroundImage")));
+            this.button_download.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_download.FlatAppearance.BorderSize = 0;
+            this.button_download.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_download.Location = new System.Drawing.Point(732, 11);
+            this.button_download.Margin = new System.Windows.Forms.Padding(0);
+            this.button_download.Name = "button_download";
+            this.button_download.Size = new System.Drawing.Size(37, 37);
+            this.button_download.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.button_download, "download YT video\r\n+Ctrl start immidiately");
+            this.button_download.UseVisualStyleBackColor = true;
+            this.button_download.Click += new System.EventHandler(this.downloadYTFileTSMenuItem_Click);
+            // 
+            // button_dup
+            // 
+            this.button_dup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_dup.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_dup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_dup.FlatAppearance.BorderSize = 0;
+            this.button_dup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_dup.Image = global::PlaylistEditor.Properties.Resources.content_duplicate_r;
+            this.button_dup.Location = new System.Drawing.Point(932, 15);
+            this.button_dup.Margin = new System.Windows.Forms.Padding(0);
+            this.button_dup.Name = "button_dup";
+            this.button_dup.Size = new System.Drawing.Size(25, 37);
+            this.button_dup.TabIndex = 35;
+            this.toolTip1.SetToolTip(this.button_dup, "find duplicates\r\n+shift remove duplicates");
+            this.button_dup.UseVisualStyleBackColor = true;
+            this.button_dup.Click += new System.EventHandler(this.button_dup_Click);
+            // 
+            // button_search
+            // 
+            this.button_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_search.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_search.FlatAppearance.BorderSize = 0;
+            this.button_search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_search.Image = global::PlaylistEditor.Properties.Resources.table_search_r;
+            this.button_search.Location = new System.Drawing.Point(966, 14);
+            this.button_search.Margin = new System.Windows.Forms.Padding(0);
+            this.button_search.Name = "button_search";
+            this.button_search.Size = new System.Drawing.Size(25, 37);
+            this.button_search.TabIndex = 33;
+            this.toolTip1.SetToolTip(this.button_search, "search\r\nCtrl+F");
+            this.button_search.UseVisualStyleBackColor = true;
+            this.button_search.Click += new System.EventHandler(this.button_search_Click);
+            // 
+            // buttonR_MoveDown
+            // 
+            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
+            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_MoveDown.Image = global::PlaylistEditor.Properties.Resources.arrow_down_bold_r;
+            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
+            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
+            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_MoveDown.TabIndex = 32;
+            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down\r\nctrl + 2");
+            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
+            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
+            // 
+            // buttonR_moveUp
+            // 
+            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
+            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_moveUp.Image = global::PlaylistEditor.Properties.Resources.arrow_up_bold_r;
+            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
+            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_moveUp.Name = "buttonR_moveUp";
+            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_moveUp.TabIndex = 31;
+            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up\r\nctrl + 1");
+            this.buttonR_moveUp.UseVisualStyleBackColor = true;
+            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
+            // 
+            // button_del_all
+            // 
+            this.button_del_all.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_del_all.FlatAppearance.BorderSize = 0;
+            this.button_del_all.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_del_all.Image = global::PlaylistEditor.Properties.Resources.delete_forever_outline_r;
+            this.button_del_all.Location = new System.Drawing.Point(292, 10);
+            this.button_del_all.Margin = new System.Windows.Forms.Padding(2);
+            this.button_del_all.Name = "button_del_all";
+            this.button_del_all.Size = new System.Drawing.Size(30, 32);
+            this.button_del_all.TabIndex = 29;
+            this.button_del_all.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.button_del_all, "delete list\r\nCtrl+N open new window");
+            this.button_del_all.UseVisualStyleBackColor = true;
+            this.button_del_all.Click += new System.EventHandler(this.button_del_all_Click);
+            // 
+            // button_settings
+            // 
+            this.button_settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_settings.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_settings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_settings.FlatAppearance.BorderSize = 0;
+            this.button_settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_settings.Image = global::PlaylistEditor.Properties.Resources.settings_outline_r;
+            this.button_settings.Location = new System.Drawing.Point(1001, 15);
+            this.button_settings.Margin = new System.Windows.Forms.Padding(0);
+            this.button_settings.Name = "button_settings";
+            this.button_settings.Size = new System.Drawing.Size(25, 37);
+            this.button_settings.TabIndex = 28;
+            this.toolTip1.SetToolTip(this.button_settings, "settings");
+            this.button_settings.UseVisualStyleBackColor = true;
+            this.button_settings.Click += new System.EventHandler(this.button_settings_Click);
+            // 
+            // button_add
+            // 
+            this.button_add.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_add.BackgroundImage")));
+            this.button_add.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_add.FlatAppearance.BorderSize = 0;
+            this.button_add.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_add.Location = new System.Drawing.Point(249, 11);
+            this.button_add.Margin = new System.Windows.Forms.Padding(2);
+            this.button_add.Name = "button_add";
+            this.button_add.Size = new System.Drawing.Size(30, 32);
+            this.button_add.TabIndex = 27;
+            this.button_add.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.button_add, "add line");
+            this.button_add.UseVisualStyleBackColor = true;
+            this.button_add.Click += new System.EventHandler(this.button_add_Click);
+            // 
+            // button_Info
+            // 
+            this.button_Info.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Info.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_Info.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_Info.FlatAppearance.BorderSize = 0;
+            this.button_Info.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Info.Image = global::PlaylistEditor.Properties.Resources.information_outline_r;
+            this.button_Info.Location = new System.Drawing.Point(1039, 15);
+            this.button_Info.Margin = new System.Windows.Forms.Padding(0);
+            this.button_Info.Name = "button_Info";
+            this.button_Info.Size = new System.Drawing.Size(25, 37);
+            this.button_Info.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.button_Info, "info/Keyboard shortcuts");
+            this.button_Info.UseVisualStyleBackColor = true;
+            this.button_Info.Click += new System.EventHandler(this.button_Info_Click);
+            // 
+            // button_delLine
+            // 
+            this.button_delLine.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_delLine.FlatAppearance.BorderSize = 0;
+            this.button_delLine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_delLine.Image = global::PlaylistEditor.Properties.Resources.close_box_outline_r;
+            this.button_delLine.Location = new System.Drawing.Point(146, 11);
+            this.button_delLine.Margin = new System.Windows.Forms.Padding(2);
+            this.button_delLine.Name = "button_delLine";
+            this.button_delLine.Size = new System.Drawing.Size(30, 32);
+            this.button_delLine.TabIndex = 2;
+            this.button_delLine.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.button_delLine, "delete line");
+            this.button_delLine.UseVisualStyleBackColor = true;
+            this.button_delLine.Click += new System.EventHandler(this.button_delLine_Click);
+            // 
+            // button_save
+            // 
+            this.button_save.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_save.FlatAppearance.BorderSize = 0;
+            this.button_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_save.Image = global::PlaylistEditor.Properties.Resources.content_save_r;
+            this.button_save.Location = new System.Drawing.Point(58, 2);
+            this.button_save.Margin = new System.Windows.Forms.Padding(2);
+            this.button_save.Name = "button_save";
+            this.button_save.Size = new System.Drawing.Size(45, 49);
+            this.button_save.TabIndex = 1;
+            this.button_save.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.button_save, "save as\r\n+shift save overwrite \r\nCtrl+S save");
+            this.button_save.UseVisualStyleBackColor = true;
+            this.button_save.Click += new System.EventHandler(this.button_save_Click);
+            // 
+            // button_open
+            // 
+            this.button_open.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_open.FlatAppearance.BorderSize = 0;
+            this.button_open.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_open.Image = global::PlaylistEditor.Properties.Resources.open_in_app_r;
+            this.button_open.Location = new System.Drawing.Point(9, 2);
+            this.button_open.Margin = new System.Windows.Forms.Padding(2);
+            this.button_open.Name = "button_open";
+            this.button_open.Size = new System.Drawing.Size(45, 49);
+            this.button_open.TabIndex = 0;
+            this.button_open.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.button_open, "open m3u\r\ndouble click empty background\r\nhint: drop m3u file with shift \r\nactivat" +
+        "es merge function\r\n");
+            this.button_open.UseVisualStyleBackColor = true;
+            this.button_open.Click += new System.EventHandler(this.button_open_Click);
             // 
             // textBox_find
             // 
@@ -680,374 +1048,6 @@
             this.plabel_Filename.Size = new System.Drawing.Size(309, 23);
             this.plabel_Filename.TabIndex = 26;
             this.plabel_Filename.Text = "pathLabel1";
-            // 
-            // button_download_start
-            // 
-            this.button_download_start.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_download_start.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_download_start.BackgroundImage = global::PlaylistEditor.Properties.Resources.download_outline_green;
-            this.button_download_start.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_download_start.FlatAppearance.BorderSize = 0;
-            this.button_download_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_download_start.Location = new System.Drawing.Point(223, 119);
-            this.button_download_start.Margin = new System.Windows.Forms.Padding(0);
-            this.button_download_start.Name = "button_download_start";
-            this.button_download_start.Size = new System.Drawing.Size(107, 46);
-            this.button_download_start.TabIndex = 65;
-            this.toolTip1.SetToolTip(this.button_download_start, "download YT video\r\n");
-            this.button_download_start.UseVisualStyleBackColor = true;
-            this.button_download_start.Click += new System.EventHandler(this.button_download_start_Click);
-            // 
-            // button_path
-            // 
-            this.button_path.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_path.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_path.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_path.BackgroundImage")));
-            this.button_path.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_path.FlatAppearance.BorderSize = 0;
-            this.button_path.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_path.Location = new System.Drawing.Point(356, 7);
-            this.button_path.Margin = new System.Windows.Forms.Padding(0);
-            this.button_path.Name = "button_path";
-            this.button_path.Size = new System.Drawing.Size(38, 37);
-            this.button_path.TabIndex = 69;
-            this.toolTip1.SetToolTip(this.button_path, "new download path\r\ndelete path with right click");
-            this.button_path.UseVisualStyleBackColor = false;
-            this.button_path.Click += new System.EventHandler(this.button_path_Click);
-            // 
-            // button_cancel
-            // 
-            this.button_cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_cancel.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_cancel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_cancel.BackgroundImage")));
-            this.button_cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_cancel.FlatAppearance.BorderSize = 0;
-            this.button_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_cancel.Location = new System.Drawing.Point(97, 119);
-            this.button_cancel.Margin = new System.Windows.Forms.Padding(0);
-            this.button_cancel.Name = "button_cancel";
-            this.button_cancel.Size = new System.Drawing.Size(114, 46);
-            this.button_cancel.TabIndex = 59;
-            this.toolTip1.SetToolTip(this.button_cancel, "cancel");
-            this.button_cancel.UseVisualStyleBackColor = true;
-            this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
-            // 
-            // RedoButton
-            // 
-            this.RedoButton.BackColor = System.Drawing.Color.MidnightBlue;
-            this.RedoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.RedoButton.FlatAppearance.BorderSize = 0;
-            this.RedoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RedoButton.Image = global::PlaylistEditor.Properties.Resources.redo_r;
-            this.RedoButton.Location = new System.Drawing.Point(108, 32);
-            this.RedoButton.Margin = new System.Windows.Forms.Padding(0);
-            this.RedoButton.Name = "RedoButton";
-            this.RedoButton.Size = new System.Drawing.Size(33, 19);
-            this.RedoButton.TabIndex = 62;
-            this.toolTip1.SetToolTip(this.RedoButton, "redo");
-            this.RedoButton.UseVisualStyleBackColor = true;
-            this.RedoButton.Click += new System.EventHandler(this.RedoButton_Click);
-            // 
-            // UndoButton
-            // 
-            this.UndoButton.BackColor = System.Drawing.Color.MidnightBlue;
-            this.UndoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.UndoButton.FlatAppearance.BorderSize = 0;
-            this.UndoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UndoButton.Image = global::PlaylistEditor.Properties.Resources.undo_r;
-            this.UndoButton.Location = new System.Drawing.Point(108, 4);
-            this.UndoButton.Margin = new System.Windows.Forms.Padding(0);
-            this.UndoButton.Name = "UndoButton";
-            this.UndoButton.Size = new System.Drawing.Size(33, 19);
-            this.UndoButton.TabIndex = 61;
-            this.toolTip1.SetToolTip(this.UndoButton, "undo");
-            this.UndoButton.UseVisualStyleBackColor = true;
-            this.UndoButton.Click += new System.EventHandler(this.UndoButton_Click);
-            // 
-            // button_check
-            // 
-            this.button_check.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_check.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_check.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_check.FlatAppearance.BorderSize = 0;
-            this.button_check.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_check.Image = global::PlaylistEditor.Properties.Resources.playlist_check_r;
-            this.button_check.Location = new System.Drawing.Point(896, 16);
-            this.button_check.Margin = new System.Windows.Forms.Padding(0);
-            this.button_check.Name = "button_check";
-            this.button_check.Size = new System.Drawing.Size(25, 36);
-            this.button_check.TabIndex = 60;
-            this.toolTip1.SetToolTip(this.button_check, "check for invalid links\r\n+ Ctrl select links");
-            this.button_check.UseVisualStyleBackColor = true;
-            this.button_check.Click += new System.EventHandler(this.button_check_Click);
-            // 
-            // button_vlc
-            // 
-            this.button_vlc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_vlc.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_vlc.BackgroundImage = global::PlaylistEditor.Properties.Resources.arrow_right_drop_circle_outline;
-            this.button_vlc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_vlc.ContextMenuStrip = this.cmLabelVlc;
-            this.button_vlc.FlatAppearance.BorderSize = 0;
-            this.button_vlc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_vlc.Location = new System.Drawing.Point(684, 10);
-            this.button_vlc.Margin = new System.Windows.Forms.Padding(0);
-            this.button_vlc.Name = "button_vlc";
-            this.button_vlc.Size = new System.Drawing.Size(40, 37);
-            this.button_vlc.TabIndex = 38;
-            this.toolTip1.SetToolTip(this.button_vlc, "play with vlc\r\ndouble click cell");
-            this.button_vlc.UseVisualStyleBackColor = true;
-            this.button_vlc.Click += new System.EventHandler(this.button_vlc_Click);
-            // 
-            // button_revert
-            // 
-            this.button_revert.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_revert.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_revert.FlatAppearance.BorderSize = 0;
-            this.button_revert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_revert.Image = global::PlaylistEditor.Properties.Resources.reload_r;
-            this.button_revert.Location = new System.Drawing.Point(336, 9);
-            this.button_revert.Margin = new System.Windows.Forms.Padding(0);
-            this.button_revert.Name = "button_revert";
-            this.button_revert.Size = new System.Drawing.Size(25, 37);
-            this.button_revert.TabIndex = 37;
-            this.toolTip1.SetToolTip(this.button_revert, "reload file");
-            this.button_revert.UseVisualStyleBackColor = true;
-            this.button_revert.Visible = false;
-            this.button_revert.Click += new System.EventHandler(this.button_revert_Click);
-            // 
-            // button_tag
-            // 
-            this.button_tag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_tag.BackgroundImage = global::PlaylistEditor.Properties.Resources.search_web;
-            this.button_tag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_tag.FlatAppearance.BorderSize = 0;
-            this.button_tag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_tag.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button_tag.Location = new System.Drawing.Point(853, 16);
-            this.button_tag.Margin = new System.Windows.Forms.Padding(0);
-            this.button_tag.Name = "button_tag";
-            this.button_tag.Size = new System.Drawing.Size(38, 34);
-            this.button_tag.TabIndex = 36;
-            this.toolTip1.SetToolTip(this.button_tag, "select plugin links");
-            this.button_tag.UseVisualStyleBackColor = true;
-            this.button_tag.Click += new System.EventHandler(this.button_tag_Click);
-            // 
-            // button_download
-            // 
-            this.button_download.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_download.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_download.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_download.BackgroundImage")));
-            this.button_download.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_download.FlatAppearance.BorderSize = 0;
-            this.button_download.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_download.Location = new System.Drawing.Point(732, 11);
-            this.button_download.Margin = new System.Windows.Forms.Padding(0);
-            this.button_download.Name = "button_download";
-            this.button_download.Size = new System.Drawing.Size(37, 37);
-            this.button_download.TabIndex = 40;
-            this.toolTip1.SetToolTip(this.button_download, "download YT video\r\n+Ctrl start immidiately");
-            this.button_download.UseVisualStyleBackColor = true;
-            this.button_download.Click += new System.EventHandler(this.downloadYTFileTSMenuItem_Click);
-            // 
-            // button_dup
-            // 
-            this.button_dup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_dup.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_dup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_dup.FlatAppearance.BorderSize = 0;
-            this.button_dup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_dup.Image = global::PlaylistEditor.Properties.Resources.content_duplicate_r;
-            this.button_dup.Location = new System.Drawing.Point(932, 15);
-            this.button_dup.Margin = new System.Windows.Forms.Padding(0);
-            this.button_dup.Name = "button_dup";
-            this.button_dup.Size = new System.Drawing.Size(25, 37);
-            this.button_dup.TabIndex = 35;
-            this.toolTip1.SetToolTip(this.button_dup, "find duplicates\r\n+shift remove duplicates");
-            this.button_dup.UseVisualStyleBackColor = true;
-            this.button_dup.Click += new System.EventHandler(this.button_dup_Click);
-            // 
-            // button_search
-            // 
-            this.button_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_search.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_search.FlatAppearance.BorderSize = 0;
-            this.button_search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_search.Image = global::PlaylistEditor.Properties.Resources.table_search_r;
-            this.button_search.Location = new System.Drawing.Point(966, 14);
-            this.button_search.Margin = new System.Windows.Forms.Padding(0);
-            this.button_search.Name = "button_search";
-            this.button_search.Size = new System.Drawing.Size(25, 37);
-            this.button_search.TabIndex = 33;
-            this.toolTip1.SetToolTip(this.button_search, "search\r\nCtrl+F");
-            this.button_search.UseVisualStyleBackColor = true;
-            this.button_search.Click += new System.EventHandler(this.button_search_Click);
-            // 
-            // buttonR_MoveDown
-            // 
-            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
-            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_MoveDown.Image = global::PlaylistEditor.Properties.Resources.arrow_down_bold_r;
-            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
-            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
-            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_MoveDown.TabIndex = 32;
-            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down");
-            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
-            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
-            // 
-            // buttonR_moveUp
-            // 
-            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
-            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_moveUp.Image = global::PlaylistEditor.Properties.Resources.arrow_up_bold_r;
-            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
-            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_moveUp.Name = "buttonR_moveUp";
-            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_moveUp.TabIndex = 31;
-            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up");
-            this.buttonR_moveUp.UseVisualStyleBackColor = true;
-            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
-            // 
-            // button_del_all
-            // 
-            this.button_del_all.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_del_all.FlatAppearance.BorderSize = 0;
-            this.button_del_all.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_del_all.Image = global::PlaylistEditor.Properties.Resources.delete_forever_outline_r;
-            this.button_del_all.Location = new System.Drawing.Point(292, 10);
-            this.button_del_all.Margin = new System.Windows.Forms.Padding(2);
-            this.button_del_all.Name = "button_del_all";
-            this.button_del_all.Size = new System.Drawing.Size(30, 32);
-            this.button_del_all.TabIndex = 29;
-            this.button_del_all.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.button_del_all, "delete list\r\nCtrl+N open new window");
-            this.button_del_all.UseVisualStyleBackColor = true;
-            this.button_del_all.Click += new System.EventHandler(this.button_del_all_Click);
-            // 
-            // button_settings
-            // 
-            this.button_settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_settings.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_settings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_settings.FlatAppearance.BorderSize = 0;
-            this.button_settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_settings.Image = global::PlaylistEditor.Properties.Resources.settings_outline_r;
-            this.button_settings.Location = new System.Drawing.Point(1001, 15);
-            this.button_settings.Margin = new System.Windows.Forms.Padding(0);
-            this.button_settings.Name = "button_settings";
-            this.button_settings.Size = new System.Drawing.Size(25, 37);
-            this.button_settings.TabIndex = 28;
-            this.toolTip1.SetToolTip(this.button_settings, "settings");
-            this.button_settings.UseVisualStyleBackColor = true;
-            this.button_settings.Click += new System.EventHandler(this.button_settings_Click);
-            // 
-            // button_add
-            // 
-            this.button_add.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_add.BackgroundImage")));
-            this.button_add.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_add.FlatAppearance.BorderSize = 0;
-            this.button_add.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_add.Location = new System.Drawing.Point(249, 11);
-            this.button_add.Margin = new System.Windows.Forms.Padding(2);
-            this.button_add.Name = "button_add";
-            this.button_add.Size = new System.Drawing.Size(30, 32);
-            this.button_add.TabIndex = 27;
-            this.button_add.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.button_add, "add line");
-            this.button_add.UseVisualStyleBackColor = true;
-            this.button_add.Click += new System.EventHandler(this.button_add_Click);
-            // 
-            // button_Info
-            // 
-            this.button_Info.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Info.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_Info.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_Info.FlatAppearance.BorderSize = 0;
-            this.button_Info.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_Info.Image = global::PlaylistEditor.Properties.Resources.information_outline_r;
-            this.button_Info.Location = new System.Drawing.Point(1039, 15);
-            this.button_Info.Margin = new System.Windows.Forms.Padding(0);
-            this.button_Info.Name = "button_Info";
-            this.button_Info.Size = new System.Drawing.Size(25, 37);
-            this.button_Info.TabIndex = 24;
-            this.toolTip1.SetToolTip(this.button_Info, "info/Keyboard shortcuts");
-            this.button_Info.UseVisualStyleBackColor = true;
-            this.button_Info.Click += new System.EventHandler(this.button_Info_Click);
-            // 
-            // button_delLine
-            // 
-            this.button_delLine.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_delLine.FlatAppearance.BorderSize = 0;
-            this.button_delLine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_delLine.Image = global::PlaylistEditor.Properties.Resources.close_box_outline_r;
-            this.button_delLine.Location = new System.Drawing.Point(146, 11);
-            this.button_delLine.Margin = new System.Windows.Forms.Padding(2);
-            this.button_delLine.Name = "button_delLine";
-            this.button_delLine.Size = new System.Drawing.Size(30, 32);
-            this.button_delLine.TabIndex = 2;
-            this.button_delLine.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.button_delLine, "delete line");
-            this.button_delLine.UseVisualStyleBackColor = true;
-            this.button_delLine.Click += new System.EventHandler(this.button_delLine_Click);
-            // 
-            // button_save
-            // 
-            this.button_save.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_save.FlatAppearance.BorderSize = 0;
-            this.button_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_save.Image = global::PlaylistEditor.Properties.Resources.content_save_r;
-            this.button_save.Location = new System.Drawing.Point(58, 2);
-            this.button_save.Margin = new System.Windows.Forms.Padding(2);
-            this.button_save.Name = "button_save";
-            this.button_save.Size = new System.Drawing.Size(45, 49);
-            this.button_save.TabIndex = 1;
-            this.button_save.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.button_save, "save as\r\n+shift save overwrite \r\nCtrl+S save");
-            this.button_save.UseVisualStyleBackColor = true;
-            this.button_save.Click += new System.EventHandler(this.button_save_Click);
-            // 
-            // button_open
-            // 
-            this.button_open.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_open.FlatAppearance.BorderSize = 0;
-            this.button_open.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_open.Image = global::PlaylistEditor.Properties.Resources.open_in_app_r;
-            this.button_open.Location = new System.Drawing.Point(9, 2);
-            this.button_open.Margin = new System.Windows.Forms.Padding(2);
-            this.button_open.Name = "button_open";
-            this.button_open.Size = new System.Drawing.Size(45, 49);
-            this.button_open.TabIndex = 0;
-            this.button_open.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.button_open, "open m3u\r\ndouble click empty background\r\nhint: drop m3u file with shift \r\nactivat" +
-        "es merge function\r\n");
-            this.button_open.UseVisualStyleBackColor = true;
-            this.button_open.Click += new System.EventHandler(this.button_open_Click);
-            // 
-            // cm1KodiPlay
-            // 
-            this.cm1KodiPlay.Image = ((System.Drawing.Image)(resources.GetObject("cm1KodiPlay.Image")));
-            this.cm1KodiPlay.Name = "cm1KodiPlay";
-            this.cm1KodiPlay.ShortcutKeyDisplayString = "Ctrl+P";
-            this.cm1KodiPlay.Size = new System.Drawing.Size(283, 24);
-            this.cm1KodiPlay.Text = "Kodi play";
-            this.cm1KodiPlay.Click += new System.EventHandler(this.playTSMenuItem_Click);
-            // 
-            // cm1KodiQueue
-            // 
-            this.cm1KodiQueue.Image = ((System.Drawing.Image)(resources.GetObject("cm1KodiQueue.Image")));
-            this.cm1KodiQueue.Name = "cm1KodiQueue";
-            this.cm1KodiQueue.ShortcutKeyDisplayString = "Ctrl+Q";
-            this.cm1KodiQueue.Size = new System.Drawing.Size(283, 24);
-            this.cm1KodiQueue.Text = "Kodi queue";
-            this.cm1KodiQueue.Click += new System.EventHandler(this.queueTSMenuItem_Click);
             // 
             // btn_refind
             // 

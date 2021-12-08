@@ -34,6 +34,7 @@ using YoutubeExplode;
 using YoutubeExplode.Converter;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
+using YoutubeExplode.Extensions;
 using static PlaylistEditor.ClassHelp;
 using static PlaylistEditor.ClassDataset;
 
@@ -121,7 +122,7 @@ namespace PlaylistEditor
             DMPLUGIN1 = PLUG + Settings.Default.DMPLUGIN1,
             BCPLUGIN = PLUG + Settings.Default.BCPLUGIN,
             DMPLUGIN2 = "&mode=playVideo"; //;mode=playVideo&quot"; //plugin.video.dailymotion_com/?url=
-        
+
         private const string YTURL = "https://www.youtube.com/watch?v=";
         private const int COLWIDTH = 500;
 
@@ -320,7 +321,7 @@ namespace PlaylistEditor
                 }
                 else
                 {
-                    yt_Link = Clipboard.GetText();
+                    yt_Link = Clipboard.GetText();  //Android: Intent
 
                 }
 
@@ -340,8 +341,12 @@ namespace PlaylistEditor
 
                 switch (linktype)
                 {
+                    case ValidVideoType.Invalid:
+                        return;
+
                     case ValidVideoType.YT:
                     case ValidVideoType.YList:
+                    case ValidVideoType.YMusic:
                         ImportYTLink(yt_Link);
                         break;
 
@@ -476,7 +481,7 @@ namespace PlaylistEditor
 
             if (yt_Link.Contains("embed"))
             {
-               //yt_Link = yt_Link.Replace("https://odysee.com/$/embed/", "");
+                //yt_Link = yt_Link.Replace("https://odysee.com/$/embed/", "");
                 string[] key_en = yt_Link.Split('/');
                 ytPluginLink = LBRYPLUGIN + key_en[5];
             }
@@ -496,7 +501,7 @@ namespace PlaylistEditor
         private void ImportRumbleLink(string yt_Link)
         {
             //https://rumble.com/vf5wzp-episode-833-the-house-that-fauci-built-the-ccp-the-who-and-the-nih-in-wuhan.html
-           // string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
+            // string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
             //string name = ""; // url.Split('/').Last();
 
             string[] key_em = yt_Link.Split('/');
@@ -516,7 +521,7 @@ namespace PlaylistEditor
         {
             //https://rumble.com/vf5wzp-episode-833-the-house-that-fauci-built-the-ccp-the-who-and-the-nih-in-wuhan.html
             string url = yt_Link;//  (String)yLink.GetData(DataFormats.Text);  //yLink Clipboarddata
-           // string name = ""; // url.Split('/').Last();
+                                 // string name = ""; // url.Split('/').Last();
 
             url = url.Trim('/').Replace("https://", "");
             string[] key = url.Split('/');
@@ -545,7 +550,7 @@ namespace PlaylistEditor
         private void ImportHTMLLink(string yt_Link)
         {
             string url = yt_Link;
-            string name = ""; 
+            string name = "";
 
             if (url.StartsWith("\\\\"))
             {
@@ -560,7 +565,7 @@ namespace PlaylistEditor
             else  //html
             {
                 name = GetTitle_html(url);
-                if (string.IsNullOrEmpty(name))  name = url.Split('/').Last();
+                if (string.IsNullOrEmpty(name)) name = url.Split('/').Last();
                 ytPluginLink = url;
             }
 
@@ -592,7 +597,7 @@ namespace PlaylistEditor
             //https://www.youtube.com/results?search_query=ariana+honda+stage
 
             string url = "";
-            if (yt_Link.Contains(".youtube.com") || yt_Link.Contains("www.youtube-nocookie.com") || yt_Link.Contains("youtu.be"))
+            if (yt_Link.Contains("youtube.com") || yt_Link.Contains("www.youtube-nocookie.com") || yt_Link.Contains("youtu.be"))
             {
                 if ((yt_Link.Contains("embed") || yt_Link.Contains("youtu.be/")) && !yt_Link.Contains("=youtu.be/"))  //variant embed link
                 {
@@ -602,7 +607,7 @@ namespace PlaylistEditor
                     // yt_Link = "https://www.youtube.com/watch?v=" + key_em[0];
                     url = YTURL + key_em[0];
                 }
- 
+
                 //https://www.youtube.com/watch?time_continue=16&v=UaTYYk3HxOc&feature=emb_logo
                 else if (yt_Link.Contains("time_continue"))
                 {
@@ -632,7 +637,7 @@ namespace PlaylistEditor
 
                     }
                 }
- 
+
                 else
                 {
                     string[] key = yt_Link.Split('=');  //variant normal or YT playlist link
@@ -647,8 +652,8 @@ namespace PlaylistEditor
 
                     }
                 }
- 
-                
+
+
                 if (string.IsNullOrEmpty(ytPluginLink))
                 {
                     ytPluginLink = "Link N/A";
@@ -1947,7 +1952,7 @@ namespace PlaylistEditor
             else
             {
                 //popup no YT Link
-                NotificationBox.Show(this,"No YT link", 1500, NotificationMsg.ERROR, Position.Parent);
+                NotificationBox.Show(this, "No YT link", 1500, NotificationMsg.ERROR, Position.Parent);
             }
 
         }
@@ -2304,7 +2309,7 @@ namespace PlaylistEditor
             {
                 //  queueTSMenuItem.PerformClick();
                 cm1KodiQueue.PerformClick();
-               // queueTSMenuItem_Click(null, null);
+                // queueTSMenuItem_Click(null, null);
             }
             else
             {
@@ -2374,12 +2379,12 @@ namespace PlaylistEditor
             if (hasChanged)
             {
                 button_save.Image = Resources.content_save_modified;
-              //  button_save.BackgroundImage = Resources.content_save_modified;
+                //  button_save.BackgroundImage = Resources.content_save_modified;
                 DataGridView1_CellValidated(null, null);
             }
             if (!hasChanged)
                 button_save.Image = Resources.content_save_1_;
-               // button_save.BackgroundImage = Resources.content_save_1_;
+            // button_save.BackgroundImage = Resources.content_save_1_;
 
         }
 
@@ -2623,7 +2628,7 @@ namespace PlaylistEditor
                         }
                         else
                         {
-                            NotificationBox.Show(this,"Error " + videofilename, 3000, NotificationMsg.ERROR,Position.Parent);
+                            NotificationBox.Show(this, "Error " + videofilename, 3000, NotificationMsg.ERROR, Position.Parent);
 
                         }
                     }
@@ -2681,7 +2686,7 @@ namespace PlaylistEditor
         {
             Cursor.Current = Cursors.WaitCursor;
             // ClassYTExplode tt = new ClassYTExplode();
-           // Form1 frm1 = new Form1();
+            // Form1 frm1 = new Form1();
 
             int maxres = Settings.Default.maxres;  //-> SetVideoQuality
             int cvideo = Settings.Default.combovideo; //-> SetFileContainer .mp4 | .webm
@@ -2689,8 +2694,8 @@ namespace PlaylistEditor
             if (!ClassDownload.CheckForFfmpeg() && maxres >= 720) return videofilename = "error";
 
 
-            Task.Run(async () => 
-            { 
+            Task.Run(async () =>
+            {
                 await DownloadStream(videolink, NewPath, maxres, cvideo);
             }).Wait();  //-> videoUrlnew   audioUrl 
 
@@ -2721,20 +2726,35 @@ namespace PlaylistEditor
 
 
                     // Get stream manifest
-                    var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videoId);
+                  //  var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videoId);
+
+                    var streamManifest = await youtube.Videos.Streams.GetManifestAndFixStreamUrlsAsync(videoId);
+
 
                     // Select audio stream
                     //  var audioStreamInfo2 = streamManifest.GetAudio().WithHighestBitrate();
-                    var audioStreamInfo = streamManifest.GetAudio()
-                                           .Where(s => s.Container == ClassYTExplode.SetFileContainer(fileext))
-                                           .WithHighestBitrate();
+                    var audioStreamInfo = streamManifest.GetAudioOnlyStreams()
+                     .Where(s => s.Container == ClassYTExplode.SetFileContainer(fileext))
+   .GetWithHighestBitrate();
 
-                    var videoStreamInfo2 = streamManifest.GetVideoOnly()
-                                          .Where(s => s.VideoQuality <= ClassYTExplode.SetVideoQuality(height))
-                                          .Where(s => s.Container == ClassYTExplode.SetFileContainer(fileext))
-                                         // .Select(h => h.Url).ToList();
-                                         .First()
-                                          ;
+                    var videoStreamInfo2 = streamManifest.GetVideoOnlyStreams()
+                        .Where(o => o.VideoQuality.MaxHeight <= ClassYTExplode.SetVideoQuality(height))
+                      //                                          .Where(s => s.VideoQuality <= ClassYTExplode.SetVideoQuality(height))
+                      .Where(t => t.Container == ClassYTExplode.SetFileContainer(fileext))
+                     // .Select(h => h.Url).ToList();
+                     .First();
+
+
+                    //var audioStreamInfo = streamManifest.GetAudio()
+                    //                       .Where(s => s.Container == ClassYTExplode.SetFileContainer(fileext))
+                    //                       .WithHighestBitrate();
+
+                    //var videoStreamInfo2 = streamManifest.GetVideoOnly()
+                    //                      .Where(s => s.VideoQuality <= ClassYTExplode.SetVideoQuality(height))
+                    //                      .Where(s => s.Container == ClassYTExplode.SetFileContainer(fileext))
+                    //                     // .Select(h => h.Url).ToList();
+                    //                     .First()
+                    //                      ;
 
                     // Combine them into a collectionb
                     var streamInfos = new IStreamInfo[] { audioStreamInfo, videoStreamInfo2 };
@@ -2742,7 +2762,7 @@ namespace PlaylistEditor
                     VideoInfo = await youtube.Videos.GetAsync(videoId);  //video info
                     videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + "." + filetype[fileext];
 
-                   // var progHandler = new Progress<double>(p => Progress2 = p * 100);
+                    // var progHandler = new Progress<double>(p => Progress2 = p * 100);
 
 
                     if (MyFileExists(videoTitle, 3000))
@@ -2789,7 +2809,7 @@ namespace PlaylistEditor
 
                     VideoInfo = await youtube.Videos.GetAsync(videoId);  //video info
                     videoTitle = NewPath + "\\" + RemoveSpecialCharacters(VideoInfo.Title) + ".mp3";
-                   // var progHandler = new Progress<double>(p => Progress2 = p * 100);
+                    // var progHandler = new Progress<double>(p => Progress2 = p * 100);
 
                     if (MyFileExists(videoTitle, 3000))
                     {

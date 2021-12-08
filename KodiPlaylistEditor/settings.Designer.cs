@@ -564,6 +564,7 @@
             this.textBox4.TabIndex = 20;
             this.textBox4.Text = "plugin.video.rumble.matrix/?url=https://rumble.com/";
             this.toolTip1.SetToolTip(this.textBox4, "search strig for Google or else");
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // textBox5
             // 
@@ -861,9 +862,9 @@
             this.label15.ForeColor = System.Drawing.Color.White;
             this.label15.Location = new System.Drawing.Point(11, 133);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(75, 20);
+            this.label15.Size = new System.Drawing.Size(66, 20);
             this.label15.TabIndex = 23;
-            this.label15.Text = "Odyssee";
+            this.label15.Text = "Odysee";
             // 
             // label14
             // 
