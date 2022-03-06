@@ -144,8 +144,12 @@ namespace PlaylistEditor
 
         private void donateButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8FF26SM3X8UAN&source=url");
+            using (AboutBox2 a = new AboutBox2())
+            {
+                a.ShowDialog();
+            }
 
         }
+
     }
 }

@@ -25,7 +25,7 @@ using System.Windows.Forms;
 using YoutubeExplode;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
-using YoutubeExplode.Extensions;
+//using YoutubeExplode.Extensions;
 
 
 namespace PlaylistEditor
@@ -162,8 +162,8 @@ namespace PlaylistEditor
             try
             {
                 // Get data
-               // var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
-                var streamManifest = await _youtube.Videos.Streams.GetManifestAndFixStreamUrlsAsync(videoId);
+                var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(videoId);
+               // var streamManifest = await _youtube.Videos.Streams.GetManifestAndFixStreamUrlsAsync(videoId);
 
 
                 VideoOnlyStreamInfos = streamManifest.GetVideoOnlyStreams().ToArray();

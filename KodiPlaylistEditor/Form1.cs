@@ -34,9 +34,9 @@ using YoutubeExplode;
 using YoutubeExplode.Converter;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
-using YoutubeExplode.Extensions;
 using static PlaylistEditor.ClassHelp;
 using static PlaylistEditor.ClassDataset;
+using System.Text;
 
 //ToDo drag&drop
 //ToDo move block of rows
@@ -146,7 +146,9 @@ namespace PlaylistEditor
 
         //  https://www.codeproject.com/articles/811035/drag-and-move-rows-in-datagridview-control
 
-
+        private Rectangle dragBoxFromMouseDown;
+        private int rowIndexFromMouseDown;
+        private int rowIndexOfItemUnderMouseToDrop;
 
         public Form1()
         {
@@ -197,8 +199,11 @@ namespace PlaylistEditor
             //  dataGridView1.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;//   .EditOnF2;
             dataGridView1.EditMode = DataGridViewEditMode.EditProgrammatically;//   .EditOnF2;
 
-            //dataGridView1.EnableHeadersVisualStyles = false;
+            DataGridStyle();
+
             //dataGridView1.RowHeadersVisible = false;
+
+
 
 
             comboBox_download.Items.Clear();
@@ -244,7 +249,7 @@ namespace PlaylistEditor
             plabel_Filename.Text = "";
             button_revert.Visible = false;
             button_cancel.Visible = false;
-            downloadYTFileToolStripMenuItem.Visible = true;
+            cms1Download.Visible = true;
             button_download.Visible = true;
 
 
@@ -1221,7 +1226,7 @@ namespace PlaylistEditor
 
                 try
                 {
-                    using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName, false /*, Encoding.UTF8*/))   //false: file ovewrite
+                    using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName, false, Encoding.UTF8))   //false: file ovewrite
                     {
                         // if (isUnixFile) file.NewLine = "\n";  //unix style LF
                         file.NewLine = "\n";  //win  LF 
@@ -1261,7 +1266,7 @@ namespace PlaylistEditor
                 plabel_Filename.Text = saveFileDialog1.FileName;
                 try
                 {
-                    using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName, false /*, Encoding.UTF8*/))   //false: file ovewrite
+                    using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName, false, Encoding.UTF8))   //false: file ovewrite
                     {
                         // if (isUnixFile) file.NewLine = "\n";  //unix style LF
                         file.NewLine = "\n";
@@ -1354,6 +1359,52 @@ namespace PlaylistEditor
             toSave(true);
         }
 
+        private void dataGridView1_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void dataGridView1_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Get the index of the item the mouse is below.
+            rowIndexFromMouseDown = dataGridView1.HitTest(e.X, e.Y).RowIndex;
+            if (rowIndexFromMouseDown != -1)
+            {
+                // Remember the point where the mouse down occurred. 
+                // The DragSize indicates the size that the mouse can move 
+                // before a drag event should be started.                
+                Size dragSize = SystemInformation.DragSize;
+
+                // Create a rectangle using the DragSize, with the mouse position being
+                // at the center of the rectangle.
+                dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2),
+                                                               e.Y - (dragSize.Height / 2)),
+                                    dragSize);
+            }
+            else
+                // Reset the rectangle if the mouse is not over an item in the ListBox.
+                dragBoxFromMouseDown = Rectangle.Empty;
+            
+        }
+
+
+        private void dataGridView1_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+            if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
+            {
+                // If the mouse moves outside the rectangle, start the drag.
+                if (dragBoxFromMouseDown != Rectangle.Empty &&
+                    !dragBoxFromMouseDown.Contains(e.X, e.Y))
+                {
+
+                    // Proceed with the drag and drop, passing in the list item.                    
+                    DragDropEffects dropEffect = dataGridView1.DoDragDrop(
+                    dataGridView1.Rows[rowIndexFromMouseDown],
+                    DragDropEffects.Move);
+                }
+            }
+        }
 
 
 
@@ -1373,11 +1424,73 @@ namespace PlaylistEditor
             //    dataGridView1.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rw);
             //}
 
+            /*
+                        // The mouse locations are relative to the screen, so they must be 
+                        // converted to client coordinates.
+                        Point clientPoint = dataGridView1.PointToClient(new Point(e.X, e.Y));
+
+                        // Get the row index of the item the mouse is below. 
+                        rowIndexOfItemUnderMouseToDrop =
+                            dataGridView1.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
+
+                        // If the drag operation was a move then remove and insert the row.
+                        if (e.Effect == DragDropEffects.Move)
+                        {
+                            DataGridViewRow rowToMove = e.Data.GetData(
+                                typeof(DataGridViewRow)) as DataGridViewRow;
+                            dataGridView1.Rows.RemoveAt(rowIndexFromMouseDown);
+                            dataGridView1.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
+
+                            if (rowIndexOfItemUnderMouseToDrop < 0)
+                            {
+                                return;
+                            }
+                            dataGridView1.Rows.RemoveAt(rowIndexFromMouseDown);
+                            dataGridView1.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
+                        }
+
+                        */
+
+            if (e.Data.GetDataPresent(typeof(DataGridViewRow)))
+            {
+
+                // The mouse locations are relative to the screen, so they must be 
+                // converted to client coordinates.
+                Point clientPoint = dataGridView1.PointToClient(new Point(e.X, e.Y));
+
+                rowIndexOfItemUnderMouseToDrop =
+                    dataGridView1.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
 
 
+                // If the drag operation was a copy then add the row to the other control.
+                if (e.Effect == DragDropEffects.Move)
+                {
+                    if (rowIndexOfItemUnderMouseToDrop < 0)
+                    {
+                        return;
+                    }
+
+                   // DataRow dr = dt.NewRow();
+
+                  //  for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    
+                        string cell0 = dataGridView1.Rows[rowIndexFromMouseDown].Cells[0].Value.ToString();
+                        string cell1 = dataGridView1.Rows[rowIndexFromMouseDown].Cells[1].Value.ToString();
+                       // dr[i] = dataGridView1[i, rowIndexFromMouseDown].Value.ToString();
+                    
+
+                    dataGridView1.Rows.RemoveAt(rowIndexFromMouseDown);
+
+                    entries.Insert(rowIndexOfItemUnderMouseToDrop, new PlayEntry(Name: cell0, Link: cell1)); ;
+
+                   // dt.Rows.InsertAt(dr, rowIndexOfItemUnderMouseToDrop);
 
 
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                    toSave(true);
+                }
+            }
+
+            else if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 nfs_server = Settings.Default.server;
                 // rpi_ip = Properties.Settings.Default.rpi;
@@ -1387,9 +1500,11 @@ namespace PlaylistEditor
                 string dirName, shortName, driveName, extName, UNCfileName;
 
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+                files.Reverse();
+
                 foreach (string fileName in files)
                 {
-
                     this.path = fileName;
 
                     dirName = Path.GetDirectoryName(fileName);
@@ -1507,7 +1622,6 @@ namespace PlaylistEditor
 
             label_central.SendToBack();
             // DataGridView1_CellValidated(null, null);
-
 
             // The mouse locations are relative to the screen, so they must be 
             // converted to client coordinates.
@@ -1660,7 +1774,7 @@ namespace PlaylistEditor
             }
         }
 
-        private void pasteTSMenuItem_Click(object sender, EventArgs e)
+        private void cms1PasteAdd_Click(object sender, EventArgs e)
         {
             // https://stackoverflow.com/questions/2089689/row-copy-paste-functionality-in-datagridviewwindows-application
 
@@ -1879,7 +1993,35 @@ namespace PlaylistEditor
 
         }
 
-        private void sendToHtttpTSMenuItem_Click(object sender, EventArgs e)
+        private void cms1Send2Clipb(object sender, EventArgs e)
+        {
+            if (dataGridView1.RowCount == 0) return;
+
+            try
+            {
+                foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+                {
+                    string iLink = row.Cells[1].Value.ToString();
+                    ValidVideoType linktype = ValidPluginCheck(iLink);
+                    string clipText = GetInetLink(linktype, iLink);
+                    if (clipText != null) Clipboard.SetText(clipText);
+                    Thread.Sleep(3000);
+                }
+                if (dataGridView1.SelectedRows.Count > 0)
+                    NotificationBox.Show("All links sent", 3000, NotificationMsg.OK);
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The Clipboard could not be accessed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+
+
+
+        }
+        private void cms1Send2Clipb2(object sender, EventArgs e)
         {
             //get link col -> cut string -> make YT link -> copy to clipboard
             if (dataGridView1.RowCount == 0) return;
@@ -1908,6 +2050,7 @@ namespace PlaylistEditor
             }
 
             DataObject ClipO = (DataObject)Clipboard.GetDataObject();
+
 
             if (Clipboard.ContainsText() && ClipO.GetData(DataFormats.Text).ToString().Contains(YTPLUGIN))
             {
@@ -2102,11 +2245,15 @@ namespace PlaylistEditor
                         break;
 
                     case Keys.C:    //copy row
-                        copyTSMenuItem.PerformClick();
+                        cms1Copy.PerformClick();
                         break;
 
                     case Keys.V:    //insert row
-                        pasteTSMenuItem.PerformClick();
+                        cms1PasteAdd.PerformClick();
+                        break;
+
+                    case Keys.I:    //insert row
+                        cms1Insert.PerformClick();
                         break;
 
                     case Keys.P:    //play on kodi
@@ -2132,7 +2279,11 @@ namespace PlaylistEditor
                         break;
 
                     case Keys.X:    //cut row
-                        cutTSMenuItem.PerformClick();
+                        cms1Cut.PerformClick();
+                        break;
+
+                    case Keys.Z:    //cut row
+                        UndoButton.PerformClick();
                         break;
 
                     case Keys.L:    //open link in explorer
@@ -2141,7 +2292,7 @@ namespace PlaylistEditor
                         break;
 
                     case Keys.G:    //search Name with google
-                        searchGoogletoolStriptem.PerformClick();
+                        cms1Search.PerformClick();
                         break;
 
                     case Keys.Add:    //change font size
@@ -2726,9 +2877,9 @@ namespace PlaylistEditor
 
 
                     // Get stream manifest
-                  //  var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videoId);
+                    var streamManifest = await youtube.Videos.Streams.GetManifestAsync(videoId);
 
-                    var streamManifest = await youtube.Videos.Streams.GetManifestAndFixStreamUrlsAsync(videoId);
+                  //  var streamManifest = await youtube.Videos.Streams.GetManifestAndFixStreamUrlsAsync(videoId);
 
 
                     // Select audio stream
@@ -3303,14 +3454,39 @@ namespace PlaylistEditor
                 }
 
                 contextMenuStrip1.Items["cms1NewWindow"].Enabled = true;
+                contextMenuStrip1.Items["cms1PasteAdd"].Enabled = true;
 
             }
             else
             {
+                //string[] itemsNList = new string[] { "cms1KodiPlay", "cms1KodiQueue",
+                //    "cms1Copy", "cms1Paste", "cms1Cut", "cms1Send2Clip", "cms1Download", };
+
+                //for (int i = 0; i < itemsNList.Length; i++)
+                //{
+                //    contextMenuStrip1.Items[itemsNList[i]].Enabled = true;
+                //}
+
+                string[] itemsNList2 = new string[] { "cms1OpenLink", "cms1Search",
+                    "cms1Rename"};
+
                 for (int i = 0; i < contextMenuStrip1.Items.Count; i++)
                 {
                     contextMenuStrip1.Items[i].Enabled = true;
                 }
+
+
+
+
+                if (dataGridView1.SelectedRows.Count > 1)
+                {
+                    for (int i = 0; i < itemsNList2.Length; i++)
+                    {
+                        contextMenuStrip1.Items[itemsNList2[i]].Enabled = false;
+                    }
+
+                }
+
             }
         }
 
@@ -3475,6 +3651,63 @@ namespace PlaylistEditor
             dataGridView1.BeginEdit(true);
         }
 
+        private void cms1Insert_Click(object sender, EventArgs e)
+        {
+            DataObject o = (DataObject)Clipboard.GetDataObject();
+
+
+            if (Clipboard.ContainsText())
+            {
+
+                try
+                {
+                    int index = dataGridView1.SelectedRows[0].Index;
+                    string[] pastedRows = Regex.Split(o.GetData(DataFormats.UnicodeText).ToString().TrimEnd("\r\n".ToCharArray()), "\r\n");
+                 
+                    foreach (string pastedRow in pastedRows.Reverse())
+                    {
+                        string[] pastedRowCells = pastedRow.Split(new char[] { '\t' });
+
+                        if (pastedRowCells.Length == 1) return;  //for copy paste only one cell
+
+                        for (int i = 0; i < pastedRowCells.Length; i++)
+                        {
+                            if (pastedRowCells[i] != "")
+                            {
+                                entries.Insert(index + i, new PlayEntry(Name: pastedRowCells[i], Link: pastedRowCells[i + 1])); ;
+                                i++;
+                            }
+                        }
+                    }
+                    toSave(true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Paste operation failed. " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+            }
+
+        }
+
+        private void cms5SearchDupli_Click(object sender, EventArgs e)
+        {
+            button_dup.PerformClick();
+
+        }
+
+        private void cms5SearchCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.Default.colDupli = cms5SearchCombo.SelectedIndex;
+            Settings.Default.Save();
+        }
+
+        private void contextMenuStrip5_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            cms5SearchCombo.SelectedIndex = Settings.Default.colDupli;
+
+        }
+
         private void deleteEntryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Try to cast the sender to a ToolStripItem
@@ -3509,6 +3742,21 @@ namespace PlaylistEditor
             comboBox_download.SelectedIndex = 0;
             Settings.Default.combodown = 0;
 
+        }
+
+        private void DataGridStyle()
+        {
+            dataGridView1.EnableHeadersVisualStyles = false;  //to make header style take effect
+
+            DataGridViewCellStyle column_header_cell_style = new DataGridViewCellStyle();
+            column_header_cell_style.BackColor = SystemColors.ControlLight;
+            column_header_cell_style.ForeColor = Color.Black;
+            //column_header_cell_style.SelectionBackColor = Color.Chocolate;
+            //column_header_cell_style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            //column_header_cell_style.Font = new Font("Tahoma", 12, FontStyle.Bold, GraphicsUnit.Pixel);  //set in ZoomGrid
+
+
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = column_header_cell_style;
         }
 
 
@@ -3753,6 +4001,12 @@ namespace PlaylistEditor
         {
             for (int i = source.SelectedRows.Count - 1; i >= 0; i--)
                 yield return source.SelectedRows[i];
+        }
+
+        public static IEnumerable<DataGridViewRow> InvRowOrder(this DataGridView source)
+        {
+            for (int i = source.Rows.Count - 1; i >= 0; i--)
+                yield return source.Rows[i];
         }
 
         /// <summary>

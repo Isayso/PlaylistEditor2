@@ -29,7 +29,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox1));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.donateButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.labelProductName = new System.Windows.Forms.Label();
@@ -38,6 +37,7 @@
             this.labelCompanyName = new System.Windows.Forms.Label();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
+            this.donateButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,23 +71,6 @@
             this.tableLayoutPanel.Size = new System.Drawing.Size(624, 398);
             this.tableLayoutPanel.TabIndex = 0;
             // 
-            // donateButton
-            // 
-            this.donateButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.donateButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("donateButton.BackgroundImage")));
-            this.donateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.donateButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.donateButton.FlatAppearance.BorderSize = 0;
-            this.donateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.donateButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.donateButton.Location = new System.Drawing.Point(512, 0);
-            this.donateButton.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.donateButton.Name = "donateButton";
-            this.donateButton.Size = new System.Drawing.Size(112, 40);
-            this.donateButton.TabIndex = 27;
-            this.donateButton.TabStop = false;
-            this.donateButton.Click += new System.EventHandler(this.donateButton_Click);
-            // 
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -108,9 +91,9 @@
             this.linkLabel1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.LinkColor = System.Drawing.SystemColors.ButtonFace;
-            this.linkLabel1.Location = new System.Drawing.Point(315, 319);
+            this.linkLabel1.Location = new System.Drawing.Point(315, 320);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(142, 20);
+            this.linkLabel1.Size = new System.Drawing.Size(132, 18);
             this.linkLabel1.TabIndex = 25;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Check for Updates";
@@ -189,6 +172,23 @@
             this.okButton.Size = new System.Drawing.Size(112, 30);
             this.okButton.TabIndex = 24;
             this.okButton.Text = "&OK";
+            // 
+            // donateButton
+            // 
+            this.donateButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.donateButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("donateButton.BackgroundImage")));
+            this.donateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.donateButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.donateButton.FlatAppearance.BorderSize = 0;
+            this.donateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.donateButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.donateButton.Location = new System.Drawing.Point(512, 0);
+            this.donateButton.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.donateButton.Name = "donateButton";
+            this.donateButton.Size = new System.Drawing.Size(112, 40);
+            this.donateButton.TabIndex = 27;
+            this.donateButton.TabStop = false;
+            this.donateButton.Click += new System.EventHandler(this.donateButton_Click);
             // 
             // AboutBox1
             // 

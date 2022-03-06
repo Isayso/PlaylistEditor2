@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(settings));
-            this.button_ok = new System.Windows.Forms.Button();
-            this.button_cancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.checkBox_w = new System.Windows.Forms.CheckBox();
             this.textBox_hot = new System.Windows.Forms.TextBox();
@@ -52,7 +50,6 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.comboBox_res = new System.Windows.Forms.ComboBox();
-            this.button_edit = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.checkBox_kodi = new System.Windows.Forms.CheckBox();
             this.checkBox_w2 = new System.Windows.Forms.CheckBox();
@@ -62,7 +59,6 @@
             this.checkBox_c2 = new System.Windows.Forms.CheckBox();
             this.tBQuery = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.btnAddpath = new System.Windows.Forms.Button();
             this.chbAutoCopy = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -92,6 +88,10 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnAddpath = new System.Windows.Forms.Button();
+            this.button_edit = new System.Windows.Forms.Button();
+            this.button_ok = new System.Windows.Forms.Button();
+            this.button_cancel = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -100,30 +100,6 @@
             this.tabPage3.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // button_ok
-            // 
-            this.button_ok.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button_ok.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_ok.Location = new System.Drawing.Point(266, 389);
-            this.button_ok.Name = "button_ok";
-            this.button_ok.Size = new System.Drawing.Size(101, 34);
-            this.button_ok.TabIndex = 3;
-            this.button_ok.Text = "OK";
-            this.button_ok.UseVisualStyleBackColor = true;
-            this.button_ok.Click += new System.EventHandler(this.button_ok_Click);
-            // 
-            // button_cancel
-            // 
-            this.button_cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button_cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_cancel.Location = new System.Drawing.Point(119, 389);
-            this.button_cancel.Name = "button_cancel";
-            this.button_cancel.Size = new System.Drawing.Size(101, 34);
-            this.button_cancel.TabIndex = 4;
-            this.button_cancel.Text = "Cancel";
-            this.button_cancel.UseVisualStyleBackColor = true;
-            this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
             // 
             // checkBox_w
             // 
@@ -366,23 +342,6 @@
             this.toolTip1.SetToolTip(this.comboBox_res, "vlc and youtube-dl");
             this.comboBox_res.Click += new System.EventHandler(this.ComboBox_all_Click);
             // 
-            // button_edit
-            // 
-            this.button_edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_edit.BackColor = System.Drawing.Color.MidnightBlue;
-            this.button_edit.BackgroundImage = global::PlaylistEditor.Properties.Resources.close_circle;
-            this.button_edit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button_edit.FlatAppearance.BorderSize = 0;
-            this.button_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_edit.Location = new System.Drawing.Point(468, 136);
-            this.button_edit.Margin = new System.Windows.Forms.Padding(0);
-            this.button_edit.Name = "button_edit";
-            this.button_edit.Size = new System.Drawing.Size(40, 37);
-            this.button_edit.TabIndex = 47;
-            this.toolTip1.SetToolTip(this.button_edit, "delete entry");
-            this.button_edit.UseVisualStyleBackColor = true;
-            this.button_edit.Click += new System.EventHandler(this.button_edit_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -498,23 +457,6 @@
             this.label11.TabIndex = 16;
             this.label11.Text = "Search query";
             this.toolTip1.SetToolTip(this.label11, "search strig for Google or else");
-            // 
-            // btnAddpath
-            // 
-            this.btnAddpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddpath.BackColor = System.Drawing.Color.MidnightBlue;
-            this.btnAddpath.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddpath.BackgroundImage")));
-            this.btnAddpath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnAddpath.FlatAppearance.BorderSize = 0;
-            this.btnAddpath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddpath.Location = new System.Drawing.Point(422, 136);
-            this.btnAddpath.Margin = new System.Windows.Forms.Padding(0);
-            this.btnAddpath.Name = "btnAddpath";
-            this.btnAddpath.Size = new System.Drawing.Size(38, 37);
-            this.btnAddpath.TabIndex = 70;
-            this.toolTip1.SetToolTip(this.btnAddpath, "new download path");
-            this.btnAddpath.UseVisualStyleBackColor = false;
-            this.btnAddpath.Click += new System.EventHandler(this.btnAddpath_Click);
             // 
             // chbAutoCopy
             // 
@@ -653,12 +595,12 @@
             this.tabPage4.BackColor = System.Drawing.Color.DarkBlue;
             this.tabPage4.Controls.Add(this.btnAddpath);
             this.tabPage4.Controls.Add(this.button_update);
-            this.tabPage4.Controls.Add(this.button_edit);
             this.tabPage4.Controls.Add(this.comboBox_download);
             this.tabPage4.Controls.Add(this.label10);
             this.tabPage4.Controls.Add(this.checkBox3);
             this.tabPage4.Controls.Add(this.comboBox_res);
             this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.button_edit);
             this.tabPage4.ForeColor = System.Drawing.Color.White;
             this.tabPage4.Location = new System.Drawing.Point(4, 29);
             this.tabPage4.Name = "tabPage4";
@@ -888,15 +830,83 @@
             this.label13.TabIndex = 19;
             this.label13.Text = "Youtube";
             // 
+            // btnAddpath
+            // 
+            this.btnAddpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddpath.BackColor = System.Drawing.Color.MidnightBlue;
+            this.btnAddpath.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddpath.BackgroundImage")));
+            this.btnAddpath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnAddpath.FlatAppearance.BorderSize = 0;
+            this.btnAddpath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddpath.Location = new System.Drawing.Point(422, 136);
+            this.btnAddpath.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAddpath.Name = "btnAddpath";
+            this.btnAddpath.Size = new System.Drawing.Size(38, 37);
+            this.btnAddpath.TabIndex = 70;
+            this.toolTip1.SetToolTip(this.btnAddpath, "new download path");
+            this.btnAddpath.UseVisualStyleBackColor = false;
+            this.btnAddpath.Click += new System.EventHandler(this.btnAddpath_Click);
+            // 
+            // button_edit
+            // 
+            this.button_edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_edit.BackColor = System.Drawing.Color.MidnightBlue;
+            this.button_edit.BackgroundImage = global::PlaylistEditor.Properties.Resources.close_circle;
+            this.button_edit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_edit.FlatAppearance.BorderSize = 0;
+            this.button_edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_edit.Location = new System.Drawing.Point(468, 136);
+            this.button_edit.Margin = new System.Windows.Forms.Padding(0);
+            this.button_edit.Name = "button_edit";
+            this.button_edit.Size = new System.Drawing.Size(40, 37);
+            this.button_edit.TabIndex = 47;
+            this.toolTip1.SetToolTip(this.button_edit, "delete entry");
+            this.button_edit.UseVisualStyleBackColor = true;
+            this.button_edit.Click += new System.EventHandler(this.button_edit_Click);
+            // 
+            // button_ok
+            // 
+            this.button_ok.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_ok.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button_ok.FlatAppearance.BorderSize = 0;
+            this.button_ok.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_ok.Image = ((System.Drawing.Image)(resources.GetObject("button_ok.Image")));
+            this.button_ok.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.button_ok.Location = new System.Drawing.Point(282, 385);
+            this.button_ok.Margin = new System.Windows.Forms.Padding(2);
+            this.button_ok.Name = "button_ok";
+            this.button_ok.Size = new System.Drawing.Size(106, 43);
+            this.button_ok.TabIndex = 18;
+            this.button_ok.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button_ok.UseVisualStyleBackColor = true;
+            this.button_ok.Click += new System.EventHandler(this.button_ok_Click);
+            // 
+            // button_cancel
+            // 
+            this.button_cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button_cancel.FlatAppearance.BorderSize = 0;
+            this.button_cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_cancel.Image = ((System.Drawing.Image)(resources.GetObject("button_cancel.Image")));
+            this.button_cancel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.button_cancel.Location = new System.Drawing.Point(128, 385);
+            this.button_cancel.Margin = new System.Windows.Forms.Padding(2);
+            this.button_cancel.Name = "button_cancel";
+            this.button_cancel.Size = new System.Drawing.Size(102, 43);
+            this.button_cancel.TabIndex = 17;
+            this.button_cancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button_cancel.UseVisualStyleBackColor = true;
+            this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
+            // 
             // settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MidnightBlue;
             this.ClientSize = new System.Drawing.Size(530, 449);
-            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.button_ok);
+            this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "settings";
@@ -920,8 +930,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button button_ok;
-        private System.Windows.Forms.Button button_cancel;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
@@ -982,5 +990,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Button button_ok;
+        private System.Windows.Forms.Button button_cancel;
     }
 }

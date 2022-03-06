@@ -51,6 +51,14 @@ namespace PlaylistEditor
 
         //   private static YoutubeClient _youtube;
 
+        private const string YTURL = "https://www.youtube.com/watch?v=",
+            DAYURL = "https://www.dailymotion.com/video/",
+            LBRYURL = "https://odysee.com/",
+            BCURL = "https://www.bitchute.com/",
+            RMBLURL = "https://www.rumble.com/",
+            VIMURL = "https://www.vimeo.com/";
+
+
         public static ValidVideoType ValidLinkCheck(string i_Link)
         {
             ClassDataset vid = new ClassDataset();  //valid video types
@@ -96,6 +104,47 @@ namespace PlaylistEditor
             else
             {
                 NotificationBox.Show("No detected Video Link", 2000, NotificationMsg.ERROR);
+
+                return ValidVideoType.Invalid;
+            }
+        }
+        public static ValidVideoType ValidPluginCheck(string i_Link)
+        {
+            ClassDataset vid = new ClassDataset();  //valid video types
+
+            if (i_Link.Contains(".youtube"))
+            {
+                return ValidVideoType.YT;
+            }
+            else if (i_Link.Contains("bitchute"))
+            {
+                return ValidVideoType.BitC;
+            }
+            else if (i_Link.Contains("dailymotion"))
+            {
+                return ValidVideoType.Daily;
+            }
+            else if (i_Link.Contains("rumble") /*&& !i_Link.Contains("embed")*/)  //for rumble 
+            {
+                return ValidVideoType.Rmbl;
+            }
+            else if (i_Link.Contains("vimeo"))  //for vimeo 
+            {
+                return ValidVideoType.Vim;
+            }
+            else if (i_Link.Contains("lbry") || i_Link.Contains("odysee"))
+            {
+                return ValidVideoType.Lbry;
+            }
+
+            if ((i_Link.StartsWith("http") || i_Link.StartsWith("\\\\") || i_Link.Contains(@":\"))
+                      && vid.VideoTypes.Any(i_Link.EndsWith))  //option http  MUST BE LAST
+            {
+                return ValidVideoType.Html;
+            }
+            else
+            {
+                //NotificationBox.Show("No detected Plugin", 2000, NotificationMsg.ERROR);
 
                 return ValidVideoType.Invalid;
             }
@@ -346,6 +395,52 @@ namespace PlaylistEditor
 
         }
 
+
+        public static string GetInetLink(ValidVideoType linktype, string link)
+        {
+            string inetLink = null;
+            switch (linktype)
+            {
+                case ValidVideoType.Invalid:
+                    return null;
+
+                case ValidVideoType.YT:
+                case ValidVideoType.YList:
+                case ValidVideoType.YMusic:
+                    inetLink = YTURL+ link.Split('=').Last();
+                    break;
+
+                case ValidVideoType.Vim:
+                    inetLink = VIMURL+ link.Split('=').Last();
+                    break;
+
+                case ValidVideoType.Daily:
+                    inetLink = DAYURL+ link.Split('=').Last();
+                    break;
+
+                case ValidVideoType.Rmbl:
+                    inetLink = RMBLURL + link.Split('/').Last();
+                    break;
+
+                case ValidVideoType.Lbry:
+                    inetLink = LBRYURL + link.Split('/').Last();
+                    break;
+
+
+                case ValidVideoType.BitC:
+                    inetLink = BCURL + link.Split('/').Last();
+                    break;
+
+                case ValidVideoType.Html:
+                    if (link.StartsWith("http"))
+                    {
+                        inetLink = link;
+                    }
+                    break;
+            }
+
+            return inetLink;
+        }
 
         public static string GetTitle_client(string url)
         {

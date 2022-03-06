@@ -1,4 +1,11 @@
-﻿2.3.0
+﻿2.3.1
+- file drop reverse order
+- D&D right mouse button
+- Insert Crtl+I
+- context menu duplicates
+- bugfixes
+
+2.3.0
 - bug Youtube
 
 2.2.9
