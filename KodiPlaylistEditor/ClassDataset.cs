@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PlaylistEditor
+﻿namespace PlaylistEditor
 {
-    class ClassDataset
+    public class ClassDataset
     {
-        public enum ValidVideoType { Invalid, YT, YList, YMusic, BitC, Html, Rmbl, Vim, Daily, Lbry }
+        public enum VideoType { Invalid, YT, YList, YMusic, BitC, Html, Rmbl, Vim, Daily, Lbry, nfs }
 
-        public string[] _videotypes;
-        public string[] VideoTypes
+        public enum ClipMode { Copy, Cut }
+
+        public enum RWMode { Write, Read, FirstRead }
+
+        public enum Modified { Yes, No, Reset }
+
+        public string[] _videoext;
+        public string[] VideoExt
         {
             get
             {
-                return _videotypes = new[] {
+                return _videoext = new[] {
                     ".m4v", ".3g2", ".3gp",".nsv",".tp",".ts",".ty",".strm",".pls",".rm",
                     ".rmvb",".mpd",".m3u",".m3u8",".ifo",".mov",".qt",".divx",".xvid",".bivx",".vob",".nrg",".pva",
                     ".wmv",".asf",".asx",".ogm",".m2v",".avi",".dat",".mpg",".mpeg",".mp4",".mkv",".mk3d",".avc",

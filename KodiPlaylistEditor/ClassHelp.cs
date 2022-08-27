@@ -27,10 +27,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YoutubeExplode;
 using static PlaylistEditor.ClassDataset;
-//using YoutubeExplode.Videos;
-//using YoutubeExplode.Videos.Streams;
 
 namespace PlaylistEditor
 {
@@ -59,7 +56,7 @@ namespace PlaylistEditor
             VIMURL = "https://www.vimeo.com/";
 
 
-        public static ValidVideoType ValidLinkCheck(string i_Link)
+        public static VideoType ValidLinkCheck(string i_Link)
         {
             ClassDataset vid = new ClassDataset();  //valid video types
 
@@ -69,84 +66,96 @@ namespace PlaylistEditor
                 || i_Link.Contains("music.youtube"))
             {
                 if (i_Link.Contains("music.youtube"))
-                    return ValidVideoType.YMusic;
+                    return VideoType.YMusic;
 
                 if (i_Link.Contains("list=") || i_Link.Contains("channel"))
-                    return ValidVideoType.YList;
-                else return ValidVideoType.YT;
+                    return VideoType.YList;
+                else return VideoType.YT;
             }
             else if (i_Link.Contains(".bitchute.com/video"))
             {
-                return ValidVideoType.BitC;
+                return VideoType.BitC;
             }
             else if (i_Link.Contains(".dailymotion.com/video"))
             {
-                return ValidVideoType.Daily;
+                return VideoType.Daily;
             }
             else if (i_Link.Contains("rumble.com") /*&& !i_Link.Contains("embed")*/)  //for rumble 
             {
-                return ValidVideoType.Rmbl;
+                return VideoType.Rmbl;
             }
             else if (i_Link.Contains("vimeo.com"))  //for vimeo 
             {
-                return ValidVideoType.Vim;
+                return VideoType.Vim;
             }
             else if (i_Link.Contains("lbry.tv") || i_Link.Contains("odysee.com"))
             {
-                return ValidVideoType.Lbry;
+                if (i_Link.Contains('@') || i_Link.Contains('$'))
+                    return VideoType.Lbry;
+
+                else
+                {
+                    NotificationBox.Show("No valid Odysee Video Link", 2000, NotificationMsg.ERROR);
+
+                    return VideoType.Invalid;
+                }
             }
 
             if ((i_Link.StartsWith("http") || i_Link.StartsWith("\\\\") || i_Link.Contains(@":\"))
-                      && vid.VideoTypes.Any(i_Link.EndsWith))  //option http  MUST BE LAST
+                      && vid.VideoExt.Any(i_Link.EndsWith))  //option http  MUST BE LAST
             {
-                return ValidVideoType.Html;
+                return VideoType.Html;
             }
             else
             {
                 NotificationBox.Show("No detected Video Link", 2000, NotificationMsg.ERROR);
 
-                return ValidVideoType.Invalid;
+                return VideoType.Invalid;
             }
         }
-        public static ValidVideoType ValidPluginCheck(string i_Link)
+        public static VideoType ValidPluginCheck(string i_Link)
         {
             ClassDataset vid = new ClassDataset();  //valid video types
 
             if (i_Link.Contains(".youtube"))
             {
-                return ValidVideoType.YT;
+                return VideoType.YT;
             }
             else if (i_Link.Contains("bitchute"))
             {
-                return ValidVideoType.BitC;
+                return VideoType.BitC;
             }
             else if (i_Link.Contains("dailymotion"))
             {
-                return ValidVideoType.Daily;
+                return VideoType.Daily;
             }
             else if (i_Link.Contains("rumble") /*&& !i_Link.Contains("embed")*/)  //for rumble 
             {
-                return ValidVideoType.Rmbl;
+                return VideoType.Rmbl;
             }
             else if (i_Link.Contains("vimeo"))  //for vimeo 
             {
-                return ValidVideoType.Vim;
+                return VideoType.Vim;
             }
             else if (i_Link.Contains("lbry") || i_Link.Contains("odysee"))
             {
-                return ValidVideoType.Lbry;
+                return VideoType.Lbry;
             }
 
             if ((i_Link.StartsWith("http") || i_Link.StartsWith("\\\\") || i_Link.Contains(@":\"))
-                      && vid.VideoTypes.Any(i_Link.EndsWith))  //option http  MUST BE LAST
+                      && vid.VideoExt.Any(i_Link.EndsWith))  //option http  MUST BE LAST
             {
-                return ValidVideoType.Html;
+                return VideoType.Html;
+            }
+            else if (i_Link.StartsWith("nfs"))
+            {
+                return VideoType.nfs;
             }
             else
             {
                 //NotificationBox.Show("No detected Plugin", 2000, NotificationMsg.ERROR);
 
-                return ValidVideoType.Invalid;
+                return VideoType.Invalid;
             }
         }
 
@@ -212,7 +221,6 @@ namespace PlaylistEditor
             }
             return a_filename;
         }
-
 
 
 
@@ -301,10 +309,14 @@ namespace PlaylistEditor
             {
                 NotificationBox.Show("Error getting Title", 1000, NotificationMsg.ERROR);
                 //MessageBox.Show("Error to get title " + ex.Message, "Get Title error", MessageBoxButtons.OK);
-                return "";
+               // return "";
+                return url.Split('/').Last();
+
             }
 
-            return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
+            return title ?? url.Split('/').Last();  //?? check if NULL : yes url...
+
+           // return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
         }
 
 
@@ -341,11 +353,13 @@ namespace PlaylistEditor
             {
                 NotificationBox.Show("Error getting Title", 1000, NotificationMsg.ERROR);
                 //MessageBox.Show("Error to get title " + ex.Message, "Get Title error", MessageBoxButtons.OK);
-                return "";
+               // return "";
+                return url.Split('/').Last(); 
             }
 
-            return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
+           // return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
 
+            return title ?? url.Split('/').Last();  //?? check if NULL : yes url...
 
 
         }
@@ -386,57 +400,90 @@ namespace PlaylistEditor
             {
                 NotificationBox.Show("Error getting Title", 1000, NotificationMsg.ERROR);
                 //MessageBox.Show("Error to get title " + ex.Message, "Get Title error", MessageBoxButtons.OK);
-                return "";
+                //return "";
+                return url.Split('/').Last();  //?? check if NULL : yes url...
             }
 
-            return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
+            return title ?? url.Split('/').Last();  //?? check if NULL : yes url...
+
+           // return title.Replace(" - YouTube", "");  //response "YouTube" if no video avaliable
 
 
 
         }
 
+        public static bool CheckClipboard()
+        {
+            try
+            {
+                DataObject o = (DataObject)Clipboard.GetDataObject();
 
-        public static string GetInetLink(ValidVideoType linktype, string link)
+                if (Clipboard.ContainsText())
+                {
+                    string content = o.GetData(DataFormats.UnicodeText).ToString();
+                    if (content.StartsWith("\tName"))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Paste operation failed. (check clip) " + ex.Message, "Copy/Paste", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+
+            return false;
+        }
+
+        public static string GetInetLink(VideoType linktype, string link)
         {
             string inetLink = null;
             switch (linktype)
             {
-                case ValidVideoType.Invalid:
+                case VideoType.Invalid:
                     return null;
 
-                case ValidVideoType.YT:
-                case ValidVideoType.YList:
-                case ValidVideoType.YMusic:
+                case VideoType.YT:
+                case VideoType.YList:
+                case VideoType.YMusic:
                     inetLink = YTURL+ link.Split('=').Last();
                     break;
 
-                case ValidVideoType.Vim:
+                case VideoType.Vim:
                     inetLink = VIMURL+ link.Split('=').Last();
                     break;
 
-                case ValidVideoType.Daily:
+                case VideoType.Daily:
                     inetLink = DAYURL+ link.Split('=').Last();
                     break;
 
-                case ValidVideoType.Rmbl:
+                case VideoType.Rmbl:
                     inetLink = RMBLURL + link.Split('/').Last();
                     break;
 
-                case ValidVideoType.Lbry:
+                case VideoType.Lbry:
                     inetLink = LBRYURL + link.Split('/').Last();
                     break;
 
 
-                case ValidVideoType.BitC:
+                case VideoType.BitC:
                     inetLink = BCURL + link.Split('/').Last();
                     break;
 
-                case ValidVideoType.Html:
+                case VideoType.Html:
                     if (link.StartsWith("http"))
                     {
                         inetLink = link;
                     }
                     break;
+
+                case VideoType.nfs:
+                    inetLink = link.Replace("/", "\\").Replace("nfs:", "file:///");
+                    break;
+
             }
 
             return inetLink;

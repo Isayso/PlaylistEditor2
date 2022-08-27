@@ -62,12 +62,6 @@
     <Setting Name="combodown" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="combopathlist" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;new path&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
-    </Setting>
     <Setting Name="cleanexit" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
@@ -76,16 +70,6 @@
     </Setting>
     <Setting Name="showFormats" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="FilePaths" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;file1&lt;/string&gt;
-  &lt;string&gt;file2&lt;/string&gt;
-  &lt;string&gt;file3&lt;/string&gt;
-  &lt;string&gt;file4&lt;/string&gt;
-  &lt;string&gt;file5&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="hotkey2" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">89</Value>
@@ -112,7 +96,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SearchQuery" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://www.google.com/search?q=</Value>
+      <Value Profile="(Default)">https://search.brave.com/search?q=</Value>
     </Setting>
     <Setting Name="autocopy" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -134,6 +118,22 @@
     </Setting>
     <Setting Name="BCPLUGIN" Type="System.String" Scope="User">
       <Value Profile="(Default)">plugin.video.bitchute/play_now/</Value>
+    </Setting>
+    <Setting Name="combopathlist" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;string&gt;new path&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="FilePaths" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;string&gt;file1&lt;/string&gt;
+  &lt;string&gt;file2&lt;/string&gt;
+  &lt;string&gt;file3&lt;/string&gt;
+  &lt;string&gt;file4&lt;/string&gt;
+  &lt;string&gt;file5&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

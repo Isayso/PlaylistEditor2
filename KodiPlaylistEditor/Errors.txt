@@ -1,15 +1,3 @@
-﻿OK - download button gone after cancel
-- download abortet after cancel
-- ffmpeg check
-- ffmpeg fallback low res
-OK - newpath cancel performance
-OK progress indicator
-OK vlc starts after dash error -> not fully implemented
+﻿
 
-- replace link
-
-OK private videos not recon
-
-check if window is browser to copy from before hotkey
-
-UNDO stack error again !!!!
+vlc kann kein daily, lbry spielen

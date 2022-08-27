@@ -12,7 +12,7 @@ namespace PlaylistEditor.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -263,20 +263,6 @@ namespace PlaylistEditor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>new path</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection combopathlist {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["combopathlist"]));
-            }
-            set {
-                this["combopathlist"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool cleanexit {
             get {
@@ -308,25 +294,6 @@ namespace PlaylistEditor.Properties {
             }
             set {
                 this["showFormats"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>file1</string>
-  <string>file2</string>
-  <string>file3</string>
-  <string>file4</string>
-  <string>file5</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection FilePaths {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["FilePaths"]));
-            }
-            set {
-                this["FilePaths"] = value;
             }
         }
         
@@ -428,7 +395,7 @@ namespace PlaylistEditor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.google.com/search?q=")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://search.brave.com/search?q=")]
         public string SearchQuery {
             get {
                 return ((string)(this["SearchQuery"]));
@@ -519,6 +486,39 @@ namespace PlaylistEditor.Properties {
             }
             set {
                 this["BCPLUGIN"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
+            "org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <s" +
+            "tring>new path</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection combopathlist {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["combopathlist"]));
+            }
+            set {
+                this["combopathlist"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <string>file1</string>
+  <string>file2</string>
+  <string>file3</string>
+  <string>file4</string>
+  <string>file5</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection FilePaths {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["FilePaths"]));
+            }
+            set {
+                this["FilePaths"] = value;
             }
         }
     }

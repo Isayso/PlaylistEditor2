@@ -33,8 +33,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cm1KodiPlay = new System.Windows.Forms.ToolStripMenuItem();
-            this.cm1KodiQueue = new System.Windows.Forms.ToolStripMenuItem();
+            this.cms1KodiPlay = new System.Windows.Forms.ToolStripMenuItem();
+            this.cms1KodiQueue = new System.Windows.Forms.ToolStripMenuItem();
             this.cms1OpenLink = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cms1Copy = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +47,7 @@
             this.cms1Download = new System.Windows.Forms.ToolStripMenuItem();
             this.cms1Rename = new System.Windows.Forms.ToolStripMenuItem();
             this.cms1NewWIndow = new System.Windows.Forms.ToolStripMenuItem();
+            this.cms1ExportList = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -72,6 +73,9 @@
             this.button_tag = new System.Windows.Forms.Button();
             this.button_download = new System.Windows.Forms.Button();
             this.button_dup = new System.Windows.Forms.Button();
+            this.contextMenuStrip5 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cms5SearchCombo = new System.Windows.Forms.ToolStripComboBox();
+            this.cms5SearchDupli = new System.Windows.Forms.ToolStripMenuItem();
             this.button_search = new System.Windows.Forms.Button();
             this.button_del_all = new System.Windows.Forms.Button();
             this.button_settings = new System.Windows.Forms.Button();
@@ -80,6 +84,8 @@
             this.button_delLine = new System.Windows.Forms.Button();
             this.button_save = new System.Windows.Forms.Button();
             this.button_open = new System.Windows.Forms.Button();
+            this.buttonR_MoveDown = new RepeatingButton();
+            this.buttonR_moveUp = new RepeatingButton();
             this.textBox_find = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -105,22 +111,16 @@
             this.deleteEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_refind = new System.Windows.Forms.Button();
             this.btn_clearfind = new System.Windows.Forms.Button();
-            this.cms1Insert = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStrip5 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cms5SearchDupli = new System.Windows.Forms.ToolStripMenuItem();
-            this.cms5SearchCombo = new System.Windows.Forms.ToolStripComboBox();
-            this.buttonR_MoveDown = new RepeatingButton();
-            this.buttonR_moveUp = new RepeatingButton();
             this.plabel_Filename = new PathLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip4.SuspendLayout();
             this.cmLabelVlc.SuspendLayout();
+            this.contextMenuStrip5.SuspendLayout();
             this.panel1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.panelMRU.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
-            this.contextMenuStrip5.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -166,42 +166,43 @@
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cm1KodiPlay,
-            this.cm1KodiQueue,
+            this.cms1KodiPlay,
+            this.cms1KodiQueue,
             this.cms1OpenLink,
             this.toolStripSeparator1,
             this.cms1Copy,
             this.cms1PasteAdd,
-            this.cms1Insert,
             this.cms1Cut,
             this.toolStripSeparator2,
             this.cms1Send2Clip,
             this.cms1Search,
+            this.cms1ExportList,
             this.toolStripSeparator3,
             this.cms1Download,
             this.cms1Rename,
             this.cms1NewWIndow});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(271, 310);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(271, 335);
+            this.contextMenuStrip1.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.contextMenuStrip1_Closing);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
-            // cm1KodiPlay
+            // cms1KodiPlay
             // 
-            this.cm1KodiPlay.Image = ((System.Drawing.Image)(resources.GetObject("cm1KodiPlay.Image")));
-            this.cm1KodiPlay.Name = "cm1KodiPlay";
-            this.cm1KodiPlay.ShortcutKeyDisplayString = "Ctrl+P";
-            this.cm1KodiPlay.Size = new System.Drawing.Size(270, 24);
-            this.cm1KodiPlay.Text = "Kodi play";
-            this.cm1KodiPlay.Click += new System.EventHandler(this.playTSMenuItem_Click);
+            this.cms1KodiPlay.Image = ((System.Drawing.Image)(resources.GetObject("cms1KodiPlay.Image")));
+            this.cms1KodiPlay.Name = "cms1KodiPlay";
+            this.cms1KodiPlay.ShortcutKeyDisplayString = "Ctrl+P";
+            this.cms1KodiPlay.Size = new System.Drawing.Size(270, 24);
+            this.cms1KodiPlay.Text = "Kodi play";
+            this.cms1KodiPlay.Click += new System.EventHandler(this.cms1KodiPlay_Click);
             // 
-            // cm1KodiQueue
+            // cms1KodiQueue
             // 
-            this.cm1KodiQueue.Image = ((System.Drawing.Image)(resources.GetObject("cm1KodiQueue.Image")));
-            this.cm1KodiQueue.Name = "cm1KodiQueue";
-            this.cm1KodiQueue.ShortcutKeyDisplayString = "Ctrl+Q";
-            this.cm1KodiQueue.Size = new System.Drawing.Size(270, 24);
-            this.cm1KodiQueue.Text = "Kodi queue";
-            this.cm1KodiQueue.Click += new System.EventHandler(this.queueTSMenuItem_Click);
+            this.cms1KodiQueue.Image = ((System.Drawing.Image)(resources.GetObject("cms1KodiQueue.Image")));
+            this.cms1KodiQueue.Name = "cms1KodiQueue";
+            this.cms1KodiQueue.ShortcutKeyDisplayString = "Ctrl+Q";
+            this.cms1KodiQueue.Size = new System.Drawing.Size(270, 24);
+            this.cms1KodiQueue.Text = "Kodi queue";
+            this.cms1KodiQueue.Click += new System.EventHandler(this.cms1KodiQueue_Click);
             // 
             // cms1OpenLink
             // 
@@ -209,7 +210,7 @@
             this.cms1OpenLink.ShortcutKeyDisplayString = "Ctrl+L";
             this.cms1OpenLink.Size = new System.Drawing.Size(270, 24);
             this.cms1OpenLink.Text = "Open video location";
-            this.cms1OpenLink.Click += new System.EventHandler(this.openLinkLocationTSMenuItem_Click);
+            this.cms1OpenLink.Click += new System.EventHandler(this.cms1OpenLink_Click);
             // 
             // toolStripSeparator1
             // 
@@ -222,14 +223,14 @@
             this.cms1Copy.ShortcutKeyDisplayString = "Ctrl+C";
             this.cms1Copy.Size = new System.Drawing.Size(270, 24);
             this.cms1Copy.Text = "Copy row";
-            this.cms1Copy.Click += new System.EventHandler(this.copyTSMenuItem_Click);
+            this.cms1Copy.Click += new System.EventHandler(this.cms1Copy_Click);
             // 
             // cms1PasteAdd
             // 
             this.cms1PasteAdd.Name = "cms1PasteAdd";
             this.cms1PasteAdd.ShortcutKeyDisplayString = "Ctrl+V";
             this.cms1PasteAdd.Size = new System.Drawing.Size(270, 24);
-            this.cms1PasteAdd.Text = "Add to end";
+            this.cms1PasteAdd.Text = "Paste Insert";
             this.cms1PasteAdd.Click += new System.EventHandler(this.cms1PasteAdd_Click);
             // 
             // cms1Cut
@@ -238,7 +239,7 @@
             this.cms1Cut.ShortcutKeyDisplayString = "Ctrl+X";
             this.cms1Cut.Size = new System.Drawing.Size(270, 24);
             this.cms1Cut.Text = "Cut row";
-            this.cms1Cut.Click += new System.EventHandler(this.cutTSMenuItem_Click);
+            this.cms1Cut.Click += new System.EventHandler(this.cms1Cut_Click);
             // 
             // toolStripSeparator2
             // 
@@ -271,9 +272,10 @@
             // cms1Download
             // 
             this.cms1Download.Name = "cms1Download";
+            this.cms1Download.ShortcutKeyDisplayString = "";
             this.cms1Download.Size = new System.Drawing.Size(270, 24);
             this.cms1Download.Text = "Download YT video";
-            this.cms1Download.Click += new System.EventHandler(this.downloadYTFileTSMenuItem_Click);
+            this.cms1Download.Click += new System.EventHandler(this.downloadYTFile_Click);
             // 
             // cms1Rename
             // 
@@ -290,6 +292,13 @@
             this.cms1NewWIndow.Size = new System.Drawing.Size(270, 24);
             this.cms1NewWIndow.Text = "New Window";
             this.cms1NewWIndow.Click += new System.EventHandler(this.cms1NewWIndow_Click);
+            // 
+            // cms1ExportList
+            // 
+            this.cms1ExportList.Name = "cms1ExportList";
+            this.cms1ExportList.Size = new System.Drawing.Size(270, 24);
+            this.cms1ExportList.Text = "Export List";
+            this.cms1ExportList.Click += new System.EventHandler(this.cms1ExportList_Click);
             // 
             // openFileDialog
             // 
@@ -614,7 +623,7 @@
             this.button_download.TabIndex = 40;
             this.toolTip1.SetToolTip(this.button_download, "download YT video\r\n+Ctrl start immidiately");
             this.button_download.UseVisualStyleBackColor = true;
-            this.button_download.Click += new System.EventHandler(this.downloadYTFileTSMenuItem_Click);
+            this.button_download.Click += new System.EventHandler(this.downloadYTFile_Click);
             // 
             // button_dup
             // 
@@ -633,6 +642,34 @@
             this.toolTip1.SetToolTip(this.button_dup, "find duplicates\r\n+shift remove duplicates");
             this.button_dup.UseVisualStyleBackColor = true;
             this.button_dup.Click += new System.EventHandler(this.button_dup_Click);
+            // 
+            // contextMenuStrip5
+            // 
+            this.contextMenuStrip5.ImageScalingSize = new System.Drawing.Size(18, 18);
+            this.contextMenuStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cms5SearchCombo,
+            this.cms5SearchDupli});
+            this.contextMenuStrip5.Name = "contextMenuStrip5";
+            this.contextMenuStrip5.Size = new System.Drawing.Size(197, 59);
+            this.contextMenuStrip5.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip5_Opening);
+            // 
+            // cms5SearchCombo
+            // 
+            this.cms5SearchCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cms5SearchCombo.Items.AddRange(new object[] {
+            "Name",
+            "Link"});
+            this.cms5SearchCombo.Name = "cms5SearchCombo";
+            this.cms5SearchCombo.Size = new System.Drawing.Size(121, 27);
+            this.cms5SearchCombo.SelectedIndexChanged += new System.EventHandler(this.cms5SearchCombo_SelectedIndexChanged);
+            // 
+            // cms5SearchDupli
+            // 
+            this.cms5SearchDupli.Font = new System.Drawing.Font("Segoe UI", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cms5SearchDupli.Name = "cms5SearchDupli";
+            this.cms5SearchDupli.Size = new System.Drawing.Size(196, 24);
+            this.cms5SearchDupli.Text = "Search Duplicates";
+            this.cms5SearchDupli.Click += new System.EventHandler(this.cms5SearchDupli_Click);
             // 
             // button_search
             // 
@@ -765,6 +802,38 @@
         "es merge function\r\n");
             this.button_open.UseVisualStyleBackColor = true;
             this.button_open.Click += new System.EventHandler(this.button_open_Click);
+            // 
+            // buttonR_MoveDown
+            // 
+            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
+            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_MoveDown.Image = global::PlaylistEditor.Properties.Resources.arrow_down_bold_r;
+            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
+            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
+            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_MoveDown.TabIndex = 32;
+            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down\r\nctrl + 2");
+            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
+            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
+            // 
+            // buttonR_moveUp
+            // 
+            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
+            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonR_moveUp.Image = global::PlaylistEditor.Properties.Resources.arrow_up_bold_r;
+            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
+            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonR_moveUp.Name = "buttonR_moveUp";
+            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
+            this.buttonR_moveUp.TabIndex = 31;
+            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up\r\nctrl + 1");
+            this.buttonR_moveUp.UseVisualStyleBackColor = true;
+            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
             // 
             // textBox_find
             // 
@@ -1051,74 +1120,6 @@
             this.btn_clearfind.Visible = false;
             this.btn_clearfind.Click += new System.EventHandler(this.btn_clearfind_Click);
             // 
-            // cms1Insert
-            // 
-            this.cms1Insert.Name = "cms1Insert";
-            this.cms1Insert.ShortcutKeyDisplayString = "Ctrl+I";
-            this.cms1Insert.Size = new System.Drawing.Size(270, 24);
-            this.cms1Insert.Text = "Insert row";
-            this.cms1Insert.Click += new System.EventHandler(this.cms1Insert_Click);
-            // 
-            // contextMenuStrip5
-            // 
-            this.contextMenuStrip5.ImageScalingSize = new System.Drawing.Size(18, 18);
-            this.contextMenuStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cms5SearchCombo,
-            this.cms5SearchDupli});
-            this.contextMenuStrip5.Name = "contextMenuStrip5";
-            this.contextMenuStrip5.Size = new System.Drawing.Size(199, 84);
-            this.contextMenuStrip5.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip5_Opening);
-            // 
-            // cms5SearchDupli
-            // 
-            this.cms5SearchDupli.Font = new System.Drawing.Font("Segoe UI", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cms5SearchDupli.Name = "cms5SearchDupli";
-            this.cms5SearchDupli.Size = new System.Drawing.Size(198, 24);
-            this.cms5SearchDupli.Text = "Search Duplicates";
-            this.cms5SearchDupli.Click += new System.EventHandler(this.cms5SearchDupli_Click);
-            // 
-            // cms5SearchCombo
-            // 
-            this.cms5SearchCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cms5SearchCombo.Items.AddRange(new object[] {
-            "Name",
-            "Link"});
-            this.cms5SearchCombo.Name = "cms5SearchCombo";
-            this.cms5SearchCombo.Size = new System.Drawing.Size(121, 27);
-            this.cms5SearchCombo.SelectedIndexChanged += new System.EventHandler(this.cms5SearchCombo_SelectedIndexChanged);
-            // 
-            // buttonR_MoveDown
-            // 
-            this.buttonR_MoveDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_MoveDown.FlatAppearance.BorderSize = 0;
-            this.buttonR_MoveDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_MoveDown.Image = global::PlaylistEditor.Properties.Resources.arrow_down_bold_r;
-            this.buttonR_MoveDown.Location = new System.Drawing.Point(213, 11);
-            this.buttonR_MoveDown.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_MoveDown.Name = "buttonR_MoveDown";
-            this.buttonR_MoveDown.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_MoveDown.TabIndex = 32;
-            this.buttonR_MoveDown.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_MoveDown, "move line down\r\nctrl + 2");
-            this.buttonR_MoveDown.UseVisualStyleBackColor = true;
-            this.buttonR_MoveDown.Click += new System.EventHandler(this.button_moveDown_Click);
-            // 
-            // buttonR_moveUp
-            // 
-            this.buttonR_moveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonR_moveUp.FlatAppearance.BorderSize = 0;
-            this.buttonR_moveUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR_moveUp.Image = global::PlaylistEditor.Properties.Resources.arrow_up_bold_r;
-            this.buttonR_moveUp.Location = new System.Drawing.Point(183, 9);
-            this.buttonR_moveUp.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonR_moveUp.Name = "buttonR_moveUp";
-            this.buttonR_moveUp.Size = new System.Drawing.Size(30, 32);
-            this.buttonR_moveUp.TabIndex = 31;
-            this.buttonR_moveUp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.toolTip1.SetToolTip(this.buttonR_moveUp, "move line up\r\nctrl + 1");
-            this.buttonR_moveUp.UseVisualStyleBackColor = true;
-            this.buttonR_moveUp.Click += new System.EventHandler(this.button_moveUp_Click);
-            // 
             // plabel_Filename
             // 
             this.plabel_Filename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1177,13 +1178,13 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStrip4.ResumeLayout(false);
             this.cmLabelVlc.ResumeLayout(false);
+            this.contextMenuStrip5.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.contextMenuStrip2.ResumeLayout(false);
             this.panelMRU.ResumeLayout(false);
             this.panelMRU.PerformLayout();
             this.contextMenuStrip3.ResumeLayout(false);
-            this.contextMenuStrip5.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1266,12 +1267,12 @@
         private System.Windows.Forms.ToolStripMenuItem cmLbl480;
         private System.Windows.Forms.ToolStripMenuItem cmLbl720;
         private System.Windows.Forms.ToolStripMenuItem cmLbl1080;
-        private System.Windows.Forms.ToolStripMenuItem cm1KodiPlay;
-        private System.Windows.Forms.ToolStripMenuItem cm1KodiQueue;
-        private System.Windows.Forms.ToolStripMenuItem cms1Insert;
+        private System.Windows.Forms.ToolStripMenuItem cms1KodiPlay;
+        private System.Windows.Forms.ToolStripMenuItem cms1KodiQueue;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip5;
         private System.Windows.Forms.ToolStripComboBox cms5SearchCombo;
         private System.Windows.Forms.ToolStripMenuItem cms5SearchDupli;
+        private System.Windows.Forms.ToolStripMenuItem cms1ExportList;
     }
 }
 

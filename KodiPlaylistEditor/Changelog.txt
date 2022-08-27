@@ -1,8 +1,21 @@
-﻿2.3.1
+﻿2.3.4
+- export list to vlc or AIMP format
+
+2.3.3
+- bugfix no arrows in edit cell
+
+2.3.2
+- vlc with vimeo, dailymotion
+- context menu optimized
+- code cleanup, bugfixes
+- ESC closes find box
+
+2.3.1
 - file drop reverse order
-- D&D right mouse button
-- Insert Crtl+I
+- D&D right mouse button to move
+- Insert row Crtl+I
 - context menu duplicates
+- send link to clip for all types of plugins
 - bugfixes
 
 2.3.0
